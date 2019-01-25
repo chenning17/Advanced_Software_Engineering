@@ -8,5 +8,3 @@
 - Katja Alexander
 - Stuart Paterson
 
-
-Help me
