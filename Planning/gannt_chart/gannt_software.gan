@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><project name="Software" company="" webLink="http://" view-date="2019-01-30" view-index="0" gantt-divider-location="744" resource-divider-location="300" version="2.8.9" locale="en_GB">
     <description/>
-    <view zooming-state="default:0" id="gantt-chart">
+    <view zooming-state="default:2" id="gantt-chart">
         <field id="tpd3" name="Name" width="330" order="0"/>
         <field id="tpd4" name="Begin date" width="205" order="1"/>
         <field id="tpd5" name="End date" width="205" order="2"/>
+        <option id="color.recent"><![CDATA[#999999 #ffff00 #99ff99 #ff0066]]></option>
     </view>
     <view id="resource-table">
         <field id="0" name="Name" width="210" order="0"/>
@@ -33,42 +34,32 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="reading item and order file inputs" color="#8cb6ce" meeting="false" start="2019-02-01" duration="3" complete="0" thirdDate="2019-01-31" thirdDate-constraint="0" expand="true">
-            <depend id="4" type="2" difference="0" hardness="Strong"/>
+        <task id="0" name="Iteration 1: Loading" color="#8cb6ce" meeting="false" start="2019-02-01" duration="4" complete="0" thirdDate="2019-01-31" thirdDate-constraint="0" expand="true">
+            <depend id="14" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="4" name="input file unit testing" color="#8cb6ce" meeting="false" start="2019-02-04" duration="3" complete="0" thirdDate="2019-01-31" thirdDate-constraint="1" expand="true"/>
-        <task id="6" name="orders and orders collection" color="#8cb6ce" meeting="false" start="2019-02-01" duration="3" complete="0" thirdDate="2019-01-29" thirdDate-constraint="0" expand="true">
-            <depend id="52" type="2" difference="0" hardness="Strong"/>
-        </task>
-        <task id="52" name="orders unit testing" color="#8cb6ce" meeting="false" start="2019-02-04" duration="3" complete="0" thirdDate="2019-01-31" thirdDate-constraint="1" expand="true"/>
-        <task id="2" name="items, item sub classes and items collection" color="#8cb6ce" meeting="false" start="2019-02-01" duration="5" complete="0" thirdDate="2019-01-21" thirdDate-constraint="0" expand="true">
-            <depend id="59" type="2" difference="0" hardness="Strong"/>
-        </task>
-        <task id="59" name="items unit testing" color="#8cb6ce" meeting="false" start="2019-02-06" duration="4" complete="0" thirdDate="2019-01-31" thirdDate-constraint="1" expand="true">
-            <depend id="10" type="2" difference="0" hardness="Strong"/>
-            <depend id="16" type="2" difference="0" hardness="Strong"/>
-        </task>
-        <task id="14" name="manager" color="#8cb6ce" meeting="false" start="2019-02-01" duration="5" complete="0" thirdDate="2019-01-29" thirdDate-constraint="0" expand="true">
+        <task id="4" name="Loading testing (TDD)" color="#8cb6ce" meeting="false" start="2019-02-01" duration="4" complete="0" thirdDate="2019-02-01" thirdDate-constraint="1" expand="true"/>
+        <task id="14" name="Iteration 2: Generation Report" color="#8cb6ce" meeting="false" start="2019-02-05" duration="2" complete="0" thirdDate="2019-01-29" thirdDate-constraint="0" expand="true">
+            <depend id="34" type="2" difference="0" hardness="Strong"/>
             <depend id="73" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="73" name="manager unit testing" color="#8cb6ce" meeting="false" start="2019-02-06" duration="4" complete="0" thirdDate="2019-01-31" thirdDate-constraint="1" expand="true"/>
-        <task id="34" name="gui" color="#8cb6ce" meeting="false" start="2019-02-01" duration="5" complete="0" thirdDate="2019-01-21" thirdDate-constraint="0" expand="true">
+        <task id="73" name="Report Testing" color="#8cb6ce" meeting="false" start="2019-02-07" duration="2" complete="0" thirdDate="2019-01-31" thirdDate-constraint="1" expand="true"/>
+        <task id="34" name="Iteration 3: GUI Part 1" color="#8cb6ce" meeting="false" start="2019-02-07" duration="5" complete="0" thirdDate="2019-01-21" thirdDate-constraint="0" expand="true">
+            <depend id="10" type="2" difference="0" hardness="Strong"/>
             <depend id="140" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="140" name="gui testing" color="#8cb6ce" meeting="false" start="2019-02-06" duration="5" complete="0" thirdDate="2019-01-31" thirdDate-constraint="1" expand="true"/>
-        <task id="10" name="discount item and discount calculator" color="#8cb6ce" meeting="false" start="2019-02-10" duration="3" complete="0" thirdDate="2019-01-29" thirdDate-constraint="0" expand="true">
+        <task id="140" name="GUI Part 1 Testing" color="#8cb6ce" meeting="false" start="2019-02-12" duration="3" complete="0" thirdDate="2019-01-31" thirdDate-constraint="1" expand="true"/>
+        <task id="10" name="Iteration 4: GUI Part 2" color="#8cb6ce" meeting="false" start="2019-02-12" duration="5" complete="0" thirdDate="2019-01-29" thirdDate-constraint="0" expand="true">
+            <depend id="16" type="2" difference="0" hardness="Strong"/>
             <depend id="66" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="66" name="discounts unit testing" color="#8cb6ce" meeting="false" start="2019-02-13" duration="3" complete="0" thirdDate="2019-01-31" thirdDate-constraint="1" expand="true">
-            <depend id="12" type="2" difference="0" hardness="Strong"/>
+        <task id="66" name="GUI Part 2 Testing" color="#8cb6ce" meeting="false" start="2019-02-17" duration="3" complete="0" thirdDate="2019-01-31" thirdDate-constraint="1" expand="true"/>
+        <task id="16" name="Iteration 5: Full System Testing" color="#8cb6ce" meeting="false" start="2019-02-17" duration="3" complete="0" thirdDate="2019-01-29" thirdDate-constraint="0" expand="true">
+            <depend id="167" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="16" name="ID exception classes" color="#8cb6ce" meeting="false" start="2019-02-10" duration="3" complete="0" thirdDate="2019-01-29" thirdDate-constraint="0" expand="true">
-            <depend id="80" type="2" difference="0" hardness="Strong"/>
+        <task id="12" name="Report Draft+ Documentation" color="#999999" meeting="false" start="2019-02-01" duration="19" complete="0" thirdDate="2019-01-29" thirdDate-constraint="0" expand="true">
+            <depend id="167" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="80" name="ID exceptions unit testing" color="#8cb6ce" meeting="false" start="2019-02-13" duration="3" complete="0" thirdDate="2019-01-31" thirdDate-constraint="1" expand="true">
-            <depend id="12" type="2" difference="0" hardness="Strong"/>
-        </task>
-        <task id="12" name="report writing / extra uml diagrams" color="#8cb6ce" meeting="false" start="2019-02-16" duration="4" complete="0" thirdDate="2019-01-29" thirdDate-constraint="0" expand="true"/>
+        <task id="167" name="Finalising Report" color="#8cb6ce" meeting="false" start="2019-02-20" duration="2" complete="0" thirdDate="2019-01-29" thirdDate-constraint="0" expand="true"/>
     </tasks>
     <resources/>
     <allocations/>
