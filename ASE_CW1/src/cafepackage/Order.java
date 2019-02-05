@@ -13,4 +13,14 @@ public class Order {
 		return null;
 	}
 
+	public int getCustomerId() {
+		// TODO Auto-generated method stub
+		return -1;
+	}
+
+	public Item getItem() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
