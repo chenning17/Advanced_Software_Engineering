@@ -4,11 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import cafepackage.DuplicateIDException;
+import cafepackage.InvalidIDException;
 import cafepackage.Item;
 
 import cafepackage.Snack;
 
-public class ItemTest {
+public class SnackTest {
 	Snack snack1;
 
 	@Before
@@ -69,6 +72,30 @@ public class ItemTest {
 		assertEquals(message, 4.00, snack1.getID());
 	}
 	
-	//TO-DO
-	//flesh out tests with boundary cases
+	@Test (expected = DuplicateIDException.class)
+	public void test_validateIDwithDuplicateID() {
+		Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snck003");
+		Snack crips = new Snack("Crisps", "Plain", 3.00, "snck003");
+	}
+	
+	@Test (expected = InvalidIDException.class)
+	public void test_validateIDwithInvalidIDNotEnoughNumbers() {
+		Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snck00");
+	}
+	
+	@Test (expected = InvalidIDException.class)
+	public void test_validateIDwithInvalidIDTooManyNumbers() {
+		Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snck0000");
+	}
+	
+	@Test (expected = InvalidIDException.class)
+	public void test_validateIDwithInvalidIDCharactersNotNumbers() {
+		Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snckaaa");
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void test_ConstructorPriceValidation(){
+			Snack orange = new Snack("Orange", "Small boy", -1.00, "snck004");
+	}
+
 }
