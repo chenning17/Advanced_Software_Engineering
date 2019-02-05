@@ -7,20 +7,21 @@ import org.junit.Test;
 
 import cafepackage.DuplicateIDException;
 import cafepackage.InvalidIDException;
+import cafepackage.Item;
+
 import cafepackage.Snack;
 
 public class SnackTest {
-	private Snack snack1;
+	Snack snack1;
 
 	@Before
 	public void setUp() {
-		snack1 = new Snack("Apple", "Granny smith", 1.20, "snck001");
+		Snack snack1 = new Snack("Apple", "Granny smith", 1.20, "snck001");
+
 	}
-	
-	
+
 	@Test
 	public void test_getName() {
-		Snack snack1 = new Snack("Apple", "Granny smith", 1.20, "snck001");
 		String message = "Failed to getName() for snack with name \"Apple\"";
 		assertEquals(message, "Apple", snack1.getName());
 	}
@@ -41,23 +42,21 @@ public class SnackTest {
 	@Test
 	public void test_setDescription() {
 		String message = "Failed to setDescription() to \"A big one\"";
-		snack1.setDescription("A big one");
+		snack1.setDescription("A big one")
 		assertEquals(message, "A big one", snack1.getDescription());
 	}
-
-
+	
 	@Test
 	public void test_getCost() {
 		String message = "Failed to getCost() for value 1.20";
-		assertEquals(message, 1.20, snack1.getCost(), 0.001);
-		
+		assertEquals(message, 1.20, snack1.getCost());
 	}
 	
 	@Test
 	public void test_setCost() {
 		String message = "Failed to setCost() to 4.00";
 		snack1.setCost(4.00);
-		assertEquals(message, 4.00, snack1.getCost(), 0.001);
+		assertEquals(message, 4.00, snack1.getCost());
 	}
 	
 	@Test
@@ -66,15 +65,13 @@ public class SnackTest {
 		assertEquals(message, "snck001", snack1.getID());
 	}
 	
-	
 	@Test
 	public void test_setID() {
 		String message = "Failed to setID() to \"snck123";
-	snack1.setID("snck123");
-		assertEquals(message, "snck123", snack1.getID());
+		snack1.setID();
+		assertEquals(message, 4.00, snack1.getID());
 	}
 	
-	/*
 	@Test (expected = DuplicateIDException.class)
 	public void test_validateIDwithDuplicateID() {
 		Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snck003");
@@ -99,6 +96,6 @@ public class SnackTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void test_ConstructorPriceValidation(){
 			Snack orange = new Snack("Orange", "Small boy", -1.00, "snck004");
-	} 
-	*/
+	}
+
 }
