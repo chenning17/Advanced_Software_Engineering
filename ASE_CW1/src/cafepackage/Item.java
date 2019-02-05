@@ -1,6 +1,5 @@
-package menupackage;
+package cafepackage;
 
 public abstract class Item {
-	
 
 }
