@@ -105,6 +105,6 @@ public abstract class Item {
 	 * Called in constructor of inheriting class, returns true if input id to constructor is valid 
 	 * @return
 	 */
-	public abstract boolean validateID();
+	protected abstract boolean validateID();
 
 }
