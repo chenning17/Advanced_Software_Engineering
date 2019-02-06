@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import cafepackage.Drink;
 import cafepackage.DuplicateIDException;
 import cafepackage.InvalidIDException;
 import cafepackage.Food;
@@ -14,7 +15,11 @@ public class FoodTest {
 
 	@Before
 	public void setUp() {
-		food1 = new Food("Panini", "Ham and cheese", 4.45, "food001");
+		try {
+			food1 = new Food("Panini", "Ham and cheese", 4.45, "food001");
+		} catch (DuplicateIDException | InvalidIDException e) {
+			fail();
+		}
 	}
 
 	@Test
@@ -69,30 +74,61 @@ public class FoodTest {
 		assertEquals(message, "food123", food1.getID());
 	}
 	
-
-	@Test (expected = DuplicateIDException.class)
+	//for tests using constructors, need to do them this way instead of with "(expected = ...)"
+	//because there are 2 exceptions the constructor can throw that need to be handled
+	@Test
 	public void test_validateIDwithDuplicateID() {
-		Food sandwich = new Food("Sandwich", "Pickle", 5.00, "food003");
-		Food chips = new Food("Chips", "Very salty", 3.00, "food003");
+		try {
+			Food sandwich = new Food("Sandwich", "Pickle", 5.00, "food003");
+			Food chips = new Food("Chips", "Very salty", 3.00, "food003");
+		} catch (DuplicateIDException e) {
+			assertTrue(e.getMessage().contains("snck003"));
+		} catch (InvalidIDException e) {
+			fail();
+		}
 	}
-	
-	@Test (expected = InvalidIDException.class)
+
+	@Test
 	public void test_validateIDwithInvalidIDNotEnoughNumbers() {
-		Food sandwich = new Food("Sandwich", "Pickle", 5.00, "food00");
+		try {
+			Food sandwich = new Food("Sandwich", "Pickle", 5.00, "food00");
+		} catch (InvalidIDException e) {
+			assertTrue(e.getMessage().contains("food00"));
+		} catch (DuplicateIDException e) {
+			fail();
+		}
 	}
 	
 	@Test (expected = InvalidIDException.class)
 	public void test_validateIDwithInvalidIDTooManyNumbers() {
-		Food sandwich = new Food("Sandwich", "Pickle", 5.00, "food0000");
+		try {
+			Food sandwich = new Food("Sandwich", "Pickle", 5.00, "food0000");
+		} catch (InvalidIDException e) {
+			assertTrue(e.getMessage().contains("food0000"));
+		} catch (DuplicateIDException e) {
+			fail();
+		}
 	}
 	
 	@Test (expected = InvalidIDException.class)
 	public void test_validateIDwithInvalidIDCharactersNotNumbers() {
-		Food sandwich = new Food("Sandwich", "Pickle", 5.00, "foodaaa");
+		try {
+			Food sandwich = new Food("Sandwich", "Pickle", 5.00, "foodaaa");
+		} catch (InvalidIDException e) {
+			assertTrue(e.getMessage().contains("foodaaa"));
+		} catch (DuplicateIDException e) {
+			fail();
+		}
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
-	public void test_ConstructorPriceValidation(){
-		Food sandwich = new Food("Sandwich", "Pickle", -5.00, "food004");
+	public void test_ConstructorPriceValidation() {
+		try {
+			Food sandwich = new Food("Sandwich", "Pickle", -5.00, "food004");
+		} catch (InvalidIDException e) {
+			fail();
+		} catch (DuplicateIDException e) {
+			fail();
+		}
 	}
 }

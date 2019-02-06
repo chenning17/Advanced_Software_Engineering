@@ -14,7 +14,7 @@ public abstract class Item {
 	 * @param cost float representing item's cost
 	 * @param id string representing item's id
 	 */
-	public Item(String name, String description, double cost, String id) {
+	public Item(String name, String description, double cost, String id) throws InvalidIDException, DuplicateIDException {
 		this.setName(name);
 		this.setDescription(description);
 		this.setCost(cost);

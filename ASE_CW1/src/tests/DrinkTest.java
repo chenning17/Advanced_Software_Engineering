@@ -14,7 +14,11 @@ public class DrinkTest {
 
 	@Before
 	public void setUp() {
-		drink1 = new Drink("Apple Juice", "Still", 1.20, "drnk001");
+		try {
+			drink1 = new Drink("Apple Juice", "Still", 1.20, "drnk001");
+		} catch (DuplicateIDException | InvalidIDException e) {
+			fail();
+		}
 	}
 
 	@Test
@@ -69,31 +73,61 @@ public class DrinkTest {
 		assertEquals(message, "drnk123", drink1.getID());
 	}
 	
-	/*
-	@Test (expected = DuplicateIDException.class)
+	//for tests using constructors, need to do them this way instead of with "(expected = ...)"
+	//because there are 2 exceptions the constructor can throw that need to be handled
+	@Test
 	public void test_validateIDwithDuplicateID() {
-		Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnk003");
-		Drink Milkshake = new Drink("Milkshake", "Chocolate", 3.00, "drnk003");
+		try {
+			Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnk003");
+			Drink Milkshake = new Drink("Milkshake", "Chocolate", 3.00, "drnk003");
+		} catch (DuplicateIDException e) {
+			assertTrue(e.getMessage().contains("drnk003"));
+		} catch (InvalidIDException e) {
+			fail();
+		}
 	}
 	
-	@Test (expected = InvalidIDException.class)
+	@Test
 	public void test_validateIDwithInvalidIDNotEnoughNumbers() {
-		Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnk00");
+		try {
+			Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnk00");
+		} catch (InvalidIDException e) {
+			assertTrue(e.getMessage().contains("drnk00"));
+		} catch (DuplicateIDException e) {
+			fail();
+		}
 	}
 	
 	@Test (expected = InvalidIDException.class)
 	public void test_validateIDwithInvalidIDTooManyNumbers() {
-		Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnk0000");
+		try {
+			Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnk0000");
+		} catch (InvalidIDException e) {
+			assertTrue(e.getMessage().contains("drnk0000"));
+		} catch (DuplicateIDException e) {
+			fail();
+		}
 	}
 	
 	@Test (expected = InvalidIDException.class)
 	public void test_validateIDwithInvalidIDCharactersNotNumbers() {
-		Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnkaaa");
+		try {
+			Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnkaaa");
+		} catch (InvalidIDException e) {
+			assertTrue(e.getMessage().contains("drnkaaa"));
+		} catch (DuplicateIDException e) {
+			fail();
+		}
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
-	public void test_ConstructorPriceValidation(){
-		Drink smoothie = new Drink("Smoothie", "Blueberry", -1.00, "drnk003");
+	public void test_ConstructorPriceValidation() {
+		try {
+			Drink smoothie = new Drink("Smoothie", "Blueberry", -1.00, "drnk003");
+		} catch (InvalidIDException e) {
+			fail();
+		} catch (DuplicateIDException e) {
+			fail();
+		}
 	}
-   */
 }
