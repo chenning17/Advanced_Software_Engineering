@@ -68,4 +68,31 @@ public class OrderTest {
 		String message3 = "Failed for item of type drink";
 		assertEquals(message3, item3, order3.getItem());
 	}
+	
+	//Tests constructor when null is passed instead of an item object
+	@Test (expected = IllegalArgumentException.class)
+	public void test_constructor_nullItem() {
+		Date testDate = new Date();
+		int testCustomerId = 1;
+		
+		Order order1 = new Order(testDate, testCustomerId, null);
+	}
+	
+	//Tests constructor when null is passed instead of a date object
+	@Test (expected = IllegalArgumentException.class)
+	public void test_constructor_nullDate() {
+		Item testItem = new Food();
+		int testCustomerId = 1;
+		
+		Order order1 = new Order(null, testCustomerId, testItem);
+	}
+	
+	//Tests constructor when an invalid customer id (negative number) is passed
+	@Test (expected = IllegalArgumentException.class)
+	public void test_constructor_invalidCustomerId() {
+		Date testDate = new Date();
+		Item testItem = new Food();
+		
+		Order order1 = new Order(testDate, -1, testItem);
+	}
 }
