@@ -44,5 +44,4 @@ public class Food extends Item {
 	private boolean isDuplicateID() {
 		return false;
 	}
-
 }
