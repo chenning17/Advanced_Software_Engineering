@@ -5,45 +5,39 @@ import java.util.Set;
 
 public class Food extends Item {
 
-	private static Set<String> idList = new HashSet<String>();
+	private static HashSet<String> idList = new HashSet<String>();
+	private static final String itemIdentifier = "food";
 		
+	/**
+	 * Food item constructor, will raise DuplicateID or InvalidID Exceptions if
+	 * input id is incorrect, will raise an IllegalArgumentException if cost is a
+	 * negative value.
+	 * 
+	 * @param name
+	 *            food item's name
+	 * @param description
+	 *            brief description of food item
+	 * @param cost
+	 *            food item's cost
+	 * @param id
+	 *            string containing food item's id
+	 * @throws DuplicateIDException
+	 *             if id already exists in idList
+	 * @throws InvalidIDException
+	 *             if id is of an incorrect format
+	 */
 	public Food(String name, String description, double cost, String id)
 			throws DuplicateIDException, InvalidIDException {
+
 		super(name, description, cost, id);
 
-		try {
-			if (validateID(id) == false) {
-				throw new InvalidIDException(id);
-			} 
-			else if (isDuplicateID(id) == true) {
-				throw new DuplicateIDException(id);
-			}
-			
-			idList.add(id);
-		} 
-		catch (InvalidIDException invalid) {
-			System.out.println(invalid.getMessage());
-		} 
-		catch (DuplicateIDException duplicate) {
-			System.out.println(duplicate.getMessage());
+		if (validateID(id, itemIdentifier) == false) {
+			throw new InvalidIDException(id);
+		} else if (isDuplicateID(id, idList) == true) {
+			throw new DuplicateIDException(id);
 		}
 
+		idList.add(id);
 	}
 
-	//TODO implement validation function
-	@Override
-	protected boolean validateID(String id) {
-		return false;
-	}
-	
-	/**
-	 * Returns true if ID is already found in the idList HashSet, returns false otherwise. 
-	 * @return
-	 */
-	private boolean isDuplicateID(String id) {
-		if(idList.contains(id)) {
-			return true;
-		}
-		return false;
-	}
 }

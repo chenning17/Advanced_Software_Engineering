@@ -20,16 +20,9 @@ public class SnackTest {
 		try {
 			snack1get = new Snack("Apple", "Granny smith", 1.20, "snck001");
 			snack1set = new Snack("Apple", "Granny smith", 1.20, "snck002");
-System.out.println(snack1get.getCost() + ", " + snack1get.getDescription() 
-+ ", " + snack1get.getID()+ ", " + snack1get.getName() + ", " + snack1get.getClass());
 		} catch (DuplicateIDException | InvalidIDException e) {
 			fail();
 		}
-	}
-	
-	@Before
-	public void setUp() {
-	
 	}
 	
 	@Test
@@ -79,8 +72,7 @@ System.out.println(snack1get.getCost() + ", " + snack1get.getDescription()
 		String message = "Failed to getID() for id of \"snck001\"";
 		assertEquals(message, "snck001", snack1get.getID());
 	}
-	
-	
+		
 	@Test
 	public void test_setID() {
 		String message = "Failed to setID() to \"snck123";
