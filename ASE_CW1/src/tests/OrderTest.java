@@ -39,12 +39,12 @@ public class OrderTest {
 		int customerId1 = 1;
 		Order order1 = new Order(testDate, customerId1, testItem);
 		String message1 = "Failed for customer id: 1";
-		assertEquals(message1, testDate, order1.getCustomerId());
+		assertEquals(message1, customerId1, order1.getCustomerId());
 		
 		int customerId2 = 99;
 		Order order2 = new Order(testDate, customerId2, testItem);
 		String message2 = "Failed for customer id: 99";
-		assertEquals(message2, testDate, order2.getCustomerId());	
+		assertEquals(message2, customerId2, order2.getCustomerId());	
 	}
 	
 	//Tests method to return item stored within the order. Returned object will be a subclass of item
@@ -64,7 +64,7 @@ public class OrderTest {
 		assertEquals(message2, item2, order2.getItem());
 		
 		Item item3 = new Drink();
-		Order order3 = new Order(testDate, testCustomerId, item2);
+		Order order3 = new Order(testDate, testCustomerId, item3);
 		String message3 = "Failed for item of type drink";
 		assertEquals(message3, item3, order3.getItem());
 	}
