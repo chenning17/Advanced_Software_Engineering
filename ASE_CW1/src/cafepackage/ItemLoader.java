@@ -1,8 +1,8 @@
 package cafepackage;
 
 public class ItemLoader extends FileInput {
-	ItemCollection menu;
-	String file;
+	private ItemCollection menu;
+	private String file;
 	
 	public ItemLoader(String filename) {
 		this.file = filename;
@@ -12,8 +12,7 @@ public class ItemLoader extends FileInput {
 	
 	public ItemCollection loadItems() {
 		inputFile(this.file);
-		return this.menu;
-		
+		return this.menu;	
 	}
 
 	/**

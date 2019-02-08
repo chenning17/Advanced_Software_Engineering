@@ -28,5 +28,21 @@ public class ItemCollection implements Iterable<Item> {
 	public Iterator<Item> iterator() {
 		return itemCollection.iterator();
 	}
+	
+	/**
+	 * Search for an item in collection by id
+	 * @param id of item to look for
+	 * @return item if it is found, otherwise null
+	 */
+	public Item findItemById(String id) {
+		Iterator<Item> iterator = itemCollection.iterator();
+		while(iterator.hasNext()) {
+			Item item = iterator.next();
+			if(item.getID().equals(id)) {
+				return item;
+			}	
+		}
+		return null;
+	}
 
 }
