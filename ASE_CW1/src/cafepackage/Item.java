@@ -2,7 +2,7 @@ package cafepackage;
 
 import java.util.HashSet;
 
-public abstract class Item implements Comparable<Item> {
+public abstract class Item {
 
 	private String name;
 	private String description;
@@ -206,10 +206,6 @@ public abstract class Item implements Comparable<Item> {
 			}
 		}
 		return false;
-	}
-	
-	public int compareTo(Item other) {
-		return this.id.compareTo(other.id);
 	}
 
 }
