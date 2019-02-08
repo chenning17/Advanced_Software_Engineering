@@ -14,7 +14,13 @@ public abstract class Item {
 	 * @param cost float representing item's cost
 	 * @param id string representing item's id
 	 */
-	public Item(String name, String description, double cost, String id) throws InvalidIDException, DuplicateIDException {
+	public Item(String name, String description, double cost, String id) 
+			throws InvalidIDException, DuplicateIDException, IllegalArgumentException {
+		
+		if(cost<0) {
+			throw new IllegalArgumentException("Price must have a positive value");
+		}
+		
 		this.setName(name);
 		this.setDescription(description);
 		this.setCost(cost);
@@ -105,6 +111,6 @@ public abstract class Item {
 	 * Called in constructor of inheriting class, returns true if input id to constructor is valid 
 	 * @return
 	 */
-	protected abstract boolean validateID();
+	protected abstract boolean validateID(String id);
 
 }

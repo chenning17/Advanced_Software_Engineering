@@ -12,10 +12,10 @@ public class Food extends Item {
 		super(name, description, cost, id);
 
 		try {
-			if (validateID() == false) {
+			if (validateID(id) == false) {
 				throw new InvalidIDException(id);
 			} 
-			else if (isDuplicateID() == true) {
+			else if (isDuplicateID(id) == true) {
 				throw new DuplicateIDException(id);
 			}
 			
@@ -32,16 +32,18 @@ public class Food extends Item {
 
 	//TODO implement validation function
 	@Override
-	protected boolean validateID() {
+	protected boolean validateID(String id) {
 		return false;
 	}
 	
 	/**
-	 * Returns true if ID is already found in the idList HashSet.
+	 * Returns true if ID is already found in the idList HashSet, returns false otherwise. 
 	 * @return
 	 */
-	// TODO implement isDuplicateIDs function
-	private boolean isDuplicateID() {
+	private boolean isDuplicateID(String id) {
+		if(idList.contains(id)) {
+			return true;
+		}
 		return false;
 	}
 }
