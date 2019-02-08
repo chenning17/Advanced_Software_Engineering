@@ -1,5 +1,7 @@
 package cafepackage;
 
+import java.util.Iterator;
+
 public class Manager {
 	private ItemCollection menu;
 	private OrderCollection orders;
@@ -13,8 +15,9 @@ public class Manager {
 	public void run() {
 		System.out.println("Inputting Items");
 		ItemLoader itemLoader = new ItemLoader("Menu.csv");
-		itemLoader.loadItems();
-		for (Item i : menu) {
+		this. menu = itemLoader.loadItems();
+		System.out.println("Printing names");
+		for (Item i : this.menu) {
 			System.out.println(i.getName());
 		}
 		
