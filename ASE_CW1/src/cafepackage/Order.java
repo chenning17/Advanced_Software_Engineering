@@ -6,9 +6,9 @@ public class Order {
 
 	private Date timeStamp;
 	private int customerId;
-	private Item orderItem;
-	
-	public Order(Date timeStamp, int customerId, Item orderItem) {
+	private String orderItem;
+	//changed orderItem to string (above and below)
+	public Order(Date timeStamp, int customerId, String orderItem) {
 		
 		//Check valid parameters have been passed
 		if(timeStamp == null) {
@@ -34,8 +34,9 @@ public class Order {
 	public int getCustomerId() {
 		return this.customerId;
 	}
-
-	public Item getItem() {
+	
+	//changed to string
+	public String getItem() {
 		return this.orderItem;
 	}
 

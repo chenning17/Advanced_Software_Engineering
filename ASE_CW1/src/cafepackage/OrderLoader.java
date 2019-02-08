@@ -19,7 +19,7 @@ public class OrderLoader extends FileInput {
 			String orderID = parts[2]; //error- should be Item not String
 			
 
-			Order order = new Order(timestamp,customerID,orderID);
+			Order order = new Order(timestamp, customerID, orderID);
 			orderCollection.add(order);
 			
 		}

@@ -1,6 +1,20 @@
 package cafepackage;
 
 public class ItemLoader extends FileInput {
+	ItemCollection menu;
+	String file;
+	
+	public ItemLoader(String filename) {
+		this.file = filename;
+		this.menu = new ItemCollection();		
+	}
+
+	
+	public ItemCollection loadItems() {
+		inputFile(this.file);
+		return this.menu;
+		
+	}
 
 	/**
 	 * Process the lines for the Menu file, checking item categories
@@ -8,7 +22,6 @@ public class ItemLoader extends FileInput {
 	@Override
 	protected void processLine(String inputLine) {
 
-		ItemCollection itemCollection = new ItemCollection(); 
 		Item item = null;
 		
 		try {
@@ -20,26 +33,26 @@ public class ItemLoader extends FileInput {
 			double cost = Double.parseDouble(parts[3]);
 
 			//Checks if the item is a snack 
-			if(id.startsWith("SNCK")) {
+			if(id.startsWith("snck")) {
 				item = new Snack(name,description,cost,id);
 			}
 
 			//checks if the item is in the food category
-			if(id.startsWith("FOOD")) {
+			if(id.startsWith("food")) {
 				item = new Food(name,description,cost,id);			
 			}
 
 			//checks if the item is in the drink category
-			if(id.startsWith("DRNK")) {
+			if(id.startsWith("drnk")) {
 				item = new Drink(name,description,cost,id);						
 			}
 
 			//checks if the item is in the discount category
-			if(id.startsWith("DISC")) {
+			if(id.startsWith("disc")) {
 				item = new Discount(name,description,cost,id);			
 			}
 
-			itemCollection.add(item);
+			this.menu.add(item);
 
 		}
 		catch (Exception e) {

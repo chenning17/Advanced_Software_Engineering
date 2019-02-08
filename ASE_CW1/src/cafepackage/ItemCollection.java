@@ -28,4 +28,5 @@ public class ItemCollection implements Iterable<Item> {
 	public Iterator<Item> iterator() {
 		return itemCollection.iterator();
 	}
+
 }
