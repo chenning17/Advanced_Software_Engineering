@@ -32,6 +32,12 @@ public class Manager {
 		OrderLoader orderLoader = new OrderLoader(orderFile, this.menu);
 		this.orders = orderLoader.loadOrders();
 		
+		try {
+			cafeGUI frame = new cafeGUI(this.menu);
+			frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 }
