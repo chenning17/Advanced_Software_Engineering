@@ -1,6 +1,7 @@
 package cafepackage;
 
-import java.sql.Date;
+import java.util.Date;
+import java.time.Instant;
 
 public class OrderLoader extends FileInput {
 	private OrderCollection orders;
@@ -10,7 +11,7 @@ public class OrderLoader extends FileInput {
 	public OrderLoader(String filename, ItemCollection Menu) {
 		this.orders = new OrderCollection();
 		this.file = filename;
-		this.menu = menu;
+		this.menu = Menu;
 	}
 	
 	public OrderCollection loadOrders() {
@@ -28,9 +29,12 @@ public class OrderLoader extends FileInput {
 		try {
 			String parts [] = inputLine.split(",");
 
-			Date timestamp = Date.valueOf(parts[0]);	
+			Instant time = Instant.parse(parts[0]);
+			Date timestamp = Date.from(time);
+//		    Instant.
+//			Date timestamp = Date.UTC(year, month, date, hrs, min, sec)
 			int customerID = Integer.parseInt(parts[1]);
-			String itemId = parts[2]; //error- should be Item not String
+			String itemId = parts[2];
 			Item item = this.menu.findItemById(itemId);
 			
 			
