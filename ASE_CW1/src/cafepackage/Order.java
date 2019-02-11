@@ -7,7 +7,7 @@ public class Order {
 	private Date timeStamp;
 	private int customerId;
 	private Item orderItem;
-	
+	//changed orderItem to string (above and below)
 	public Order(Date timeStamp, int customerId, Item orderItem) {
 		
 		//Check valid parameters have been passed
@@ -34,7 +34,8 @@ public class Order {
 	public int getCustomerId() {
 		return this.customerId;
 	}
-
+	
+	//changed to string
 	public Item getItem() {
 		return this.orderItem;
 	}

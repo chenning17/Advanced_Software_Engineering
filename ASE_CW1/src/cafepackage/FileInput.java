@@ -21,6 +21,8 @@ public abstract class FileInput {
 					processLine(inputLine);
 				}
 			}
+			
+			scanner.close();
 		}
 
 
