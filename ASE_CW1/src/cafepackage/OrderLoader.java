@@ -31,8 +31,6 @@ public class OrderLoader extends FileInput {
 
 			Instant time = Instant.parse(parts[0]);
 			Date timestamp = Date.from(time);
-//		    Instant.
-//			Date timestamp = Date.UTC(year, month, date, hrs, min, sec)
 			int customerID = Integer.parseInt(parts[1]);
 			String itemId = parts[2];
 			Item item = this.menu.findItemById(itemId);
