@@ -7,16 +7,23 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.DefaultListModel;
 
-public class cafeGUI extends JFrame {
+public class cafeGUI extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private JTextField textField;
 	private ItemCollection menu;
+	private JButton btnAdd;
+	private DefaultListModel<Item> menuListModel;
+	private JList<Item> menuList;
+	private DefaultListModel<Item> orderListModel;
+	private JList<Item> currentOrder;
 
 	/**
 	 * Launch the application.
@@ -40,10 +47,12 @@ public class cafeGUI extends JFrame {
 	public cafeGUI(ItemCollection menu) {
 		this.menu = menu;
 
-		DefaultListModel<Item> listModel = new DefaultListModel<Item>();
+		this.menuListModel = new DefaultListModel<Item>();
 		for(Item item : this.menu) {
-			listModel.addElement(item);
+			this.menuListModel.addElement(item);
 		}
+		
+		this.orderListModel = new DefaultListModel<Item>();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 566, 384);
@@ -52,22 +61,43 @@ public class cafeGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JList<Item> menuList = new JList<>(listModel);
+		this.menuList = new JList<>(this.menuListModel);
 		contentPane.add(menuList);
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel);
 		
-		JButton btnAdd = new JButton("Add");
-		panel.add(btnAdd);
+		this.btnAdd = new JButton("Add");
+		this.btnAdd.addActionListener(this);
+		panel.add(this.btnAdd);
 		
 		JButton btnCreateOrder = new JButton("Create Order");
 		panel.add(btnCreateOrder);
 		
-		textField = new JTextField();
-		contentPane.add(textField);
-		textField.setColumns(10);
+		this.currentOrder = new JList<Item>(this.orderListModel);
+		contentPane.add(currentOrder);
 
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == this.btnAdd) {
+			addButtonPressed();
+		}
+		
+	}
+	/**
+	 * Loops through selected items and adds them to the list on the right of the screen
+	 */
+	private void addButtonPressed() {
+		//System.out.println("You pressed the add button");
+		
+		int[] indices = menuList.getSelectedIndices();
+		if (indices.length != 0) {
+			for (int i : indices) {
+				Item selected = this.menuListModel.getElementAt(i);
+				this.orderListModel.addElement(selected);
+			}
+		}
 	}
 
 }
