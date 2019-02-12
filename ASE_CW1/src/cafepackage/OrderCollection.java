@@ -2,7 +2,7 @@ package cafepackage;
 
 import java.util.*;
 
-public class OrderCollection {
+public class OrderCollection implements Iterable<Item> {
 
 	private ArrayList<Order> orderCollection;
 
