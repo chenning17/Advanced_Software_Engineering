@@ -3,6 +3,7 @@ package cafepackage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -36,6 +37,7 @@ public class Manager {
 		GenerateReport();
 	}
 	
+	//When should this be called
 	void GenerateReport() {
 		
 		BufferedWriter writer = null;
@@ -64,6 +66,12 @@ public class Manager {
 			}catch(Exception ex) {
 				//Do nothing
 			}
+		}
+	}
+	
+	public void addOrder(ArrayList<Order> newOrders) {
+		for(Order newOrder:newOrders) {
+			this.orders.add(newOrder);
 		}
 	}
 }
