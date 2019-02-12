@@ -26,6 +26,7 @@ public class cafeGUI extends JFrame implements ActionListener {
 	private JButton btnAdd;
 	private JButton btnCreateOrder;
 	private JButton btnGenReport;
+	private JTextField totalPrice;
 	private DefaultListModel<Item> menuListModel;
 	private JList<Item> menuList;
 	private DefaultListModel<Item> orderListModel;
@@ -91,6 +92,10 @@ public class cafeGUI extends JFrame implements ActionListener {
 		this.btnGenReport.addActionListener(this);
 		panel.add(btnGenReport);
 		
+		this.totalPrice = new JTextField();
+		panel.add(totalPrice);
+		updateTotalPrice();
+		
 		this.currentOrder = new JList<Item>(this.orderListModel);
 		contentPane.add(currentOrder);
 
@@ -137,6 +142,7 @@ public class cafeGUI extends JFrame implements ActionListener {
 				this.orderListModel.addElement(selected);
 			}
 		}
+		updateTotalPrice();
 	}
 	
 	/**
@@ -144,6 +150,20 @@ public class cafeGUI extends JFrame implements ActionListener {
 	 */
 	private void generateReport() {
 		this.manager.generateReport();
+	}
+	
+	private void updateTotalPrice() {
+		//TODO: Calculate discounts and update cart
+		totalPrice.setText(String.format("Total price: %.2f", calculateTotalPrice()));
+	}
+	
+	private double calculateTotalPrice() {
+		double price = 0.0;
+		for (int i = 0 ; i < orderListModel.size(); i++) {
+			Item item = orderListModel.getElementAt(i);
+			price += item.getCost();
+		}
+		return price;
 	}
 
 }
