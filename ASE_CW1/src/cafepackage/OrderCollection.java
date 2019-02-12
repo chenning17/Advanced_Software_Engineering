@@ -36,9 +36,6 @@ public class OrderCollection implements Iterable<Order> {
 	
 	public HashMap<Item, Integer> getItemFreq(ItemCollection menu) {
 		
-		//this.menu = new ItemCollection();
-		//this.orders = new OrderCollection();
-		
 		HashMap<Item,Integer> itemCounts = new HashMap<Item,Integer>();
 		for(Item i : menu) {
 			itemCounts.put(i,0);
@@ -53,9 +50,8 @@ public class OrderCollection implements Iterable<Order> {
 			itemCounts.put(currentItem,counts+1);
 		}
 		
-		return itemCounts;
-		 
-		
+		return itemCounts;	
+	}
+
 		
 	}
-}
