@@ -33,7 +33,7 @@ public class Manager {
 		this.orders = orderLoader.loadOrders();
 		
 		try {
-			cafeGUI frame = new cafeGUI(this.menu);
+			cafeGUI frame = new cafeGUI(this.menu, this); //create gui giving it a menu and the manager itself
 			frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
