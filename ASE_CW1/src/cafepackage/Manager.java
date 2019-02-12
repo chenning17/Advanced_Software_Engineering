@@ -40,12 +40,10 @@ public class Manager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		GenerateReport();
 	}
 	
 	//When should this be called
-	void GenerateReport() {
+	public void generateReport() {
 		
 		BufferedWriter writer = null;
 		
