@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class Manager {
@@ -37,10 +38,22 @@ public class Manager {
 		GenerateReport();
 	}
 	
+	
+	
 	//When should this be called
 	void GenerateReport() {
 		
 		BufferedWriter writer = null;
+			
+		HashMap<Item,Integer> itemCounts = this.orders.getItemFreq(this.menu);
+		
+		for(HashMap.Entry<Item,Integer> entry : itemCounts.entrySet()) {
+			System.out.println("Item: " +entry.getKey().getName() + ", Count: " + entry.getValue());
+			System.out.println("Cost: " +entry.getKey().getCost() + ", Total Item Cost: £" + entry.getKey().getCost()*entry.getValue());
+			System.out.println();
+			
+		}
+
 		
 		//Code based on answers at: https://stackoverflow.com/questions/2885173/how-do-i-create-a-file-and-write-to-it-in-java
 		try {
@@ -56,6 +69,8 @@ public class Manager {
 				writer.write("\n");
 			}
 			
+			
+		
 			
 			System.out.println("Report saved!");
 		}catch(java.io.IOException ioe) {

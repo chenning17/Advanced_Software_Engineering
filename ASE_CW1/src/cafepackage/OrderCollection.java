@@ -6,6 +6,7 @@ public class OrderCollection implements Iterable<Order> {
 
 	private ArrayList<Order> orderCollection;
 
+
 	/**
 	 * Default Constructor
 	 */
@@ -31,5 +32,30 @@ public class OrderCollection implements Iterable<Order> {
 	
 	public int count() {
 		return orderCollection.size();
+	}
+	
+	public HashMap<Item, Integer> getItemFreq(ItemCollection menu) {
+		
+		//this.menu = new ItemCollection();
+		//this.orders = new OrderCollection();
+		
+		HashMap<Item,Integer> itemCounts = new HashMap<Item,Integer>();
+		for(Item i : menu) {
+			itemCounts.put(i,0);
+		}
+		
+		for(Order o : this.orderCollection) {
+		
+			Item currentItem = o.getItem();
+			
+			int counts = itemCounts.get(currentItem);
+			
+			itemCounts.put(currentItem,counts+1);
+		}
+		
+		return itemCounts;
+		 
+		
+		
 	}
 }
