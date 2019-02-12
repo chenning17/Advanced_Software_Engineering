@@ -127,7 +127,8 @@ public class cafeGUI extends JFrame implements ActionListener {
 			newOrder.add(order);
 		}
 		this.manager.addOrder(newOrder);
-		//TODO: Clear basket when order submitted in GUI
+		this.orderListModel.removeAllElements();
+		updateTotalPrice();
 	}
 
 	/**
