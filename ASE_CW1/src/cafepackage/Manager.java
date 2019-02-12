@@ -54,12 +54,12 @@ public class Manager {
 			String filename = "output.txt";
 			File outputFile = new File(filename);
 			writer = new BufferedWriter(new FileWriter(outputFile));
-			writer.write("Customer id\tItem\tDate\t\n");
+			writer.write(String.format("%-15s\t%-25s\t%-30s\t\n", "Customer id", "Item", "Date"));
 			
 			for(Order o : this.orders) {
-				writer.write(o.getCustomerId() + "\t");
-				writer.write(o.getItem().getName() + "\t");
-				writer.write(o.getTimestamp().toString() + "\t");
+				writer.write(String.format("%-15s\t", "" + o.getCustomerId()));
+				writer.write(String.format("%-25s\t", o.getItem().getName()));
+				writer.write(String.format("%-30s\t", o.getTimestamp().toString()));
 				writer.write("\n");
 			}
 			
@@ -74,11 +74,6 @@ public class Manager {
 				//Do nothing
 			}
 		}
-	}
-	
-	public static void main(String[] args) {
-		Manager manager = new Manager();
-		manager.run();
 	}
 }
 
