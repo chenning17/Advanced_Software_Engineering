@@ -3,6 +3,7 @@ package cafepackage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.Date;
 import java.util.Iterator;
 
 public class Manager {
@@ -51,7 +52,7 @@ public class Manager {
 		
 		//Code based on answers at: https://stackoverflow.com/questions/2885173/how-do-i-create-a-file-and-write-to-it-in-java
 		try {
-			String filename = "output.txt";
+			String filename = "Report "+ new Date().toString().substring(0, 10) + ".txt";
 			File outputFile = new File(filename);
 			writer = new BufferedWriter(new FileWriter(outputFile));
 			writer.write(String.format("%-15s\t%-25s\t%-30s\t\n", "Customer id", "Item", "Date"));
