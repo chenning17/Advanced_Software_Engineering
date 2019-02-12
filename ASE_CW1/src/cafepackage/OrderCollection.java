@@ -2,7 +2,7 @@ package cafepackage;
 
 import java.util.*;
 
-public class OrderCollection {
+public class OrderCollection implements Iterable<Order> {
 
 	private ArrayList<Order> orderCollection;
 
@@ -27,5 +27,9 @@ public class OrderCollection {
 	 */
 	public Iterator<Order> iterator() {
 		return orderCollection.iterator();
+	}
+	
+	public int count() {
+		return orderCollection.size();
 	}
 }
