@@ -32,8 +32,15 @@ public class Manager {
 		OrderLoader orderLoader = new OrderLoader(orderFile, this.menu);
 		this.orders = orderLoader.loadOrders();
 		
-		System.out.println("---\nOrders loaded: " + this.orders.count());
-		
+    System.out.println("---\nOrders loaded: " + this.orders.count());
+    
+		try {
+			cafeGUI frame = new cafeGUI(this.menu, this); //create gui giving it a menu and the manager itself
+			frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		GenerateReport();
 	}
 	
