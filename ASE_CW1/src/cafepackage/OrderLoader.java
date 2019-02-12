@@ -23,9 +23,6 @@ public class OrderLoader extends FileInput {
 	@Override
 	protected void processLine(String inputLine) {
 		
-
-		OrderCollection orderCollection = new OrderCollection(); 
-		
 		try {
 			String parts [] = inputLine.split(",");
 
@@ -38,7 +35,7 @@ public class OrderLoader extends FileInput {
 			
 
 			Order order = new Order(timestamp, customerID, item);
-			orderCollection.add(order);
+			this.orders.add(order);
 			
 		}
 		catch (Exception e) {
