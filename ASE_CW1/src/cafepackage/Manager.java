@@ -40,8 +40,6 @@ public class Manager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		generateReport();
 	}
 	
 	//When should this be called
