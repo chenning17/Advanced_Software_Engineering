@@ -44,5 +44,9 @@ public class ItemCollection implements Iterable<Item> {
 		}
 		return null;
 	}
+	
+	public int count() {
+		return itemCollection.size();
+	}
 
 }

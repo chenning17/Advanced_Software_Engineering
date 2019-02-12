@@ -22,13 +22,8 @@ public class Manager {
 		System.out.println("Inputting Items from: " + menuFile);
 		ItemLoader itemLoader = new ItemLoader(menuFile);
 		this.menu = itemLoader.loadItems();
-		//System.out.println("Printing names");
-		int count = 0;
-		for (Item i : this.menu) {
-			count++;
-			//System.out.println(i.getName());
-		}
-		System.out.println("---\nItems loaded into menu: " + count);
+
+		System.out.println("---\nItems loaded into menu: " + this.menu.count());
 		
 		//load orders from csv, ...
 		String orderFile = "OrderList.csv";
@@ -36,12 +31,7 @@ public class Manager {
 		OrderLoader orderLoader = new OrderLoader(orderFile, this.menu);
 		this.orders = orderLoader.loadOrders();
 		
-		int orderCount = 0;
-		for (Order o : this.orders) {
-			orderCount++;
-			//System.out.println(i.getName());
-		}
-		System.out.println("---\nOrders loaded: " + orderCount);
+		System.out.println("---\nOrders loaded: " + this.orders.count());
 		
 		GenerateReport();
 	}

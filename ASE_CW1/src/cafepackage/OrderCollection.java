@@ -28,4 +28,8 @@ public class OrderCollection implements Iterable<Order> {
 	public Iterator<Order> iterator() {
 		return orderCollection.iterator();
 	}
+	
+	public int count() {
+		return orderCollection.size();
+	}
 }
