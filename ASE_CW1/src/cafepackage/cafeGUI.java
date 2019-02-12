@@ -25,6 +25,7 @@ public class cafeGUI extends JFrame implements ActionListener {
 	private ItemCollection menu;
 	private JButton btnAdd;
 	private JButton btnCreateOrder;
+	private JButton btnGenReport;
 	private DefaultListModel<Item> menuListModel;
 	private JList<Item> menuList;
 	private DefaultListModel<Item> orderListModel;
@@ -86,6 +87,10 @@ public class cafeGUI extends JFrame implements ActionListener {
 		this.btnCreateOrder.addActionListener(this);
 		panel.add(btnCreateOrder);
 		
+		this.btnGenReport = new JButton("Generate Report");
+		this.btnGenReport.addActionListener(this);
+		panel.add(btnGenReport);
+		
 		this.currentOrder = new JList<Item>(this.orderListModel);
 		contentPane.add(currentOrder);
 
@@ -94,14 +99,19 @@ public class cafeGUI extends JFrame implements ActionListener {
 	//listener for buttons being pressed
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.btnAdd) {
-			addButtonPressed();
+			addToCart();
 		}
 		else if (e.getSource() == this.btnCreateOrder) {
-			createOrderButtonPressed();
+			submitOrder();
+		}else if(e.getSource() == this.btnGenReport) {
+			generateReport();
 		}
 	}
 	
-	private void createOrderButtonPressed() {
+	/**
+	 * Submits items in cart to manager as a new order
+	 */
+	private void submitOrder() {
 		ArrayList<Order> newOrder = new ArrayList<Order>();
 		//System.out.println("Create order button pressed");
 		int customerID = Order.getCurrentCustomerID();
@@ -111,13 +121,14 @@ public class cafeGUI extends JFrame implements ActionListener {
 			Order order = new Order(date, customerID, item);
 			newOrder.add(order);
 		}
-		//pass to manager here
+		this.manager.addOrder(newOrder);
+		//TODO: Clear basket when order submitted in GUI
 	}
 
 	/**
 	 * Loops through selected items and adds them to the list on the right of the screen
 	 */
-	private void addButtonPressed() {
+	private void addToCart() {
 		
 		int[] indices = menuList.getSelectedIndices(); //get indices of selected items
 		if (indices.length != 0) {
@@ -126,6 +137,13 @@ public class cafeGUI extends JFrame implements ActionListener {
 				this.orderListModel.addElement(selected);
 			}
 		}
+	}
+	
+	/**
+	 * Tells manager to generate a new report
+	 */
+	private void generateReport() {
+		this.manager.generateReport();
 	}
 
 }

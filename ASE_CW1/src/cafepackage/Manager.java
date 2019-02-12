@@ -41,11 +41,11 @@ public class Manager {
 			e.printStackTrace();
 		}
 
-		GenerateReport();
+		generateReport();
 	}
 	
 	//When should this be called
-	void GenerateReport() {
+	public void generateReport() {
 		
 		BufferedWriter writer = null;
 		
