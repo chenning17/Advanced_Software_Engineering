@@ -53,28 +53,28 @@ public class Manager {
 			String filename = "Report " + new Date().toString().substring(0, 10) + ".txt";
 			File outputFile = new File(filename);
 			writer = new BufferedWriter(new FileWriter(outputFile));
-			writer.write(String.format("%-15s\t%-25s\t%-30s\t\n", "Customer id", "Item", "Date"));
-
-			for (Order o : this.orders) {
-				writer.write(String.format("%-15s\t", "" + o.getCustomerId()));
-				writer.write(String.format("%-25s\t", o.getItem().getName()));
-				writer.write(String.format("%-30s\t", o.getTimestamp().toString()));
-				writer.write("\n");
-			}
+			
+//			writer.write(String.format("%-15s\t%-25s\t%-30s\t\n", "Customer id", "Item", "Date"));
+//
+//			for (Order o : this.orders) {
+//				writer.write(String.format("%-15s\t", "" + o.getCustomerId()));
+//				writer.write(String.format("%-25s\t", o.getItem().getName()));
+//				writer.write(String.format("%-30s\t", o.getTimestamp().toString()));
+//				writer.write("\n");
+//			}
+			
+			writer.write(String.format("Total Value Report\ncreated on: %s \n\n", new Date().toString().substring(0, 10)));
 			writer.write(String.format("%-35s\t%-10s\t%-10s\t\n", "Item", "Count", "Total Value"));
 			
 			double totalIncome = 0;
-			
 			for (HashMap.Entry<Item, Integer> entry : itemCounts.entrySet()) {
 				String itemName = entry.getKey().getName();
 				int itemCount = entry.getValue();
 				double totalValue = entry.getKey().getCost() * entry.getValue();
 				totalIncome += totalValue;
 				writer.write(String.format("%-35s\t %-10d\t £%-10.2f\t\n", itemName, itemCount,	totalValue));
-				 
 			}
-	
-			writer.write(String.format("\nTotal Earnings: £%.2f", totalIncome));
+			writer.write(String.format("\nTotal Earnings: %34s%.2f", "£",totalIncome));
 				
 			System.out.println("Report saved!");
 		} catch (java.io.IOException ioe) {
