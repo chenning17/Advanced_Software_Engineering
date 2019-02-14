@@ -22,8 +22,8 @@ import javax.swing.DefaultListModel;
 public class cafeGUI extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private ItemCollection menu;
 	private JButton btnAdd;
+	private JButton btnRemove;
 	private JButton btnCreateOrder;
 	private JButton btnGenReport;
 	private JTextField totalPrice;
@@ -33,24 +33,6 @@ public class cafeGUI extends JFrame implements ActionListener {
 	private JList<Item> currentOrder;
 	private Manager manager;
 
-	
-	/**
-	 * Launch the application.
-	 */
-	/*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					cafeGUI frame = new cafeGUI(new ItemCollection(), new Manager());
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	*/
 
 	/**
 	 * Create the frame.
@@ -78,11 +60,16 @@ public class cafeGUI extends JFrame implements ActionListener {
 		contentPane.add(scrollPane);
 		
 		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(5, 0, 0, 20));
 		contentPane.add(panel);
 		
 		this.btnAdd = new JButton("Add");
 		this.btnAdd.addActionListener(this);
 		panel.add(this.btnAdd);
+		
+		this.btnRemove = new JButton("Remove");
+		this.btnRemove.addActionListener(this);
+		panel.add(this.btnRemove);
 		
 		this.btnCreateOrder = new JButton("Create Order");
 		this.btnCreateOrder.addActionListener(this);
@@ -108,8 +95,12 @@ public class cafeGUI extends JFrame implements ActionListener {
 		}
 		else if (e.getSource() == this.btnCreateOrder) {
 			submitOrder();
-		}else if(e.getSource() == this.btnGenReport) {
+		}
+		else if(e.getSource() == this.btnGenReport) {
 			generateReport();
+		}
+		else if(e.getSource() == this.btnRemove) {
+			removeFromCart();
 		}
 	}
 	
@@ -127,7 +118,8 @@ public class cafeGUI extends JFrame implements ActionListener {
 			newOrder.add(order);
 		}
 		this.manager.addOrder(newOrder);
-		//TODO: Clear basket when order submitted in GUI
+		this.orderListModel.removeAllElements();
+		updateTotalPrice();
 	}
 
 	/**
@@ -140,6 +132,26 @@ public class cafeGUI extends JFrame implements ActionListener {
 			for (int i : indices) {
 				Item selected = this.menuListModel.getElementAt(i);
 				this.orderListModel.addElement(selected);
+			}
+		}
+		updateTotalPrice();
+		this.menuList.clearSelection();
+	}
+	
+	/**
+	 * Removes selected items from list on right of screen
+	 */
+	private void removeFromCart() {
+		System.out.println("This would remove:");
+		int[] indices = currentOrder.getSelectedIndices();
+		for (int i : indices) {
+			System.out.println(i);
+		}
+		for (int i = this.orderListModel.size()-1; i > -1; i--) {
+			for(int index : indices) {
+				if (i == index) {
+					orderListModel.remove(i);
+				}
 			}
 		}
 		updateTotalPrice();
