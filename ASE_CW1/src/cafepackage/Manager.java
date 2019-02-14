@@ -35,13 +35,20 @@ public class Manager {
 		OrderLoader orderLoader = new OrderLoader(orderFile, this.menu);
 		this.orders = orderLoader.loadOrders();
 
-		System.out.println("---\nOrders loaded: " + this.orders.count());
-
-		GenerateReport();
+		
+    System.out.println("---\nOrders loaded: " + this.orders.count());
+    
+		try {
+			cafeGUI frame = new cafeGUI(this.menu, this); //create gui giving it a menu and the manager itself
+			frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
-	// When should this be called
-	void GenerateReport() {
+	
+	//When should this be called
+	public void generateReport() {
+		
 
 		BufferedWriter writer = null;
 
@@ -72,9 +79,9 @@ public class Manager {
 				int itemCount = entry.getValue();
 				double totalValue = entry.getKey().getCost() * entry.getValue();
 				totalIncome += totalValue;
-				writer.write(String.format("%-35s\t %-10d\t £%-10.2f\t\n", itemName, itemCount,	totalValue));
+				writer.write(String.format("%-35s\t %-10d\t ï¿½%-10.2f\t\n", itemName, itemCount,	totalValue));
 			}
-			writer.write(String.format("\nTotal Earnings: %34s%.2f", "£",totalIncome));
+			writer.write(String.format("\nTotal Earnings: %34s%.2f", "ï¿½",totalIncome));
 				
 			System.out.println("Report saved!");
 		} catch (java.io.IOException ioe) {

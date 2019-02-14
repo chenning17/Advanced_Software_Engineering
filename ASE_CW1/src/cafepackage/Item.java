@@ -208,8 +208,20 @@ public abstract class Item implements Comparable<Item> {
 		return false;
 	}
 	
+	/**
+	 * Method from Comparable interface, items compared based on their id string
+	 */
 	public int compareTo(Item other) {
 		return this.id.compareTo(other.id);
+	}
+	
+	/**
+	 * Displays name and cost of an item instead of memory location
+	 */
+	@Override
+	public String toString() {
+		String displayInfo = String.format("%s : %5s", this.name, this.cost);
+		return displayInfo;
 	}
 
 }
