@@ -7,13 +7,13 @@ import java.util.HashMap;
 public class DiscountCalculator {
 
 	// add discount item to input order
-	public static void applyDiscount(OrderCollection orderCollection) {
+	public static void applyDiscount(OrderCollection orderCollection, ItemCollection menu) {
 
 		HashMap<Integer, ArrayList<Item>> groupedOrders = orderCollection.getGroupedOrders();
 
 		ArrayList<Order> discountList = new ArrayList<Order>();
 
-		int discountID = 0;
+		//int discountID = 0;
 		for (HashMap.Entry<Integer, ArrayList<Item>> entry : groupedOrders.entrySet()) {
 
 			Integer customerID = entry.getKey();
@@ -36,31 +36,32 @@ public class DiscountCalculator {
 			double bestDeal = mealDeal;
 
 			if (bestDeal > 0) {
-				discountID++;
+				//discountID++;
 				// create a discount item and add it to the order
-				try {
-					String discountIDString = String.format("disc%03d", discountID);
-					Item discount = new Discount("mealDeal", "£3.50 meal deal", bestDeal, discountIDString );
+				//try {
+					//String discountIDString = String.format("disc%03d", discountID);
+					//Item discount = new Discount("mealDeal", "£3.50 meal deal", bestDeal, discountIDString );
 
 					// TODO this date should match the given order creation date
 					Date date = new Date();
-					Order discountOrder = new Order(date, customerID, discount);
+					//if testDeal type of deal:
+					Order discountOrder = new Order(date, customerID, menu.findItemById("disc999"));
 
 					discountList.add(discountOrder);
 
-				} catch (DuplicateIDException e) {
-					e.printStackTrace();
-				} catch (InvalidIDException e) { // TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				//} catch (DuplicateIDException e) {
+				//	e.printStackTrace();
+				//} catch (InvalidIDException e) { // TODO Auto-generated catch block
+				//	e.printStackTrace();
+				//}
 
 			}
 		}
 
 		// now add each discount found to the orders list
 		for (Order order : discountList) {
-			//orderCollection.add(order);
-			//System.out.println("A discount item order has been added to orderCollection");
+			orderCollection.add(order);
+			System.out.println("A discount item order has been added to orderCollection");
 			Item item = order.getItem();
 			System.out.printf("discount details name: %s, savings value: £%.2f, ID: %s\n", item.getName(), item.getCost(), item.getID());
 		}

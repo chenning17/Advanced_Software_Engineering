@@ -2,44 +2,45 @@ Total Value Report
 created on: Fri Feb 15 
 
 Item                               	Count     	Total Value	
-Beef Burger                        	 0         	 �0.00      	
-Orange Juice                       	 2         	 �2.30      	
-Bacon and Brie Panini              	 1         	 �6.75      	
-Soup of the Day                    	 1         	 �5.25      	
-Chocolate Chip Cookie              	 1         	 �1.25      	
-Cadbury                            	 0         	 �0.00      	
-Tea                                	 2         	 �3.90      	
-Black Coffee                       	 2         	 �3.50      	
-Fanta                              	 2         	 �2.50      	
-Sparkling Water                    	 0         	 �0.00      	
-Oatmeal Cookie                     	 1         	 �1.25      	
-Twirl                              	 0         	 �0.00      	
-Still Water                        	 0         	 �0.00      	
-Mars Bar                           	 0         	 �0.00      	
-Apple                              	 1         	 �0.50      	
-Salt and Vinegar Crisps            	 0         	 �0.00      	
-Ceaser Salad                       	 0         	 �0.00      	
-Cheese Burger                      	 1         	 �9.25      	
-Apple Juice                        	 0         	 �0.00      	
-Fish and Chips                     	 0         	 �0.00      	
-Latte                              	 3         	 �6.75      	
-Snickers                           	 0         	 �0.00      	
-Hot Chocolate                      	 1         	 �2.45      	
-Banana                             	 0         	 �0.00      	
-Coca-Cola                          	 1         	 �1.25      	
-Ham and Cheese Panini              	 1         	 �6.25      	
-Chicken Burger                     	 1         	 �8.95      	
-Irn Bru                            	 1         	 �1.25      	
-Sprite                             	 1         	 �1.25      	
-Chocolate Muffin                   	 0         	 �0.00      	
-Macaroni Cheese                    	 1         	 �7.75      	
-Prawn Cocktail Crisps              	 1         	 �0.75      	
-Lasagna                            	 1         	 �8.25      	
-Cheese and Onion Crisps            	 0         	 �0.00      	
-Cheese Panini                      	 1         	 �6.25      	
-Blueberry Muffin                   	 1         	 �1.75      	
-Twix                               	 0         	 �0.00      	
-Orange                             	 0         	 �0.00      	
-Flapjack                           	 1         	 �1.25      	
+Chocolate Muffin                   	 0         	 £0.00      	
+Irn Bru                            	 1         	 £1.25      	
+Sparkling Water                    	 0         	 £0.00      	
+Bacon and Brie Panini              	 1         	 £6.75      	
+Apple                              	 1         	 £0.50      	
+Soup of the Day                    	 1         	 £5.25      	
+Fish and Chips                     	 0         	 £0.00      	
+Banana                             	 0         	 £0.00      	
+Still Water                        	 0         	 £0.00      	
+Coca-Cola                          	 1         	 £1.25      	
+Snickers                           	 0         	 £0.00      	
+Chicken Burger                     	 1         	 £8.95      	
+Orange                             	 0         	 £0.00      	
+Ham and Cheese Panini              	 1         	 £6.25      	
+Ceaser Salad                       	 0         	 £0.00      	
+Macaroni Cheese                    	 1         	 £7.75      	
+Cheese and Onion Crisps            	 0         	 £0.00      	
+Beef Burger                        	 0         	 £0.00      	
+Oatmeal Cookie                     	 1         	 £1.25      	
+Cadbury                            	 0         	 £0.00      	
+Hot Chocolate                      	 1         	 £2.45      	
+Twirl                              	 0         	 £0.00      	
+Cheese Burger                      	 1         	 £9.25      	
+Fanta                              	 2         	 £2.50      	
+Chocolate Chip Cookie              	 1         	 £1.25      	
+Salt and Vinegar Crisps            	 0         	 £0.00      	
+Orange Juice                       	 2         	 £2.30      	
+Flapjack                           	 1         	 £1.25      	
+Latte                              	 3         	 £6.75      	
+Blueberry Muffin                   	 1         	 £1.75      	
+Mars Bar                           	 0         	 £0.00      	
+Tea                                	 2         	 £3.90      	
+Twix                               	 0         	 £0.00      	
+Black Coffee                       	 2         	 £3.50      	
+Apple Juice                        	 0         	 £0.00      	
+Prawn Cocktail Crisps              	 1         	 £0.75      	
+Cheese Panini                      	 1         	 £6.25      	
+Sprite                             	 1         	 £1.25      	
+Lasagna                            	 1         	 £8.25      	
+testDeal                           	 4         	 £8.00      	
 
-Total Earnings:                                  �90.60
+Total Earnings:                                  £98.60

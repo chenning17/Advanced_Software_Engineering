@@ -24,7 +24,7 @@ public class Manager {
 		// load items from csv, print count to check right number entered
 		String menuFile = "Menu.csv";
 		System.out.println("Inputting Items from: " + menuFile);
-		ItemLoader itemLoader = new ItemLoader(menuFile);
+		ItemLoader itemLoader = new ItemLoader(menuFile, this.menu);
 		this.menu = itemLoader.loadItems();
 
 		System.out.println("---\nItems loaded into menu: " + this.menu.count());
@@ -50,7 +50,7 @@ public class Manager {
 	public void generateReport() {
 		
 		//apply discounts to orders
-		DiscountCalculator.applyDiscount(this.orders);
+		DiscountCalculator.applyDiscount(this.orders, this.menu);
 		
 		BufferedWriter writer = null;
 
@@ -81,9 +81,9 @@ public class Manager {
 				int itemCount = entry.getValue();
 				double totalValue = entry.getKey().getCost() * entry.getValue();
 				totalIncome += totalValue;
-				writer.write(String.format("%-35s\t %-10d\t �%-10.2f\t\n", itemName, itemCount,	totalValue));
+				writer.write(String.format("%-35s\t %-10d\t £%-10.2f\t\n", itemName, itemCount,	totalValue));
 			}
-			writer.write(String.format("\nTotal Earnings: %34s%.2f", "�",totalIncome));
+			writer.write(String.format("\nTotal Earnings: %34s%.2f", "£",totalIncome));
 				
 			System.out.println("Report saved!");
 		} catch (java.io.IOException ioe) {
