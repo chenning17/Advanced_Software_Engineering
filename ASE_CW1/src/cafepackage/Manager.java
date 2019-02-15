@@ -49,7 +49,9 @@ public class Manager {
 	//When should this be called
 	public void generateReport() {
 		
-
+		//apply discounts to orders
+		DiscountCalculator.applyDiscount(this.orders);
+		
 		BufferedWriter writer = null;
 
 		HashMap<Item, Integer> itemCounts = this.orders.getItemFreq(this.menu);

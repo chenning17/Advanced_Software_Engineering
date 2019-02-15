@@ -1,0 +1,30 @@
+Customer id    	Item                     	Date                          	
+111111         	Blueberry Muffin         	Sat Jun 16 10:12:00 BST 2018  	
+111111         	Latte                    	Sat Jun 16 10:12:00 BST 2018  	
+111112         	Latte                    	Sat Jun 16 10:14:00 BST 2018  	
+111113         	Tea                      	Sat Jun 16 10:17:00 BST 2018  	
+111113         	Black Coffee             	Sat Jun 16 10:17:00 BST 2018  	
+111113         	Black Coffee             	Sat Jun 16 10:17:00 BST 2018  	
+111114         	Hot Chocolate            	Sat Jun 16 10:21:00 BST 2018  	
+111115         	Orange Juice             	Sat Jun 16 10:24:00 BST 2018  	
+111116         	Orange Juice             	Sat Jun 16 10:37:00 BST 2018  	
+111116         	Oatmeal Cookie           	Sat Jun 16 10:37:00 BST 2018  	
+111117         	Latte                    	Sat Jun 16 10:45:00 BST 2018  	
+111118         	Tea                      	Sat Jun 16 10:57:00 BST 2018  	
+111118         	Chocolate Chip Cookie    	Sat Jun 16 10:57:00 BST 2018  	
+111119         	Flapjack                 	Sat Jun 16 12:56:00 BST 2018  	
+111120         	Coca-Cola                	Sat Jun 16 13:02:00 BST 2018  	
+111120         	Irn Bru                  	Sat Jun 16 13:02:00 BST 2018  	
+111120         	Cheese Panini            	Sat Jun 16 13:02:00 BST 2018  	
+111120         	Macaroni Cheese          	Sat Jun 16 13:02:00 BST 2018  	
+111121         	Soup of the Day          	Sat Jun 16 13:09:00 BST 2018  	
+111122         	Chicken Burger           	Sat Jun 16 13:17:00 BST 2018  	
+111122         	Sprite                   	Sat Jun 16 13:17:00 BST 2018  	
+111123         	Ham and Cheese Panini    	Sat Jun 16 13:25:00 BST 2018  	
+111124         	Cheese Burger            	Sat Jun 16 13:27:00 BST 2018  	
+111124         	Fanta                    	Sat Jun 16 13:27:00 BST 2018  	
+111125         	Lasagna                  	Sat Jun 16 13:37:00 BST 2018  	
+111125         	Prawn Cocktail Crisps    	Sat Jun 16 13:37:00 BST 2018  	
+111125         	Fanta                    	Sat Jun 16 13:37:00 BST 2018  	
+111126         	Bacon and Brie Panini    	Sat Jun 16 13:45:00 BST 2018  	
+111126         	Apple                    	Sat Jun 16 13:45:00 BST 2018  	
