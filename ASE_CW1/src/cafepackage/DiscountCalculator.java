@@ -6,11 +6,21 @@ import java.util.HashMap;
 
 public class DiscountCalculator {
 
-	// add discount item to input order
+	/**
+	 * Given the list of all orders, apply a discount to each if applicable and if
+	 * not already added.
+	 * 
+	 * @param orderCollection
+	 *            list of all orders currently made to the system
+	 * @param menu
+	 *            list of all items currently available, passed here in order to be
+	 *            able to add new discount items to it (for report generation)
+	 */
 	public static void applyDiscount(OrderCollection orderCollection, ItemCollection menu) {
 
 		HashMap<Integer, ArrayList<Item>> groupedOrders = orderCollection.getGroupedOrders();
 
+		//temporary list used to hold the new discount orders made
 		ArrayList<Order> discountList = new ArrayList<Order>();
 
 		int discountID = 0;
@@ -36,21 +46,29 @@ public class DiscountCalculator {
 			// this is not the prefered method -> is much better to just create another
 			// order of discounts using existing discount item
 
+			// TODO this method of checking for existing discount relies on items / orders
+			// being in same order as before, therefore need to be able to check which
+			// discount applies to which order
+			// to make this more robust
+
 			double bestDeal = mealDeal;
 
 			if (bestDeal > 0) {
 				discountID++;
-				// create a discount item and add it to menu and order if it does not already exist
+				// create a discount item and add it to menu and order if it does not already
+				// exist
 				String discountIDString = String.format("disc%03d", discountID);
 				if (menu.findItemById(discountIDString) == null) {
 					try {
 						Item discount = new Discount("mealDeal", "£3.50 meal deal", bestDeal, discountIDString);
 						menu.add(discount);
-						
+
 						// TODO this date should match the given order creation date
 						Date date = new Date();
-						// if testDeal type of deal:
+						//create new order of discount item for given customer id
 						Order discountOrder = new Order(date, customerID, discount);
+		
+						//add order to temporary list of discount orders
 						discountList.add(discountOrder);
 					} catch (DuplicateIDException | InvalidIDException e) {
 						e.printStackTrace();
@@ -60,7 +78,7 @@ public class DiscountCalculator {
 			}
 		}
 
-		// now add each discount found to the orders list
+		// now add each discount from the temporary discount list to the inputted orders list
 		for (Order order : discountList) {
 			orderCollection.add(order);
 			System.out.println("A discount item order has been added to orderCollection");
@@ -71,10 +89,22 @@ public class DiscountCalculator {
 
 	}
 
+	/**
+	 * Given an input list of items, will return the value of savings that a meal
+	 * deal would save the user. Returns a value of 0 if deal is not applicable or
+	 * if the price of items is not enough to save money using the deal.
+	 * 
+	 * @param itemList
+	 *            list of items in an order
+	 * @return
+	 */
 	public static double applyMealDeal(ArrayList<Item> itemList) {
 
+		// value used to hold the amount of savings applied by the deal
 		double dealValue = 0;
 
+		// values used to hold the value of the most expensive item of each category
+		// in order to apply the best deal
 		double maxFood = -1;
 		double maxDrink = -1;
 		double maxSnack = -1;
@@ -105,7 +135,6 @@ public class DiscountCalculator {
 				dealValue = 0;
 			}
 		}
-
 		return dealValue;
 	}
 
