@@ -26,13 +26,13 @@ Soup of the Day                    	 1         	 £ 5.25
 Blueberry Muffin                   	 1         	 £ 1.75     	
 Apple Juice                        	 0         	 £ 0.00     	
 Apple                              	 1         	 £ 0.50     	
-Fish and Chips                     	 2         	 £ 19.00    	
+Fish and Chips                     	 0         	 £ 0.00     	
 Salt and Vinegar Crisps            	 0         	 £ 0.00     	
 Macaroni Cheese                    	 1         	 £ 7.75     	
 Orange                             	 0         	 £ 0.00     	
 Cheese Panini                      	 1         	 £ 6.25     	
 Chicken Burger                     	 1         	 £ 8.95     	
-***MEAL DEAL DISCOUNT***           	 1         	 £-4.75     	
+                                   	 1         	 £-4.75     	
 Banana                             	 0         	 £ 0.00     	
 Tea                                	 2         	 £ 3.90     	
 Coca-Cola                          	 1         	 £ 1.25     	
@@ -43,4 +43,4 @@ Prawn Cocktail Crisps              	 1         	 £ 0.75
 Cheese Burger                      	 1         	 £ 9.25     	
 Ham and Cheese Panini              	 1         	 £ 6.25     	
 
-Total Earnings:                                  £104.85
+Total Earnings:                                  £85.85

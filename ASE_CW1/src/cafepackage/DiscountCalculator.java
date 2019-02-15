@@ -29,41 +29,13 @@ public class DiscountCalculator {
 			Integer customerID = entry.getKey();
 			ArrayList<Item> itemList = entry.getValue();
 
-			double mealDeal = applyMealDeal(itemList);
-			double bogofSnackDeal = applyBOGOFSnackDeal(itemList);
-
-			// double someotherDeal = applSomeotherDeal(itemList);
-
-			// TODO add other deals and check which returns the largest value as this is
-			// then the best deal,
-			// also make sure bestDeal > 0
-
-			// TODO should already have all discount choices as elements in input menu file
-			// / already stored in program and added to itemCollection
-			// therefore this will avoid the duplication of discounts
-			// at the minute discountID counter is just used to create unique IDs when run
-			// once (second time will use previous IDs) but
-			// this is not the prefered method -> is much better to just create another
-			// order of discounts using existing discount item
+			String discountName = "";
+			String discountDescription = "";
+			double bestDeal = getBestDeal(itemList, discountName, discountDescription);
 
 			// TODO this method of checking for existing discount relies on items / orders
 			// being in same order as before, therefore need to be able to check which
-			// discount applies to which order
-			// to make this more robust
-
-			double bestDeal;
-			String discountName;
-			String discountDescription;
-			
-			if (mealDeal > bogofSnackDeal) {
-				bestDeal = mealDeal;
-				discountName = "***MEAL DEAL DISCOUNT***";
-				discountDescription = "£5.50 meal deal";
-			} else {
-				bestDeal = bogofSnackDeal;
-				discountName = "***BOGOF DEAL DISCOUNT***";
-				discountDescription = "buy one get one free on all snacks";
-			}
+			// discount applies to which order to make this more robust
 
 			if (bestDeal > 0) {
 				discountID++;
@@ -181,7 +153,7 @@ public class DiscountCalculator {
 		Item tempItem;
 		int counts;
 		// evaluate each item count to see if it qualifies for a bogof snack deal
-		//and add the correct (number of free items) * (item cost) to the dealValue
+		// and add the correct (number of free items) * (item cost) to the dealValue
 		for (HashMap.Entry<Item, Integer> entry : itemCounts.entrySet()) {
 			tempItem = entry.getKey();
 			counts = entry.getValue();
@@ -193,4 +165,66 @@ public class DiscountCalculator {
 
 		return dealValue;
 	}
+
+	/**
+	 * Given a list of items, will attempt to apply all available deals to this
+	 * list, and will return the best discount value possible. This function is
+	 * provided for use with the main applyDiscount function in this
+	 * DiscountCalculator class.
+	 * 
+	 * @param itemList
+	 *            list of items to check for deal validity
+	 * @param discountName
+	 *            input string to be overwritten with the name of the best discount
+	 * @param discountDescription
+	 *            input string to be overwritten with the description of the best
+	 *            discount
+	 * @return
+	 */
+	public static double getBestDeal(ArrayList<Item> itemList, String discountName, String discountDescription) {
+		
+		//call all available deals to compare their values
+		double mealDeal = applyMealDeal(itemList);
+		double bogofSnackDeal = applyBOGOFSnackDeal(itemList);
+
+		double bestDeal;
+
+		if (mealDeal > bogofSnackDeal) {
+			bestDeal = mealDeal;
+			discountName = "***MEAL DEAL DISCOUNT***";
+			discountDescription = "£5.50 meal deal";
+		} else {
+			bestDeal = bogofSnackDeal;
+			discountName = "***BOGOF DEAL DISCOUNT***";
+			discountDescription = "buy one get one free on all snacks";
+		}
+		return bestDeal;
+	}
+
+	/**
+	 * Given a list of items, will attempt to apply all available deals to this
+	 * list, and will return the best discount value possible. This function is
+	 * aimed at GUI usage for providing a discount value for the given list of
+	 * items.
+	 * 
+	 * @param itemList
+	 *            list of items to check for deal validity
+	 * @return
+	 */
+	public static double getBestDeal(ArrayList<Item> itemList) {
+		
+		//call all available deals to compare their values
+		double mealDeal = applyMealDeal(itemList);
+		double bogofSnackDeal = applyBOGOFSnackDeal(itemList);
+
+		double bestDeal;
+
+		if (mealDeal > bogofSnackDeal) {
+			bestDeal = mealDeal;
+		} else {
+			bestDeal = bogofSnackDeal;
+		}
+		return bestDeal;
+	}
+
 }
