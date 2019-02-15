@@ -13,7 +13,7 @@ public class DiscountCalculator {
 
 		ArrayList<Order> discountList = new ArrayList<Order>();
 
-		//int discountID = 0;
+		int discountID = 0;
 		for (HashMap.Entry<Integer, ArrayList<Item>> entry : groupedOrders.entrySet()) {
 
 			Integer customerID = entry.getKey();
@@ -27,34 +27,36 @@ public class DiscountCalculator {
 			// TODO add other deals and check which returns the largest value as this is
 			// then the best deal,
 			// also make sure bestDeal > 0
-			
-			//TODO should already have all discount choices as elements in input menu file / already stored in program and added to itemCollection
-			//therefore this will avoid the duplication of discounts
-			//at the minute discountID counter is just used to create unique IDs when run once (second time will use previous IDs) but 
-			//this is not the prefered method -> is much better to just create another order of discounts using existing discount item
-			
+
+			// TODO should already have all discount choices as elements in input menu file
+			// / already stored in program and added to itemCollection
+			// therefore this will avoid the duplication of discounts
+			// at the minute discountID counter is just used to create unique IDs when run
+			// once (second time will use previous IDs) but
+			// this is not the prefered method -> is much better to just create another
+			// order of discounts using existing discount item
+
 			double bestDeal = mealDeal;
 
 			if (bestDeal > 0) {
-				//discountID++;
-				// create a discount item and add it to the order
-				//try {
-					//String discountIDString = String.format("disc%03d", discountID);
-					//Item discount = new Discount("mealDeal", "£3.50 meal deal", bestDeal, discountIDString );
+				discountID++;
+				// create a discount item and add it to menu and order if it does not already exist
+				String discountIDString = String.format("disc%03d", discountID);
+				if (menu.findItemById(discountIDString) == null) {
+					try {
+						Item discount = new Discount("mealDeal", "£3.50 meal deal", bestDeal, discountIDString);
+						menu.add(discount);
+						
+						// TODO this date should match the given order creation date
+						Date date = new Date();
+						// if testDeal type of deal:
+						Order discountOrder = new Order(date, customerID, discount);
+						discountList.add(discountOrder);
+					} catch (DuplicateIDException | InvalidIDException e) {
+						e.printStackTrace();
+					}
 
-					// TODO this date should match the given order creation date
-					Date date = new Date();
-					//if testDeal type of deal:
-					Order discountOrder = new Order(date, customerID, menu.findItemById("disc999"));
-
-					discountList.add(discountOrder);
-
-				//} catch (DuplicateIDException e) {
-				//	e.printStackTrace();
-				//} catch (InvalidIDException e) { // TODO Auto-generated catch block
-				//	e.printStackTrace();
-				//}
-
+				}
 			}
 		}
 
@@ -63,7 +65,8 @@ public class DiscountCalculator {
 			orderCollection.add(order);
 			System.out.println("A discount item order has been added to orderCollection");
 			Item item = order.getItem();
-			System.out.printf("discount details name: %s, savings value: £%.2f, ID: %s\n", item.getName(), item.getCost(), item.getID());
+			System.out.printf("discount details name: %s, savings value: £%.2f, ID: %s\n", item.getName(),
+					item.getCost(), item.getID());
 		}
 
 	}

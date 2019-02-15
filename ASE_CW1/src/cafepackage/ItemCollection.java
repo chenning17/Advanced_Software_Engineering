@@ -13,7 +13,6 @@ public class ItemCollection implements Iterable<Item> {
 	 */
 	public ItemCollection() {
 		itemCollection = new TreeSet<Item>();
-		this.addDiscountItems();
 	}
 
 	/**
@@ -26,15 +25,6 @@ public class ItemCollection implements Iterable<Item> {
 		this.itemCollection.add(item);
 	}
 
-	private void addDiscountItems() {
-		Item testDeal;
-		try {
-			testDeal = new Discount("testDeal", "-£2 test deal", 2, "disc999");
-			this.itemCollection.add(testDeal);
-		} catch (DuplicateIDException | InvalidIDException e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * returns an iterator of the items
