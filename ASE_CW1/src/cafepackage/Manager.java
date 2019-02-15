@@ -80,8 +80,13 @@ public class Manager {
 				String itemName = entry.getKey().getName();
 				int itemCount = entry.getValue();
 				double totalValue = entry.getKey().getCost() * entry.getValue();
+				
+				//if item is a discount then make sure to use the negative value for adding to total costs
+				if(entry.getKey() instanceof Discount) {
+					totalValue *= -1;
+				}
 				totalIncome += totalValue;
-				writer.write(String.format("%-35s\t %-10d\t £%-10.2f\t\n", itemName, itemCount,	totalValue));
+				writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", itemName, itemCount,	totalValue));
 			}
 			writer.write(String.format("\nTotal Earnings: %34s%.2f", "£",totalIncome));
 				
