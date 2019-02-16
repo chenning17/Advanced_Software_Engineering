@@ -32,11 +32,14 @@ public class cafeGUI extends JFrame implements ActionListener {
 	private DefaultListModel<Item> orderListModel;
 	private JList<Item> currentOrder;
 	private Manager manager;
+	private ItemCollection menu;
 
 	/**
 	 * Create the frame.
 	 */
 	public cafeGUI(ItemCollection menu, Manager manager) {
+		//keep class variable reference to menu in order to add new discount items to the collection
+		this.menu = menu; 
 		this.manager = manager;
 
 		this.menuListModel = new DefaultListModel<Item>();
@@ -112,6 +115,11 @@ public class cafeGUI extends JFrame implements ActionListener {
 			Item item = orderListModel.getElementAt(i);
 			Order order = new Order(date, customerID, item);
 			newOrder.add(order);
+			
+			//if item is a discount, add it to the menu item collection for report generation
+			if(item instanceof Discount) {
+				this.menu.add(item);
+			}
 		}
 		this.manager.addOrder(newOrder);
 		this.orderListModel.removeAllElements();
