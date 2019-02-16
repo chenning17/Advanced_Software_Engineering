@@ -132,40 +132,8 @@ public class cafeGUI extends JFrame implements ActionListener {
 			}
 		}
 
-		ArrayList<Item> basket = new ArrayList<Item>();
-		for (int i = 0; i < this.orderListModel.getSize(); i++) {
-			basket.add(this.orderListModel.getElementAt(i));
-		}
+		refreshDiscount(true);
 
-		Item prevDiscount = null;
-				//remove any previous discounts
-		for(Item item : basket) {
-			if(item instanceof Discount) {
-				prevDiscount = item;
-			}
-		}
-		
-		// Discount discount = DiscountCalculator.applyDiscount(this.orderListModel,
-		// this.menuListModel);
-		Discount discount = DiscountCalculator.getBestDeal(basket);
-		if (discount != null) {
-			//check if new discount is better than previous
-			if(prevDiscount != null && prevDiscount.getCost() > discount.getCost()) {
-				discount = (Discount) prevDiscount;
-				//remove old discount from current chosen items
-				this.orderListModel.removeElement(prevDiscount);
-				basket.remove(prevDiscount);
-			}
-			else if( prevDiscount != null) {
-			//remove old discount from current chosen items
-				this.orderListModel.removeElement(prevDiscount);
-				basket.remove(prevDiscount);
-				
-			}
-				//add new discount
-			
-			this.orderListModel.addElement(discount);
-		}
 		updateTotalPrice();
 		this.menuList.clearSelection();
 	}
@@ -186,7 +154,63 @@ public class cafeGUI extends JFrame implements ActionListener {
 				}
 			}
 		}
+		// remove previousDiscount before refreshing discount to get newest discount
+
+		refreshDiscount(false);
 		updateTotalPrice();
+	}
+
+	/**
+	 * Using the current list of items selected, updates the discount item held in
+	 * the currently selected items list if applicable. Will replace an old discount
+	 * item with a better discount if it is found. If the given parameter itemAdded
+	 * is false the previous discount if found will always be removed and replaced
+	 * with the current best discount available. This is useful for when an item is
+	 * removed from the selected list of items. If a value of true is given, it will
+	 * only replace the previous discount if the current discount value is greater
+	 * 
+	 * @param itemAdded
+	 *            boolean value used to choose if previous discount value should be
+	 *            instantly removed or compared with current best discount available
+	 */
+	private void refreshDiscount(boolean itemAdded) {
+		ArrayList<Item> basket = new ArrayList<Item>();
+		for (int i = 0; i < this.orderListModel.getSize(); i++) {
+			basket.add(this.orderListModel.getElementAt(i));
+		}
+
+		Item prevDiscount = null;
+		// check for any previous discounts
+		for (Item item : basket) {
+			if (item instanceof Discount) {
+				prevDiscount = item;
+			}
+		}
+
+		// remove old discount if item was removed
+		if (itemAdded == false) {
+			this.orderListModel.removeElement(prevDiscount);
+			basket.remove(prevDiscount);
+			prevDiscount = null;
+		}
+
+		// get current best discount
+		Discount discount = DiscountCalculator.getBestDeal(basket);
+		if (discount != null) {
+			// check if new discount is better than previous
+			if (prevDiscount != null && prevDiscount.getCost() > discount.getCost()) {
+				discount = (Discount) prevDiscount;
+				// remove old discount from current chosen items
+				this.orderListModel.removeElement(prevDiscount);
+				basket.remove(prevDiscount);
+			} else if (prevDiscount != null) {
+				// remove old discount from current chosen items
+				this.orderListModel.removeElement(prevDiscount);
+				basket.remove(prevDiscount);
+			}
+			// add new discount
+			this.orderListModel.addElement(discount);
+		}
 	}
 
 	/**

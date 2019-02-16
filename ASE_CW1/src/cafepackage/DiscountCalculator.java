@@ -9,65 +9,53 @@ public class DiscountCalculator {
 	static int discountID = 0;
 
 	/**
-	 * Given the list of all orders, apply a discount to each if applicable and if
-	 * not already added.
+	 * Given a list of items, will attempt to apply all available deals to this
+	 * list, and will return the best discount value possible. This function is
+	 * provided for use with the main applyDiscount function in this
+	 * DiscountCalculator class.
 	 * 
-	 * @param orderCollection
-	 *            list of all orders currently made to the system
-	 * @param menu
-	 *            list of all items currently available, passed here in order to be
-	 *            able to add new discount items to it (for report generation)
+	 * @param itemList
+	 *            list of items to check for deal validity
+	 * @param discountName
+	 *            input string to be overwritten with the name of the best discount
+	 * @param discountDescription
+	 *            input string to be overwritten with the description of the best
+	 *            discount
+	 * @return
 	 */
+	public static Discount getBestDeal(ArrayList<Item> itemList) {
 
-	/*
-	 * public static void applyDiscount(OrderCollection orderCollection,
-	 * ItemCollection menu) {
-	 * 
-	 * HashMap<Integer, ArrayList<Item>> groupedOrders =
-	 * orderCollection.getGroupedOrders();
-	 * 
-	 * // temporary list used to hold the new discount orders made ArrayList<Order>
-	 * discountList = new ArrayList<Order>();
-	 * 
-	 * int discountID = 0; for (HashMap.Entry<Integer, ArrayList<Item>> entry :
-	 * groupedOrders.entrySet()) {
-	 * 
-	 * Integer customerID = entry.getKey(); ArrayList<Item> itemList =
-	 * entry.getValue();
-	 * 
-	 * String discountName = ""; String discountDescription = ""; double bestDeal =
-	 * getBestDeal(itemList, discountName, discountDescription);
-	 * 
-	 * // TODO this method of checking for existing discount relies on items /
-	 * orders // being in same order as before, therefore need to be able to check
-	 * which // discount applies to which order to make this more robust
-	 * 
-	 * if (bestDeal > 0) { discountID++; // create a discount item and add it to
-	 * menu and order if it does not already // exist String discountIDString =
-	 * String.format("disc%03d", discountID); if
-	 * (menu.findItemById(discountIDString) == null) { try { Item discount = new
-	 * Discount(discountName, discountDescription, bestDeal, discountIDString);
-	 * menu.add(discount);
-	 * 
-	 * // TODO this date should match the given order creation date Date date = new
-	 * Date(); // create new order of discount item for given customer id Order
-	 * discountOrder = new Order(date, customerID, discount);
-	 * 
-	 * // add order to temporary list of discount orders
-	 * discountList.add(discountOrder); } catch (DuplicateIDException |
-	 * InvalidIDException e) { e.printStackTrace(); }
-	 * 
-	 * } } }
-	 * 
-	 * // now add each discount from the temporary discount list to the inputted
-	 * orders // list for (Order order : discountList) { orderCollection.add(order);
-	 * System.out.println("A discount item order has been added to orderCollection"
-	 * ); Item item = order.getItem(); System.out.
-	 * printf("discount details -> name: %s, savings value: £%.2f, ID: %s\n",
-	 * item.getName(), item.getCost(), item.getID()); }
-	 * 
-	 * }
-	 */
+		// call all available deals to compare their values
+		double mealDeal = applyMealDeal(itemList);
+		double bogofSnackDeal = applyBOGOFSnackDeal(itemList);
+		String discountName = "";
+		String discountDescription = "";
+		discountID++;
+		String discountIDString = String.format("disc%03d", discountID);
+
+		double bestDeal = 0;
+
+		if (mealDeal > bogofSnackDeal && mealDeal > 0) {
+			bestDeal = mealDeal;
+			discountName = "***MEAL DEAL DISCOUNT***";
+			discountDescription = "£5.50 meal deal";
+
+		} else if (bogofSnackDeal > mealDeal && bogofSnackDeal > 0) {
+			bestDeal = bogofSnackDeal;
+			discountName = "***BOGOF DEAL DISCOUNT***";
+			discountDescription = "buy one get one free on all snacks";
+
+		}
+		if (bestDeal > 0) {
+			Discount discount = createDiscountItem(discountName, discountDescription, bestDeal, discountIDString);
+			return discount;
+		}
+
+		else {
+			return null;
+		}
+
+	}
 
 	/**
 	 * Given an input list of items, will return the value of savings that a meal
@@ -114,7 +102,7 @@ public class DiscountCalculator {
 				dealValue = -1;
 			}
 		}
-		
+
 		if (dealValue > 0) {
 			return dealValue;
 		} else {
@@ -151,7 +139,6 @@ public class DiscountCalculator {
 		}
 
 		Item tempItem;
-
 		// evaluate each item count to see if it qualifies for a bogof snack deal
 		// and add the correct (number of free items) * (item cost) to the dealValue
 		for (HashMap.Entry<Item, Integer> entry : itemCounts.entrySet()) {
@@ -170,54 +157,19 @@ public class DiscountCalculator {
 	}
 
 	/**
-	 * Given a list of items, will attempt to apply all available deals to this
-	 * list, and will return the best discount value possible. This function is
-	 * provided for use with the main applyDiscount function in this
-	 * DiscountCalculator class.
+	 * Create and return a new Discount item with the given parameters passed to the
+	 * Discount item constructor.
 	 * 
-	 * @param itemList
-	 *            list of items to check for deal validity
 	 * @param discountName
-	 *            input string to be overwritten with the name of the best discount
+	 *            string holding name of the discount
 	 * @param discountDescription
-	 *            input string to be overwritten with the description of the best
-	 *            discount
+	 *            string holding the description for the discount item
+	 * @param bestDeal
+	 *            double value holding the value of the discount item
+	 * @param discountIDString
+	 *            string used as the ID for a discount item
 	 * @return
 	 */
-	public static Discount getBestDeal(ArrayList<Item> itemList) {
-
-		// call all available deals to compare their values
-		double mealDeal = applyMealDeal(itemList);
-		double bogofSnackDeal = applyBOGOFSnackDeal(itemList);
-		String discountName = "";
-		String discountDescription = "";
-		discountID++;
-		String discountIDString = String.format("disc%03d", discountID);
-
-		double bestDeal = 0;
-
-		if (mealDeal > bogofSnackDeal && mealDeal > 0) {
-			bestDeal = mealDeal;
-			discountName = "***MEAL DEAL DISCOUNT***";
-			discountDescription = "£5.50 meal deal";
-			
-		} else if (bogofSnackDeal > mealDeal && bogofSnackDeal > 0) {
-			bestDeal = bogofSnackDeal;
-			discountName = "***BOGOF DEAL DISCOUNT***";
-			discountDescription = "buy one get one free on all snacks";
-		
-		}
-		if (bestDeal > 0) {
-			Discount discount = createDiscountItem(discountName, discountDescription, bestDeal, discountIDString);
-			return discount;
-		}
-
-		else {
-			return null;
-		}
-
-	}
-
 	private static Discount createDiscountItem(String discountName, String discountDescription, double bestDeal,
 			String discountIDString) {
 		Discount discount = null;
@@ -225,34 +177,10 @@ public class DiscountCalculator {
 			discount = new Discount(discountName, discountDescription, bestDeal, discountIDString);
 			return discount;
 		} catch (DuplicateIDException | InvalidIDException e) {
-			// e.printStackTrace();
-			// discount has not been created as it is invalid
+			e.printStackTrace();
 		}
 
 		return discount;
 	}
-
-	/**
-	 * Given a list of items, will attempt to apply all available deals to this
-	 * list, and will return the best discount value possible. This function is
-	 * aimed at GUI usage for providing a discount value for the given list of
-	 * items.
-	 * 
-	 * @param itemList
-	 *            list of items to check for deal validity
-	 * @return
-	 */
-	/*
-	 * public static double getBestDeal(ArrayList<Item> itemList) {
-	 * 
-	 * //call all available deals to compare their values double mealDeal =
-	 * applyMealDeal(itemList); double bogofSnackDeal =
-	 * applyBOGOFSnackDeal(itemList);
-	 * 
-	 * double bestDeal;
-	 * 
-	 * if (mealDeal > bogofSnackDeal) { bestDeal = mealDeal; } else { bestDeal =
-	 * bogofSnackDeal; } return bestDeal; }
-	 */
 
 }
