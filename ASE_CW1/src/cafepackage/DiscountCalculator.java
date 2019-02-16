@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 public class DiscountCalculator {
 
+	static int discountID = 0;
+
 	/**
 	 * Given the list of all orders, apply a discount to each if applicable and if
 	 * not already added.
@@ -16,67 +18,60 @@ public class DiscountCalculator {
 	 *            list of all items currently available, passed here in order to be
 	 *            able to add new discount items to it (for report generation)
 	 */
-	public static void applyDiscount(OrderCollection orderCollection, ItemCollection menu) {
 
-		HashMap<Integer, ArrayList<Item>> groupedOrders = orderCollection.getGroupedOrders();
-
-		// temporary list used to hold the new discount orders made
-		ArrayList<Order> discountList = new ArrayList<Order>();
-
-		int discountID = 0;
-		for (HashMap.Entry<Integer, ArrayList<Item>> entry : groupedOrders.entrySet()) {
-
-			Integer customerID = entry.getKey();
-			ArrayList<Item> itemList = entry.getValue();
-
-			String discountName = "";
-			String discountDescription = "";
-			double bestDeal = getBestDeal(itemList, discountName, discountDescription);
-
-			// TODO this method of checking for existing discount relies on items / orders
-			// being in same order as before, therefore need to be able to check which
-			// discount applies to which order to make this more robust
-
-			if (bestDeal > 0) {
-				discountID++;
-				// create a discount item and add it to menu and order if it does not already
-				// exist
-				String discountIDString = String.format("disc%03d", discountID);
-				if (menu.findItemById(discountIDString) == null) {
-					try {
-						Item discount = new Discount(discountName, discountDescription, bestDeal, discountIDString);
-						menu.add(discount);
-
-						// TODO this date should match the given order creation date
-						Date date = new Date();
-						// create new order of discount item for given customer id
-						Order discountOrder = new Order(date, customerID, discount);
-
-						// add order to temporary list of discount orders
-						discountList.add(discountOrder);
-					} catch (DuplicateIDException | InvalidIDException e) {
-						e.printStackTrace();
-					}
-
-				}
-			}
-		}
-
-		// now add each discount from the temporary discount list to the inputted orders
-		// list
-		for (Order order : discountList) {
-			orderCollection.add(order);
-			System.out.println("A discount item order has been added to orderCollection");
-			Item item = order.getItem();
-			System.out.printf("discount details -> name: %s, savings value: £%.2f, ID: %s\n", item.getName(),
-					item.getCost(), item.getID());
-		}
-
-	}
+	/*
+	 * public static void applyDiscount(OrderCollection orderCollection,
+	 * ItemCollection menu) {
+	 * 
+	 * HashMap<Integer, ArrayList<Item>> groupedOrders =
+	 * orderCollection.getGroupedOrders();
+	 * 
+	 * // temporary list used to hold the new discount orders made ArrayList<Order>
+	 * discountList = new ArrayList<Order>();
+	 * 
+	 * int discountID = 0; for (HashMap.Entry<Integer, ArrayList<Item>> entry :
+	 * groupedOrders.entrySet()) {
+	 * 
+	 * Integer customerID = entry.getKey(); ArrayList<Item> itemList =
+	 * entry.getValue();
+	 * 
+	 * String discountName = ""; String discountDescription = ""; double bestDeal =
+	 * getBestDeal(itemList, discountName, discountDescription);
+	 * 
+	 * // TODO this method of checking for existing discount relies on items /
+	 * orders // being in same order as before, therefore need to be able to check
+	 * which // discount applies to which order to make this more robust
+	 * 
+	 * if (bestDeal > 0) { discountID++; // create a discount item and add it to
+	 * menu and order if it does not already // exist String discountIDString =
+	 * String.format("disc%03d", discountID); if
+	 * (menu.findItemById(discountIDString) == null) { try { Item discount = new
+	 * Discount(discountName, discountDescription, bestDeal, discountIDString);
+	 * menu.add(discount);
+	 * 
+	 * // TODO this date should match the given order creation date Date date = new
+	 * Date(); // create new order of discount item for given customer id Order
+	 * discountOrder = new Order(date, customerID, discount);
+	 * 
+	 * // add order to temporary list of discount orders
+	 * discountList.add(discountOrder); } catch (DuplicateIDException |
+	 * InvalidIDException e) { e.printStackTrace(); }
+	 * 
+	 * } } }
+	 * 
+	 * // now add each discount from the temporary discount list to the inputted
+	 * orders // list for (Order order : discountList) { orderCollection.add(order);
+	 * System.out.println("A discount item order has been added to orderCollection"
+	 * ); Item item = order.getItem(); System.out.
+	 * printf("discount details -> name: %s, savings value: £%.2f, ID: %s\n",
+	 * item.getName(), item.getCost(), item.getID()); }
+	 * 
+	 * }
+	 */
 
 	/**
 	 * Given an input list of items, will return the value of savings that a meal
-	 * deal would save the user. Returns a value of 0 if deal is not applicable or
+	 * deal would save the user. Returns a value of -1 if deal is not applicable or
 	 * if the price of items is not enough to save money using the deal.
 	 * 
 	 * @param itemList
@@ -86,7 +81,7 @@ public class DiscountCalculator {
 	public static double applyMealDeal(ArrayList<Item> itemList) {
 
 		// value used to hold the amount of savings applied by the deal
-		double dealValue = 0;
+		double dealValue = -1;
 
 		// values used to hold the value of the most expensive item of each category
 		// in order to apply the best deal
@@ -119,13 +114,18 @@ public class DiscountCalculator {
 				dealValue = 0;
 			}
 		}
-		return dealValue;
+		
+		if (dealValue > 0) {
+			return dealValue;
+		} else {
+			return -1;
+		}
 	}
 
 	/**
 	 * Given an input list of items, will return the value of savings that a buy one
 	 * get one free deal would save the user. This deal applies only to orders where
-	 * two identical snack items have been ordered. Returns a value of 0 if deal is
+	 * two identical snack items have been ordered. Returns a value of -1 if deal is
 	 * not applicable, will apply deal two multiples of 2, i.e. 4 items would give a
 	 * discount equivalent to 2, but 3 would give a discount equivalent to 1 free
 	 * item.
@@ -137,13 +137,13 @@ public class DiscountCalculator {
 	public static double applyBOGOFSnackDeal(ArrayList<Item> itemList) {
 		// value used to hold the amount of savings applied by the deal
 		double dealValue = 0;
-
+		int counts;
 		HashMap<Item, Integer> itemCounts = new HashMap<Item, Integer>();
 
 		for (Item item : itemList) {
 
 			if (itemCounts.containsKey(item)) {
-				int counts = itemCounts.get(item);
+				counts = itemCounts.get(item);
 				itemCounts.put(item, counts + 1);
 			} else {
 				itemCounts.put(item, 1);
@@ -151,7 +151,7 @@ public class DiscountCalculator {
 		}
 
 		Item tempItem;
-		int counts;
+
 		// evaluate each item count to see if it qualifies for a bogof snack deal
 		// and add the correct (number of free items) * (item cost) to the dealValue
 		for (HashMap.Entry<Item, Integer> entry : itemCounts.entrySet()) {
@@ -162,8 +162,11 @@ public class DiscountCalculator {
 				dealValue += ((counts - counts % 2) / 2) * tempItem.getCost();
 			}
 		}
-
-		return dealValue;
+		if (dealValue > 0) {
+			return dealValue;
+		} else {
+			return -1;
+		}
 	}
 
 	/**
@@ -181,24 +184,52 @@ public class DiscountCalculator {
 	 *            discount
 	 * @return
 	 */
-	public static double getBestDeal(ArrayList<Item> itemList, String discountName, String discountDescription) {
-		
-		//call all available deals to compare their values
+	public static Discount getBestDeal(ArrayList<Item> itemList) {
+
+		// call all available deals to compare their values
 		double mealDeal = applyMealDeal(itemList);
 		double bogofSnackDeal = applyBOGOFSnackDeal(itemList);
+		String discountName = "";
+		String discountDescription = "";
+		discountID++;
+		String discountIDString = String.format("disc%03d", discountID);
 
-		double bestDeal;
+		double bestDeal = 0;
 
-		if (mealDeal > bogofSnackDeal) {
+		if (mealDeal > bogofSnackDeal && mealDeal > 0) {
 			bestDeal = mealDeal;
 			discountName = "***MEAL DEAL DISCOUNT***";
 			discountDescription = "£5.50 meal deal";
-		} else {
+			discountIDString = "disc001";
+		} else if (bogofSnackDeal > mealDeal && bogofSnackDeal > 0) {
 			bestDeal = bogofSnackDeal;
 			discountName = "***BOGOF DEAL DISCOUNT***";
 			discountDescription = "buy one get one free on all snacks";
+			discountIDString = "disc002";
 		}
-		return bestDeal;
+		if (bestDeal > 0) {
+			Discount discount = createDiscountItem(discountName, discountDescription, bestDeal, discountIDString);
+			return discount;
+		}
+
+		else {
+			return null;
+		}
+
+	}
+
+	private static Discount createDiscountItem(String discountName, String discountDescription, double bestDeal,
+			String discountIDString) {
+		Discount discount = null;
+		try {
+			discount = new Discount(discountName, discountDescription, bestDeal, discountIDString);
+			return discount;
+		} catch (DuplicateIDException | InvalidIDException e) {
+			// e.printStackTrace();
+			// discount has not been created as it is invalid
+		}
+
+		return discount;
 	}
 
 	/**
@@ -211,20 +242,17 @@ public class DiscountCalculator {
 	 *            list of items to check for deal validity
 	 * @return
 	 */
-	public static double getBestDeal(ArrayList<Item> itemList) {
-		
-		//call all available deals to compare their values
-		double mealDeal = applyMealDeal(itemList);
-		double bogofSnackDeal = applyBOGOFSnackDeal(itemList);
-
-		double bestDeal;
-
-		if (mealDeal > bogofSnackDeal) {
-			bestDeal = mealDeal;
-		} else {
-			bestDeal = bogofSnackDeal;
-		}
-		return bestDeal;
-	}
+	/*
+	 * public static double getBestDeal(ArrayList<Item> itemList) {
+	 * 
+	 * //call all available deals to compare their values double mealDeal =
+	 * applyMealDeal(itemList); double bogofSnackDeal =
+	 * applyBOGOFSnackDeal(itemList);
+	 * 
+	 * double bestDeal;
+	 * 
+	 * if (mealDeal > bogofSnackDeal) { bestDeal = mealDeal; } else { bestDeal =
+	 * bogofSnackDeal; } return bestDeal; }
+	 */
 
 }

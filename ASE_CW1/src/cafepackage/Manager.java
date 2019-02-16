@@ -50,7 +50,7 @@ public class Manager {
 	public void generateReport() {
 		
 		//apply discounts to orders
-		DiscountCalculator.applyDiscount(this.orders, this.menu);
+		//DiscountCalculator.applyDiscount(this.orders, this.menu);
 		
 		BufferedWriter writer = null;
 
