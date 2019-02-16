@@ -111,7 +111,7 @@ public class DiscountCalculator {
 			// make sure that the deal value is a positive value in case item combo is
 			// already cheaper than meal deal
 			if (dealValue < 0) {
-				dealValue = 0;
+				dealValue = -1;
 			}
 		}
 		
@@ -200,12 +200,12 @@ public class DiscountCalculator {
 			bestDeal = mealDeal;
 			discountName = "***MEAL DEAL DISCOUNT***";
 			discountDescription = "£5.50 meal deal";
-			discountIDString = "disc001";
+			
 		} else if (bogofSnackDeal > mealDeal && bogofSnackDeal > 0) {
 			bestDeal = bogofSnackDeal;
 			discountName = "***BOGOF DEAL DISCOUNT***";
 			discountDescription = "buy one get one free on all snacks";
-			discountIDString = "disc002";
+		
 		}
 		if (bestDeal > 0) {
 			Discount discount = createDiscountItem(discountName, discountDescription, bestDeal, discountIDString);

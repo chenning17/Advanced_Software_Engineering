@@ -137,11 +137,11 @@ public class cafeGUI extends JFrame implements ActionListener {
 			basket.add(this.orderListModel.getElementAt(i));
 		}
 
-		Discount prevDiscount = null;
+		Item prevDiscount = null;
 				//remove any previous discounts
 		for(Item item : basket) {
 			if(item instanceof Discount) {
-				prevDiscount = (Discount) item;
+				prevDiscount = item;
 			}
 		}
 		
@@ -151,15 +151,20 @@ public class cafeGUI extends JFrame implements ActionListener {
 		if (discount != null) {
 			//check if new discount is better than previous
 			if(prevDiscount != null && prevDiscount.getCost() > discount.getCost()) {
-				discount = prevDiscount;
+				discount = (Discount) prevDiscount;
+				//remove old discount from current chosen items
+				this.orderListModel.removeElement(prevDiscount);
+				basket.remove(prevDiscount);
 			}
-			else {
+			else if( prevDiscount != null) {
 			//remove old discount from current chosen items
 				this.orderListModel.removeElement(prevDiscount);
 				basket.remove(prevDiscount);
-				//add new discount
-				this.orderListModel.addElement(discount);
+				
 			}
+				//add new discount
+			
+			this.orderListModel.addElement(discount);
 		}
 		updateTotalPrice();
 		this.menuList.clearSelection();
