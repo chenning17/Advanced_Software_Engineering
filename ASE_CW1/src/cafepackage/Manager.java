@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class Manager {
 	private ItemCollection menu;
@@ -53,7 +54,7 @@ public class Manager {
 
 		BufferedWriter writer = null;
 
-		HashMap<Item, Integer> itemCounts = this.orders.getItemFreq(this.menu);
+		TreeMap<Item, Integer> itemCounts = this.orders.getItemFreq(this.menu);
 
 		// Code based on answers at:
 		// https://stackoverflow.com/questions/2885173/how-do-i-create-a-file-and-write-to-it-in-java
