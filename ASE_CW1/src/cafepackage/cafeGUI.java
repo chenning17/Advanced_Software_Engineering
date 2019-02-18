@@ -149,7 +149,7 @@ public class cafeGUI extends JFrame implements ActionListener {
 			}
 		}
 
-		refreshDiscount(true);
+		refreshDiscount();
 
 		updateTotalPrice();
 		this.menuList.clearSelection();
@@ -171,9 +171,8 @@ public class cafeGUI extends JFrame implements ActionListener {
 				}
 			}
 		}
-		// remove previousDiscount before refreshing discount to get newest discount
 
-		refreshDiscount(false);
+		refreshDiscount();
 		updateTotalPrice();
 	}
 
@@ -185,24 +184,25 @@ public class cafeGUI extends JFrame implements ActionListener {
 	 * with the current best discount available. This is useful for when an item is
 	 * removed from the selected list of items. If a value of true is given, it will
 	 * only replace the previous discount if the current discount value is greater
-	 * 
-	 * @param itemAdded
-	 *            boolean value used to choose if previous discount value should be
-	 *            instantly removed or compared with current best discount available
 	 */
-	private void refreshDiscount(boolean itemAdded) {
+	private void refreshDiscount() {
 		ArrayList<Item> basket = new ArrayList<Item>();
+		ArrayList<Discount> discounts = new ArrayList<Discount>();
 		
 		for (int i = 0; i < this.orderListModel.getSize(); i++) {
 			Item tempItem = this.orderListModel.getElementAt(i); //Store item temporarily so we don't have to 
 			
 			//Collect basket
-			if (!(tempItem instanceof Discount)) {
-				basket.add(tempItem);
+			if (tempItem instanceof Discount) {
+				discounts.add((Discount)tempItem);
 			}else {
 				//Remove existing discounts
-				this.orderListModel.removeElement(tempItem);
+				basket.add(tempItem);
 			}
+		}
+		
+		for(Discount discount : discounts) {
+			this.orderListModel.removeElement(discount);
 		}
 
 		//Loop through basket finding best discount and removing used items. Breaks out of loop when no more discounts

@@ -48,7 +48,7 @@ public class DiscountCalculator {
 			bogofSnackDeal.Apply();
 		}else {
 			//return best deal
-			if(mealDeal.getValue() < bogofSnackDeal.getValue()) {
+			if(mealDeal.getValue() > bogofSnackDeal.getValue()) {
 				discount = createDiscountItem(mealDeal.NAME, mealDeal.DESCRIPTION, mealDeal.getValue(), discountIDString);
 				mealDeal.Apply();
 			}else {
@@ -116,20 +116,18 @@ public class DiscountCalculator {
 				snackCounter++;
 				
 				//Shortcutting ORs to get around possibility of nulls
-				if(cheapestSnack == null || item.getCost() < cheapestSnack.getCost()) {
+				if(cheapestSnack == null) {
+					cheapestSnack = (Snack) item;
+				}else if(item.getCost() < cheapestSnack.getCost()){
 					//If we find a new cheapest snack check if the old cheapest snack becomes the most expensive snack 
-					if(mostExpensiveSnack == null || (cheapestSnack != null && cheapestSnack.getCost() > mostExpensiveSnack.getCost())) {
+					if(mostExpensiveSnack == null) {
 						mostExpensiveSnack = cheapestSnack;
 					}
 					
 					cheapestSnack = (Snack) item; //No problem casting because we already checked instance of
-					
-				}else if(mostExpensiveSnack == null || item.getCost()>mostExpensiveSnack.getCost()) {
-					//If we find a new most expensive snack check if the old expensive snack becomes the cheapest snack 
-					if(cheapestSnack == null || (mostExpensiveSnack != null && mostExpensiveSnack.getCost() > cheapestSnack.getCost())) {
-						cheapestSnack = mostExpensiveSnack;
-					}
-					
+				}else if(mostExpensiveSnack == null) {
+					mostExpensiveSnack = (Snack) item;
+				}else if(item.getCost()>mostExpensiveSnack.getCost()) {
 					mostExpensiveSnack = (Snack) item;
 				}
 			}
@@ -210,7 +208,7 @@ class MealDeal{
 	
 	public double getValue() {
 		double totalPrice = food.getCost() + drink.getCost() + snack.getCost();
-		return totalPrice - 5.5;
+		return (totalPrice - 5.5);
 	}
 	
 	//Remove deal items from basket
