@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -49,8 +51,9 @@ public class cafeGUI extends JFrame implements ActionListener {
 
 		this.orderListModel = new DefaultListModel<Item>();
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -77,16 +80,24 @@ public class cafeGUI extends JFrame implements ActionListener {
 		this.btnCreateOrder.addActionListener(this);
 		panel.add(btnCreateOrder);
 
-		this.btnGenReport = new JButton("Generate Report");
-		this.btnGenReport.addActionListener(this);
-		panel.add(btnGenReport);
-
 		this.totalPrice = new JTextField();
 		panel.add(totalPrice);
 		updateTotalPrice();
 
 		this.currentOrder = new JList<Item>(this.orderListModel);
 		contentPane.add(currentOrder);
+		
+		/**
+		 * Override default close operation to include report generation
+		 * https://stackoverflow.com/questions/9093448/how-to-capture-a-jframes-close-button-click-event
+		 */
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				generateReport();
+				System.exit(0);
+			}
+		});
 
 	}
 
@@ -96,8 +107,6 @@ public class cafeGUI extends JFrame implements ActionListener {
 			addToCart();
 		} else if (e.getSource() == this.btnCreateOrder) {
 			submitOrder();
-		} else if (e.getSource() == this.btnGenReport) {
-			generateReport();
 		} else if (e.getSource() == this.btnRemove) {
 			removeFromCart();
 		}
