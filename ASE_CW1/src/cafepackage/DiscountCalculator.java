@@ -112,17 +112,46 @@ public class DiscountCalculator {
 
 	/**
 	 * Given an input list of items, will return the value of savings that a buy one
-	 * get one free deal would save the user. This deal applies only to orders where
-	 * two identical snack items have been ordered. Returns a value of -1 if deal is
+	 * get one free deal would save the user. Returns a value of -1 if deal is
 	 * not applicable, will apply deal two multiples of 2, i.e. 4 items would give a
 	 * discount equivalent to 2, but 3 would give a discount equivalent to 1 free
-	 * item.
+	 * item. Applies discount in order that items appear. The cost of every second snack
+	 * will be added to the discount.
 	 * 
 	 * @param itemList
 	 *            list of items in an order
-	 * @return
+	 * @return value of discount
 	 */
 	public static double applyBOGOFSnackDeal(ArrayList<Item> itemList) {
+		boolean snack1 = false;
+		boolean snack2 = false;
+		
+		double dealValue = 0;
+		
+		for (Item item : itemList) {
+			//for each item in the list
+			if (item instanceof Snack) { //if the item is a snack
+				if(!snack1) { //and if no snacks have been found yet, say we've found 1 snack
+					snack1 = true;
+				}
+				else if(!snack2) { //otherwise if a snack has already been found, say we've found a second
+					snack2 = true;
+				}
+				
+				if(snack1 && snack2) { //if we've found 2 snacks
+					dealValue += item.getCost(); //add the cost of the second to the discount
+					
+					//reset values to look for more snacks
+					snack1 = false;
+					snack2 = false;
+				}
+			}
+		}
+		return dealValue;
+	}
+		
+		
+		/*
 		// value used to hold the amount of savings applied by the deal
 		double dealValue = 0;
 		int counts;
@@ -154,7 +183,7 @@ public class DiscountCalculator {
 		} else {
 			return -1;
 		}
-	}
+	}*/
 
 	/**
 	 * Create and return a new Discount item with the given parameters passed to the
