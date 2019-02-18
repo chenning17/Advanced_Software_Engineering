@@ -35,23 +35,22 @@ public class Manager {
 		OrderLoader orderLoader = new OrderLoader(orderFile, this.menu);
 		this.orders = orderLoader.loadOrders();
 
-		
-    System.out.println("---\nOrders loaded: " + this.orders.count());
-    
+		System.out.println("---\nOrders loaded: " + this.orders.count());
+
 		try {
-			cafeGUI frame = new cafeGUI(this.menu, this); //create gui giving it a menu and the manager itself
+			cafeGUI frame = new cafeGUI(this.menu, this); // create gui giving it a menu and the manager itself
 			frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	//When should this be called
+
+	// When should this be called
 	public void generateReport() {
-		
-		//apply discounts to orders
-		//DiscountCalculator.applyDiscount(this.orders, this.menu);
-		
+
+		// apply discounts to orders
+		// DiscountCalculator.applyDiscount(this.orders, this.menu);
+
 		BufferedWriter writer = null;
 
 		HashMap<Item, Integer> itemCounts = this.orders.getItemFreq(this.menu);
@@ -62,7 +61,7 @@ public class Manager {
 			String filename = "Report " + new Date().toString().substring(0, 10) + ".txt";
 			File outputFile = new File(filename);
 			writer = new BufferedWriter(new FileWriter(outputFile));
-			
+
 //			writer.write(String.format("%-15s\t%-25s\t%-30s\t\n", "Customer id", "Item", "Date"));
 //
 //			for (Order o : this.orders) {
@@ -71,79 +70,71 @@ public class Manager {
 //				writer.write(String.format("%-30s\t", o.getTimestamp().toString()));
 //				writer.write("\n");
 //			}
-			
-			writer.write(String.format("Total Value Report\ncreated on: %s \n\n", new Date().toString().substring(0, 10)));
+
+			writer.write(
+					String.format("Total Value Report\ncreated on: %s \n\n", new Date().toString().substring(0, 10)));
 			writer.write(String.format("%-35s\t%-10s\t%-10s\t\n", "Item", "Count", "Total Value"));
-			
+
 			double totalIncome = 0;
 			int i = 0;
-			while(i < 4) {
-				if(i==0) {
-					writer.write("\n--==Food==--\n");
-					for(Item item : this.menu) {
-						if(item instanceof Food) {
-							String name = item.getName();
-							int count = itemCounts.get(item);
-							double totalValue = item.getCost() * count;
-							totalIncome += totalValue;
-							writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
-						}
-					}
+
+			writer.write("\n--==Food==--\n");
+			for (Item item : this.menu) {
+				if (item instanceof Food) {
+					String name = item.getName();
+					int count = itemCounts.get(item);
+					double totalValue = item.getCost() * count;
+					totalIncome += totalValue;
+					writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
 				}
-				else if(i==1) {
-					writer.write("\n--==Snack==--\n");
-					for(Item item : this.menu) {
-						if(item instanceof Snack) {
-							String name = item.getName();
-							int count = itemCounts.get(item);
-							double totalValue = item.getCost() * count;
-							totalIncome += totalValue;
-							writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
-						}
-					}
-				}
-				else if(i==2) {
-					writer.write("\n--==Drink==--\n");
-					for(Item item : this.menu) {
-						if(item instanceof Drink) {
-							String name = item.getName();
-							int count = itemCounts.get(item);
-							double totalValue = item.getCost() * count;
-							totalIncome += totalValue;
-							writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
-						}
-					}
-				}
-				else if(i==3) {
-					writer.write("\n--==Discount==--\n");
-					for(Item item : this.menu) {
-						if(item instanceof Discount) {
-							String name = item.getName();
-							int count = itemCounts.get(item);
-							double totalValue = item.getCost() * count * -1;
-							totalIncome += totalValue;
-							writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
-						}
-					}
-				}
-				i++;
 			}
+
+			writer.write("\n--==Snack==--\n");
+			for (Item item : this.menu) {
+				if (item instanceof Snack) {
+					String name = item.getName();
+					int count = itemCounts.get(item);
+					double totalValue = item.getCost() * count;
+					totalIncome += totalValue;
+					writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
+				}
+			}
+
+			writer.write("\n--==Drink==--\n");
+			for (Item item : this.menu) {
+				if (item instanceof Drink) {
+					String name = item.getName();
+					int count = itemCounts.get(item);
+					double totalValue = item.getCost() * count;
+					totalIncome += totalValue;
+					writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
+				}
+			}
+
+			writer.write("\n--==Discount==--\n");
+			for (Item item : this.menu) {
+				if (item instanceof Discount) {
+					String name = item.getName();
+					int count = itemCounts.get(item);
+					double totalValue = item.getCost() * count * -1;
+					totalIncome += totalValue;
+					writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
+				}
+			}
+
 			/*
-			for (HashMap.Entry<Item, Integer> entry : itemCounts.entrySet()) {
-				String itemName = entry.getKey().getName();
-				int itemCount = entry.getValue();
-				double totalValue = entry.getKey().getCost() * entry.getValue();
-				
-				//if item is a discount then make sure to use the negative value for adding to total costs
-				if(entry.getKey() instanceof Discount) {
-					totalValue *= -1;
-				}
-				totalIncome += totalValue;
-				writer.write(String.format("%-35s\t %-10d\t Â£% -10.2f\t\n", itemName, itemCount,	totalValue));
-			}
-			*/
-			writer.write(String.format("\nTotal Earnings: %34s%.2f", "£",totalIncome));
-				
+			 * for (HashMap.Entry<Item, Integer> entry : itemCounts.entrySet()) { String
+			 * itemName = entry.getKey().getName(); int itemCount = entry.getValue(); double
+			 * totalValue = entry.getKey().getCost() * entry.getValue();
+			 * 
+			 * //if item is a discount then make sure to use the negative value for adding
+			 * to total costs if(entry.getKey() instanceof Discount) { totalValue *= -1; }
+			 * totalIncome += totalValue;
+			 * writer.write(String.format("%-35s\t %-10d\t Â£% -10.2f\t\n", itemName,
+			 * itemCount, totalValue)); }
+			 */
+			writer.write(String.format("\nTotal Earnings: %34s%.2f", "£", totalIncome));
+
 			System.out.println("Report saved!");
 		} catch (java.io.IOException ioe) {
 			System.out.println("Failed to save report." + ioe.getMessage());
