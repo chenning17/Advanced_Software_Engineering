@@ -208,6 +208,7 @@ class MealDeal{
 	
 	public double getValue() {
 		double totalPrice = food.getCost() + drink.getCost() + snack.getCost();
+		totalPrice = Math.round(totalPrice * 100) / 100.0;
 		return (totalPrice - 5.5);
 	}
 	
