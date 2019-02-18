@@ -178,19 +178,6 @@ public abstract class Item implements Comparable<Item> {
 	}
 
 	/**
-	 * Returns true if ID is already found in the idList HashSet, returns false
-	 * otherwise.
-	 * 
-	 * @return
-	 */
-	protected static boolean isDuplicateID(String id, HashSet<String> idList) {
-		if (idList.contains(id)) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * Called in constructor of inheriting class, returns true if input id to
 	 * constructor is valid
 	 * 
