@@ -192,7 +192,6 @@ public class cafeGUI extends JFrame implements ActionListener {
 	 */
 	private void refreshDiscount(boolean itemAdded) {
 		ArrayList<Item> basket = new ArrayList<Item>();
-		ArrayList<Discount> discounts;
 		
 		for (int i = 0; i < this.orderListModel.getSize(); i++) {
 			Item tempItem = this.orderListModel.getElementAt(i); //Store item temporarily so we don't have to 
@@ -201,16 +200,23 @@ public class cafeGUI extends JFrame implements ActionListener {
 			if (!(tempItem instanceof Discount)) {
 				basket.add(tempItem);
 			}else {
+				//Remove existing discounts
 				this.orderListModel.removeElement(tempItem);
 			}
 		}
 
-		// get current best discount
-		Discount discount = DiscountCalculator.getBestDeal(basket);
-		// add new discount
-		if(discount != null) {
-			this.orderListModel.addElement(discount);
+		//Loop through basket finding best discount and removing used items. Breaks out of loop when no more discounts
+		while(true) {
+			// get current best discount. If a discount is found it removes those items from basket
+			Discount discount = DiscountCalculator.getBestDeal(basket);
+			// add new discount
+			if(discount != null) {
+				this.orderListModel.addElement(discount);
+			}else {
+				break;
+			}
 		}
+
 	}
 
 	/**
