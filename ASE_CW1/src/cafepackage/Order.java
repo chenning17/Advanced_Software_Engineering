@@ -33,7 +33,7 @@ public class Order {
 
 		// highest pre-existing customer ID ends up being set to the current ID + 1
 		if (this.customerId >= currentCustomerID) {
-			this.currentCustomerID = customerId + 1;
+			currentCustomerID = customerId + 1;
 		}
 		else if (this.customerId == currentCustomerID) {
 			currentCustomerID++;
