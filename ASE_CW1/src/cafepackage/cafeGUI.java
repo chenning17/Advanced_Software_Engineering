@@ -192,40 +192,23 @@ public class cafeGUI extends JFrame implements ActionListener {
 	 */
 	private void refreshDiscount(boolean itemAdded) {
 		ArrayList<Item> basket = new ArrayList<Item>();
+		ArrayList<Discount> discounts;
+		
 		for (int i = 0; i < this.orderListModel.getSize(); i++) {
-			basket.add(this.orderListModel.getElementAt(i));
-		}
-
-		Item prevDiscount = null;
-		// check for any previous discounts
-		for (Item item : basket) {
-			if (item instanceof Discount) {
-				prevDiscount = item;
+			Item tempItem = this.orderListModel.getElementAt(i); //Store item temporarily so we don't have to 
+			
+			//Collect basket
+			if (!(tempItem instanceof Discount)) {
+				basket.add(tempItem);
+			}else {
+				this.orderListModel.removeElement(tempItem);
 			}
-		}
-
-		// remove old discount if item was removed
-		if (itemAdded == false) {
-			this.orderListModel.removeElement(prevDiscount);
-			basket.remove(prevDiscount);
-			prevDiscount = null;
 		}
 
 		// get current best discount
 		Discount discount = DiscountCalculator.getBestDeal(basket);
-		if (discount != null) {
-			// check if new discount is better than previous
-			if (prevDiscount != null && prevDiscount.getCost() > discount.getCost()) {
-				discount = (Discount) prevDiscount;
-				// remove old discount from current chosen items
-				this.orderListModel.removeElement(prevDiscount);
-				basket.remove(prevDiscount);
-			} else if (prevDiscount != null) {
-				// remove old discount from current chosen items
-				this.orderListModel.removeElement(prevDiscount);
-				basket.remove(prevDiscount);
-			}
-			// add new discount
+		// add new discount
+		if(discount != null) {
 			this.orderListModel.addElement(discount);
 		}
 	}
