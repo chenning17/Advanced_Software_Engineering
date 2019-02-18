@@ -49,17 +49,5 @@ Still Water                        	 0         	 £ 0.00
 Tea                                	 2         	 £ 3.90     	
 
 --==Discount==--
-Apple Juice                        	 0         	 £-0.00     	
-Black Coffee                       	 2         	 £-3.50     	
-Coca-Cola                          	 1         	 £-1.25     	
-Fanta                              	 2         	 £-2.50     	
-Hot Chocolate                      	 1         	 £-2.45     	
-Irn Bru                            	 1         	 £-1.25     	
-Latte                              	 3         	 £-6.75     	
-Orange Juice                       	 2         	 £-2.30     	
-Sparkling Water                    	 0         	 £-0.00     	
-Sprite                             	 1         	 £-1.25     	
-Still Water                        	 0         	 £-0.00     	
-Tea                                	 2         	 £-3.90     	
 
-Total Earnings:                                 Â£65.45
+Total Earnings:                                  £90.60

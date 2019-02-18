@@ -65,7 +65,7 @@ public class cafeGUI extends JFrame implements ActionListener {
 		contentPane.add(scrollPane);
 
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(5, 0, 0, 20));
+		panel.setLayout(new GridLayout(4, 0, 0, 20));
 		contentPane.add(panel);
 
 		this.btnAdd = new JButton("Add");

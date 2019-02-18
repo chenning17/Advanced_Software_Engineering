@@ -117,7 +117,7 @@ public class Manager {
 				else if(i==3) {
 					writer.write("\n--==Discount==--\n");
 					for(Item item : this.menu) {
-						if(item instanceof Drink) {
+						if(item instanceof Discount) {
 							String name = item.getName();
 							int count = itemCounts.get(item);
 							double totalValue = item.getCost() * count * -1;
@@ -142,7 +142,7 @@ public class Manager {
 				writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", itemName, itemCount,	totalValue));
 			}
 			*/
-			writer.write(String.format("\nTotal Earnings: %34s%.2f", "£",totalIncome));
+			writer.write(String.format("\nTotal Earnings: %34s%.2f", "�",totalIncome));
 				
 			System.out.println("Report saved!");
 		} catch (java.io.IOException ioe) {
