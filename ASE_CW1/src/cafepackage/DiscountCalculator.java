@@ -208,8 +208,9 @@ class MealDeal{
 	
 	public double getValue() {
 		double totalPrice = food.getCost() + drink.getCost() + snack.getCost();
+		totalPrice -= 5.5;
 		totalPrice = Math.round(totalPrice * 100) / 100.0;
-		return (totalPrice - 5.5);
+		return totalPrice;
 	}
 	
 	//Remove deal items from basket
