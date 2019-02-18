@@ -199,7 +199,7 @@ public abstract class Item implements Comparable<Item> {
 	 * Method from Comparable interface, items compared based on their id string
 	 */
 	public int compareTo(Item other) {
-		return this.id.compareTo(other.id);
+		return this.getName().compareTo(other.getName());
 	}
 	
 	/**
