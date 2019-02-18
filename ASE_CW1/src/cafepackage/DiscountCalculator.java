@@ -9,19 +9,14 @@ public class DiscountCalculator {
 	static int discountID = 0;
 
 	/**
-	 * Given a list of items, will attempt to apply all available deals to this
-	 * list, and will return the best discount value possible. This function is
-	 * provided for use with the main applyDiscount function in this
-	 * DiscountCalculator class.
+	 * Given a list of items, will find best discount available and return it.
+	 * If no discounts available then returns null.
+	 * Any items used in discount are removed from list.
 	 * 
 	 * @param itemList
-	 *            list of items to check for deal validity
-	 * @param discountName
-	 *            input string to be overwritten with the name of the best discount
-	 * @param discountDescription
-	 *            input string to be overwritten with the description of the best
-	 *            discount
-	 * @return
+	 *				list of items to check for deal validity
+	 * @return discount
+	 * 				Best available discount
 	 */
 	public static Discount getBestDeal(ArrayList<Item> itemList) {
 
@@ -61,14 +56,14 @@ public class DiscountCalculator {
 	}
 
 	/**
-	 * Given an input list of items, will return the value of savings that a meal
-	 * deal would save the user. Returns a value of -1 if deal is not applicable or
-	 * if the price of items is not enough to save money using the deal.
+	 * Given an input list of items, will return the best meal deal available.
+	 * Returns null if deal not applicable
 	 * 
 	 * @param basket
-	 *            list of items in an order
+	 *			List of items to check for deals
 	 * @return
-	 */
+	 * 			Best available meal deal
+	 */			
 	static MealDeal applyMealDeal(ArrayList<Item> basket) {
 		// values used to hold the value of the most expensive item of each category
 		// in order to apply the best deal
@@ -103,8 +98,9 @@ public class DiscountCalculator {
 	 * Cheapest snack is free and most expensive snack is kept.
 	 * 
 	 * @param basket
-	 *            list of items in an order
-	 * @return The items in the discount
+	 *			list of items in an order
+	 * @return 
+	 * 			The items in the discount
 	 */
 	static BogofSnack applyBOGOFSnackDeal(ArrayList<Item> basket) {
 		int snackCounter = 0;
@@ -168,6 +164,7 @@ public class DiscountCalculator {
 
 }
 
+//Object to store details of a Bogof snack deal
 class BogofSnack{
 	public final String NAME = "***BOGOF DEAL DISCOUNT***";
 	public final String DESCRIPTION = "Buy one get one free on all snacks";
@@ -191,6 +188,7 @@ class BogofSnack{
 	}
 }
 
+//Object to store details of a meal deal
 class MealDeal{
 	public final String NAME = "***MEAL DEAL DISCOUNT***";
 	public final String DESCRIPTION = "£5.50 meal deal";

@@ -177,39 +177,36 @@ public class cafeGUI extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * Using the current list of items selected, updates the discount item held in
-	 * the currently selected items list if applicable. Will replace an old discount
-	 * item with a better discount if it is found. If the given parameter itemAdded
-	 * is false the previous discount if found will always be removed and replaced
-	 * with the current best discount available. This is useful for when an item is
-	 * removed from the selected list of items. If a value of true is given, it will
-	 * only replace the previous discount if the current discount value is greater
+	 * Calculates best discounts for current cart.
+	 * Will remove old discounts before calculating new ones.
+	 * If discounts are found they will be added to basket. Best discounts added first.
+	 * Can add multiple discounts but any item can only be part of one discount.
 	 */
 	private void refreshDiscount() {
-		ArrayList<Item> basket = new ArrayList<Item>();
+		ArrayList<Item> tempBasket = new ArrayList<Item>();
 		ArrayList<Discount> discounts = new ArrayList<Discount>();
 		
 		for (int i = 0; i < this.orderListModel.getSize(); i++) {
 			Item tempItem = this.orderListModel.getElementAt(i); //Store item temporarily so we don't have to 
 			
-			//Collect basket
 			if (tempItem instanceof Discount) {
+				//Store discounts to be removed from GUI after finished looping through list
 				discounts.add((Discount)tempItem);
 			}else {
-				//Remove existing discounts
-				basket.add(tempItem);
+				//Collect all items in cart
+				tempBasket.add(tempItem);
 			}
 		}
 		
+		//Remove all old discounts
 		for(Discount discount : discounts) {
 			this.orderListModel.removeElement(discount);
 		}
 
 		//Loop through basket finding best discount and removing used items. Breaks out of loop when no more discounts
 		while(true) {
-			// get current best discount. If a discount is found it removes those items from basket
-			Discount discount = DiscountCalculator.getBestDeal(basket);
-			// add new discount
+			Discount discount = DiscountCalculator.getBestDeal(tempBasket);
+			
 			if(discount != null) {
 				this.orderListModel.addElement(discount);
 			}else {
@@ -227,7 +224,6 @@ public class cafeGUI extends JFrame implements ActionListener {
 	}
 
 	private void updateTotalPrice() {
-		// TODO: Calculate discounts and update cart
 		totalPrice.setText(String.format("Total price: %.2f", calculateTotalPrice()));
 	}
 
