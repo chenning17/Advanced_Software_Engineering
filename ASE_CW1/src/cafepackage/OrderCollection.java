@@ -36,9 +36,9 @@ public class OrderCollection implements Iterable<Order> {
 		return orderCollection.size();
 	}
 
-	public HashMap<Item, Integer> getItemFreq(ItemCollection menu) {
+	public TreeMap<Item, Integer> getItemFreq(ItemCollection menu) {
 
-		HashMap<Item, Integer> itemCounts = new HashMap<Item, Integer>();
+		TreeMap<Item, Integer> itemCounts = new TreeMap<Item, Integer>();
 		for (Item i : menu) {
 			itemCounts.put(i, 0);
 		}
