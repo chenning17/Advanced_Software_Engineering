@@ -32,11 +32,9 @@ public class Snack extends Item {
 
 		if (validateID(id, itemIdentifier) == false) {
 			throw new InvalidIDException(id);
-		} else if (isDuplicateID(id, idList) == true) {
+		} else if (!idList.add(id)) {
 			throw new DuplicateIDException(id);
 		}
-
-		idList.add(id);
 	}
 	
 }
