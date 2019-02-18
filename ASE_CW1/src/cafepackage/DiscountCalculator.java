@@ -123,68 +123,37 @@ public class DiscountCalculator {
 	 * @return value of discount
 	 */
 	public static double applyBOGOFSnackDeal(ArrayList<Item> itemList) {
-		boolean snack1 = false;
-		boolean snack2 = false;
+		double snack1 = 0;
+		double snack2 = 0;
 		
 		double dealValue = 0;
 		
 		for (Item item : itemList) {
 			//for each item in the list
 			if (item instanceof Snack) { //if the item is a snack
-				if(!snack1) { //and if no snacks have been found yet, say we've found 1 snack
-					snack1 = true;
+				if(snack1 == 0) { //and if no snacks have been found yet, get the cost of that snack
+					snack1 = item.getCost();
 				}
-				else if(!snack2) { //otherwise if a snack has already been found, say we've found a second
-					snack2 = true;
+				else if(snack2 == 0) { //otherwise if a snack has already been found, get the cost of the second snack
+					snack2 = item.getCost();
 				}
 				
-				if(snack1 && snack2) { //if we've found 2 snacks
-					dealValue += item.getCost(); //add the cost of the second to the discount
+				if(snack1 != 0 && snack2 != 0) { //if we've found 2 snacks, add the value of the one with the lower cost to the discount
+					if(snack1 < snack2) {
+						dealValue += snack1;
+					} else {
+						dealValue += snack2;
+					}
 					
-					//reset values to look for more snacks
-					snack1 = false;
-					snack2 = false;
+					//reset values to look for more snacks in basket
+					snack1 = 0;
+					snack2 = 0;
 				}
 			}
 		}
 		return dealValue;
 	}
 		
-		
-		/*
-		// value used to hold the amount of savings applied by the deal
-		double dealValue = 0;
-		int counts;
-		HashMap<Item, Integer> itemCounts = new HashMap<Item, Integer>();
-
-		for (Item item : itemList) {
-
-			if (itemCounts.containsKey(item)) {
-				counts = itemCounts.get(item);
-				itemCounts.put(item, counts + 1);
-			} else {
-				itemCounts.put(item, 1);
-			}
-		}
-
-		Item tempItem;
-		// evaluate each item count to see if it qualifies for a bogof snack deal
-		// and add the correct (number of free items) * (item cost) to the dealValue
-		for (HashMap.Entry<Item, Integer> entry : itemCounts.entrySet()) {
-			tempItem = entry.getKey();
-			counts = entry.getValue();
-
-			if (tempItem instanceof Snack && counts > 1) {
-				dealValue += ((counts - counts % 2) / 2) * tempItem.getCost();
-			}
-		}
-		if (dealValue > 0) {
-			return dealValue;
-		} else {
-			return -1;
-		}
-	}*/
-
 	/**
 	 * Create and return a new Discount item with the given parameters passed to the
 	 * Discount item constructor.
