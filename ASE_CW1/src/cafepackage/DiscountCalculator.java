@@ -112,50 +112,48 @@ public class DiscountCalculator {
 
 	/**
 	 * Given an input list of items, will return the value of savings that a buy one
-	 * get one free deal would save the user. This deal applies only to orders where
-	 * two identical snack items have been ordered. Returns a value of -1 if deal is
+	 * get one free deal would save the user. Returns a value of -1 if deal is
 	 * not applicable, will apply deal two multiples of 2, i.e. 4 items would give a
 	 * discount equivalent to 2, but 3 would give a discount equivalent to 1 free
-	 * item.
+	 * item. Applies discount in order that items appear. The cost of every second snack
+	 * will be added to the discount.
 	 * 
 	 * @param itemList
 	 *            list of items in an order
-	 * @return
+	 * @return value of discount
 	 */
 	public static double applyBOGOFSnackDeal(ArrayList<Item> itemList) {
-		// value used to hold the amount of savings applied by the deal
+		double snack1 = 0;
+		double snack2 = 0;
+		
 		double dealValue = 0;
-		int counts;
-		HashMap<Item, Integer> itemCounts = new HashMap<Item, Integer>();
-
+		
 		for (Item item : itemList) {
-
-			if (itemCounts.containsKey(item)) {
-				counts = itemCounts.get(item);
-				itemCounts.put(item, counts + 1);
-			} else {
-				itemCounts.put(item, 1);
+			//for each item in the list
+			if (item instanceof Snack) { //if the item is a snack
+				if(snack1 == 0) { //and if no snacks have been found yet, get the cost of that snack
+					snack1 = item.getCost();
+				}
+				else if(snack2 == 0) { //otherwise if a snack has already been found, get the cost of the second snack
+					snack2 = item.getCost();
+				}
+				
+				if(snack1 != 0 && snack2 != 0) { //if we've found 2 snacks, add the value of the one with the lower cost to the discount
+					if(snack1 < snack2) {
+						dealValue += snack1;
+					} else {
+						dealValue += snack2;
+					}
+					
+					//reset values to look for more snacks in basket
+					snack1 = 0;
+					snack2 = 0;
+				}
 			}
 		}
-
-		Item tempItem;
-		// evaluate each item count to see if it qualifies for a bogof snack deal
-		// and add the correct (number of free items) * (item cost) to the dealValue
-		for (HashMap.Entry<Item, Integer> entry : itemCounts.entrySet()) {
-			tempItem = entry.getKey();
-			counts = entry.getValue();
-
-			if (tempItem instanceof Snack && counts > 1) {
-				dealValue += ((counts - counts % 2) / 2) * tempItem.getCost();
-			}
-		}
-		if (dealValue > 0) {
-			return dealValue;
-		} else {
-			return -1;
-		}
+		return dealValue;
 	}
-
+		
 	/**
 	 * Create and return a new Discount item with the given parameters passed to the
 	 * Discount item constructor.
