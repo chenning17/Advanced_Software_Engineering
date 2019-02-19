@@ -68,26 +68,31 @@ public class ItemLoaderTest {
 		}
 		assertEquals("Failed to read in food item", itemName, testItem.getName());
 	}
-
+// Checks that Food items are loaded in correctly
 	@Test
 	public void testLoadInFood() {
 		loadReadItem(this.food1, "food001", "Haggis");
 	}
 
+// Checks that Drink items are loaded in correctly
 	@Test
 	public void testLoadInDrink() {
 		loadReadItem(this.drink1, "drnk001", "Fanta");
 	}
 
+// Checks that Snack items are loaded in correctly
 	@Test
 	public void testLoadInSnack() {
 		loadReadItem(this.snack1, "snck001", "Smokey Bacon Crisps");
 	}
-	
+// Checks that Discounts are loaded in correctly
 	@Test
 	public void testLoadInDiscount() {
 		loadReadItem(this.discount1, "disc001", "Meal Deal");
 	}
+	
+
+//Tests constructor when an invalid drink id (drin) is passed
 	@Test
 	public void testLoadInDrink2() {
 		loadReadItem(this.drink2, "drin123", "Fanta");
