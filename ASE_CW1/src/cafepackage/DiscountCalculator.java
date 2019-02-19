@@ -86,7 +86,13 @@ public class DiscountCalculator {
 
 		//If at least one of each type of item is present then return a deal
 		if (maxFood != null && maxDrink != null && maxSnack != null) {
-			return new MealDeal(maxFood, maxDrink, maxSnack, basket);
+			MealDeal tempMealDeal = new MealDeal(maxFood, maxDrink, maxSnack, basket);
+			if(tempMealDeal.getValue() <= 0.0) {
+				return null;
+			}else {
+				return tempMealDeal;
+			}
+			
 		}else {
 			return null;
 		}
