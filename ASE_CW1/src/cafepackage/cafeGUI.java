@@ -54,40 +54,48 @@ public class cafeGUI extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		
+		//set up JPanel
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(1, 0, 0, 0));
 
+		//Set up menu, add to JPanel
 		JScrollPane scrollPane = new JScrollPane();
 		this.menuList = new JList<>(this.menuListModel);
 		scrollPane.setViewportView(menuList);
 		contentPane.add(scrollPane);
 
+		//set up middle area, add buttons and display for cost of order
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(4, 0, 0, 20));
 		contentPane.add(panel);
 
+		//Add button
 		this.btnAdd = new JButton("Add");
 		this.btnAdd.addActionListener(this);
 		panel.add(this.btnAdd);
-
+		
+		//Remove button
 		this.btnRemove = new JButton("Remove");
 		this.btnRemove.addActionListener(this);
 		panel.add(this.btnRemove);
 
+		//Create order button
 		this.btnCreateOrder = new JButton("Create Order");
 		this.btnCreateOrder.addActionListener(this);
 		panel.add(btnCreateOrder);
 
+		//Order cost display
 		this.totalPrice = new JTextField();
 		panel.add(totalPrice);
 		updateTotalPrice();
 
+		//Create and add empty JList used to show the items currently in the order
 		this.currentOrder = new JList<Item>(this.orderListModel);
 		contentPane.add(currentOrder);
 		
-		/**
+		/*
 		 * Override default close operation to include report generation
 		 * https://stackoverflow.com/questions/9093448/how-to-capture-a-jframes-close-button-click-event
 		 */
@@ -117,9 +125,10 @@ public class cafeGUI extends JFrame implements ActionListener {
 	 */
 	private void submitOrder() {
 		ArrayList<Order> newOrder = new ArrayList<Order>();
-		// System.out.println("Create order button pressed");
 		int customerID = Order.getCurrentCustomerID();
 		Date date = new Date();
+		
+		//create a new order for each item in the "Basket"
 		for (int i = 0; i < orderListModel.size(); i++) {
 			Item item = orderListModel.getElementAt(i);
 			Order order = new Order(date, customerID, item);
@@ -130,6 +139,7 @@ public class cafeGUI extends JFrame implements ActionListener {
 				this.menu.add(item);
 			}
 		}
+		//update orders, reset gui ready for next order
 		this.manager.addOrder(newOrder);
 		this.orderListModel.removeAllElements();
 		updateTotalPrice();
@@ -159,11 +169,8 @@ public class cafeGUI extends JFrame implements ActionListener {
 	 * Removes selected items from list on right of screen
 	 */
 	private void removeFromCart() {
-		System.out.println("This would remove:");
 		int[] indices = currentOrder.getSelectedIndices();
-		for (int i : indices) {
-			System.out.println(i);
-		}
+
 		for (int i = this.orderListModel.size() - 1; i > -1; i--) {
 			for (int index : indices) {
 				if (i == index) {
@@ -223,10 +230,17 @@ public class cafeGUI extends JFrame implements ActionListener {
 		this.manager.generateReport();
 	}
 
+	/**
+	 * Changes display of total price to sum of items in basket
+	 */
 	private void updateTotalPrice() {
 		totalPrice.setText(String.format("Total price: %.2f", calculateTotalPrice()));
 	}
 
+	/**
+	 * Sums cost of items in basket
+	 * @return double of cost of all items in basket
+	 */
 	private double calculateTotalPrice() {
 		double price = 0.0;
 		for (int i = 0; i < orderListModel.size(); i++) {

@@ -24,18 +24,27 @@ public class OrderCollection implements Iterable<Order> {
 	}
 
 	/**
-	 * returns an iterator of the orders
+	 * Exposes iterator of private ArrayList
 	 * 
-	 * @return
+	 * @return an iterator of the orders
 	 */
 	public Iterator<Order> iterator() {
 		return orderCollection.iterator();
 	}
 
+	/**
+	 * 
+	 * @return size of arrayList
+	 */
 	public int count() {
 		return orderCollection.size();
 	}
 
+	/**
+	 * Gets the frequency of item sales
+	 * @param menu 
+	 * @return TreeMap with Items as key, and integer of counts as value
+	 */
 	public TreeMap<Item, Integer> getItemFreq(ItemCollection menu) {
 
 		TreeMap<Item, Integer> itemCounts = new TreeMap<Item, Integer>();

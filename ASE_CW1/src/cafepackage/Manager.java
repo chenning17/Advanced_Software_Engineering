@@ -30,7 +30,7 @@ public class Manager {
 
 		System.out.println("---\nItems loaded into menu: " + this.menu.count());
 
-		// load orders from csv, ...
+		// load orders from csv
 		String orderFile = "OrderList.csv";
 		System.out.println("\nInputing orders from: " + orderFile);
 		OrderLoader orderLoader = new OrderLoader(orderFile, this.menu);
@@ -46,7 +46,9 @@ public class Manager {
 		}
 	}
 
-	// When should this be called
+	/**
+	 * writes report of items sold and takings to file
+	 */
 	public void generateReport() {
 
 		// apply discounts to orders
@@ -62,15 +64,6 @@ public class Manager {
 			String filename = "Report " + new Date().toString().substring(0, 10) + ".txt";
 			File outputFile = new File(filename);
 			writer = new BufferedWriter(new FileWriter(outputFile));
-
-//			writer.write(String.format("%-15s\t%-25s\t%-30s\t\n", "Customer id", "Item", "Date"));
-//
-//			for (Order o : this.orders) {
-//				writer.write(String.format("%-15s\t", "" + o.getCustomerId()));
-//				writer.write(String.format("%-25s\t", o.getItem().getName()));
-//				writer.write(String.format("%-30s\t", o.getTimestamp().toString()));
-//				writer.write("\n");
-//			}
 
 			writer.write(
 					String.format("Total Value Report\ncreated on: %s \n\n", new Date().toString().substring(0, 10)));
@@ -123,17 +116,6 @@ public class Manager {
 				}
 			}
 
-			/*
-			 * for (HashMap.Entry<Item, Integer> entry : itemCounts.entrySet()) { String
-			 * itemName = entry.getKey().getName(); int itemCount = entry.getValue(); double
-			 * totalValue = entry.getKey().getCost() * entry.getValue();
-			 * 
-			 * //if item is a discount then make sure to use the negative value for adding
-			 * to total costs if(entry.getKey() instanceof Discount) { totalValue *= -1; }
-			 * totalIncome += totalValue;
-			 * writer.write(String.format("%-35s\t %-10d\t Â£% -10.2f\t\n", itemName,
-			 * itemCount, totalValue)); }
-			 */
 			writer.write(String.format("\nTotal Earnings: %34s%.2f", "£", totalIncome));
 
 			System.out.println("Report saved!");
@@ -147,7 +129,8 @@ public class Manager {
 			}
 		}
 	}
-
+	
+	
 	public void addOrder(ArrayList<Order> newOrders) {
 		for (Order newOrder : newOrders) {
 			this.orders.add(newOrder);

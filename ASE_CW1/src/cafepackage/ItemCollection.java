@@ -53,6 +53,10 @@ public class ItemCollection implements Iterable<Item> {
 		return null;
 	}
 
+	/**
+	 * Exposes size() method of underlying TreeSet
+	 * @return size as int
+	 */
 	public int count() {
 		return itemCollection.size();
 	}
