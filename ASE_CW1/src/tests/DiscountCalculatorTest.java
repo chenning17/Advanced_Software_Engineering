@@ -20,7 +20,6 @@ import cafepackage.Snack;
 
 public class DiscountCalculatorTest {
 	
-
 	static Item food1;
 	static Item food2;
 	static Item food3;
@@ -47,7 +46,7 @@ public class DiscountCalculatorTest {
 	}
 	
 	
-	
+	//Test to determine that a Meal Deal gets applied
 	@Test
 	public void test_getBestDealMealDeal() {
 		
@@ -65,6 +64,7 @@ public class DiscountCalculatorTest {
 		assertEquals(message2,0.01,discount.getCost(),0.001);
 	}	
 	
+	//Test to determine that a Buy One Get One Free snack Deal is applied
 	@Test
 	public void test_getBestDealBOGOF() {
 		
@@ -81,6 +81,7 @@ public class DiscountCalculatorTest {
 		assertEquals(message2,0.50,discount2.getCost(),0.001);
 	}
 	
+	//Test to ensure multiple Meal Deals can be applied
 	@Test
 	public void test_getBestDealMultipleMealDeal() {
 		
@@ -95,7 +96,6 @@ public class DiscountCalculatorTest {
 		itemList3.add(drink1);
 		itemList3.add(drink2);
 		
-		
 		Discount discount3 = DiscountCalculator.getBestDeal(itemList3);
 		Discount discount4 = DiscountCalculator.getBestDeal(itemList3);
 		
@@ -106,6 +106,7 @@ public class DiscountCalculatorTest {
 		assertEquals(message2+" in Deal Two",0.01,discount4.getCost(),0.001);
 	}
 	
+	//Test to ensure multiple BOGOF snack Deals can be applied
 	@Test
 	public void test_getBestDealMultipleBOGOF() {
 		
@@ -128,6 +129,7 @@ public class DiscountCalculatorTest {
 		assertEquals(message2+" in Deal Two",0.54,discount6.getCost(),0.001);
 	}
 	
+	//Test to ensure both a Meal Deal and a BOGOF can be applied
 	@Test
 	public void test_getBestDealMultipleDealTypes() {
 		
@@ -151,7 +153,7 @@ public class DiscountCalculatorTest {
 		assertEquals(message2+" in Deal Two",0.05,discount8.getCost(),0.001);
 	}
 	
-	
+	//Test to make sure a Meal Deal is not applied if the total cost is less than the Meal Deal cost
 	@Test
 	public void test_getBestDealMealDealPriceHigher() {
 		
