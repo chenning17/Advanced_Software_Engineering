@@ -166,6 +166,26 @@ public class DiscountCalculatorTest {
 		
 		assertEquals(message,null,DiscountCalculator.getBestDeal(itemList6));
 	}
+	
+	//Test to make sure only one snack is taken off if three snacks are added
+	@Test 
+	public void test_getBestDealBOGOF3Snack() {
+		
+		String message1 = "Failure in first BOGOF deal";
+		String message2 = "Only one deal should be applied";
+		
+		ArrayList<Item> itemList7 = new ArrayList<Item>();
+		itemList7.add(snack1);
+		itemList7.add(snack2);
+		itemList7.add(snack3);
+		
+		Discount discount8 = DiscountCalculator.getBestDeal(itemList7);
+		Discount discount9 = DiscountCalculator.getBestDeal(itemList7);
+		
+		assertEquals(message1,"***BOGOF DEAL DISCOUNT***",discount8.getName());
+		assertEquals(message1,0.5,discount8.getCost(),0.001);
+		assertEquals(message2,null,discount9);
+	}
 
 }
 
