@@ -9,7 +9,7 @@ import cafepackage.DuplicateIDException;
 import cafepackage.InvalidIDException;
 import cafepackage.Discount;
 
-public class DiscountTest {
+public class DiscountTest { 
 		
 	private static Discount discount1get;
 	private static Discount discount1set;
