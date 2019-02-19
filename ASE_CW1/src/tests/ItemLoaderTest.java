@@ -57,7 +57,6 @@ public class ItemLoaderTest {
 			writer.write(csvLine);
 			writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -93,7 +92,7 @@ public class ItemLoaderTest {
 	
 
 //Tests constructor when an invalid drink id (drin) is passed
-	@Test
+	@Test (expected = InvalidIDException.class)
 	public void testLoadInDrink2() {
 		loadReadItem(this.drink2, "drin123", "Fanta");
 	}
