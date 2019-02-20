@@ -25,10 +25,10 @@ public class OrderTest {
 	@BeforeClass
 	public static void oneTimeSetUp() {
 		try {
-			testItemSnack = new Snack("Apple", "Granny smith", 1.20, "snck001");
-			testItemFood = new Food("Panini", "Ham and cheese", 4.45, "food001");
-			testItemDrink = new Drink("Apple Juice", "Still", 1.20, "drnk001");
-			testItemDiscount = new Discount("Half price", "50% off order", 5.50, "disc001");
+			testItemSnack = new Snack("Apple", "Granny smith", 1.20, "snck100");
+			testItemFood = new Food("Panini", "Ham and cheese", 4.45, "food100");
+			testItemDrink = new Drink("Apple Juice", "Still", 1.20, "drnk100");
+			testItemDiscount = new Discount("Half price", "50% off order", 5.50, "disc100");
 		
 		} catch (DuplicateIDException | InvalidIDException e) {
 			fail();

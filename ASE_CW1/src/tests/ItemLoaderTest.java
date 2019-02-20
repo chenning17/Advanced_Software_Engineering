@@ -43,11 +43,11 @@ public class ItemLoaderTest {
 	} catch (IOException e1) {
 		e1.printStackTrace();
 	}
-	food1 = "food001,Haggis,Haggis with Potato and Turnip,8.50";
-	drink1 = "drnk001,Fanta,Soft Drink,1.25";
-	snack1 = "snck001,Smokey Bacon Crisps,Crisps,0.90";
-	discount1 = "disc001,Meal Deal, Food offer,5.50";
-	drink2 = "drin123,Fanta,Soft Drink,1.25";
+	food1 = "food010,Haggis,Haggis with Potato and Turnip,8.50";
+	drink1 = "drnk010,Fanta,Soft Drink,1.25";
+	snack1 = "snck010,Smokey Bacon Crisps,Crisps,0.90";
+	discount1 = "disc010,Meal Deal, Food offer,5.50";
+	drink2 = "drin231,Fanta,Soft Drink,1.25";
 	this.menu = new ItemCollection();
 	itemLoader = new ItemLoader("testFile.csv", this.menu);
 		}   	
@@ -70,24 +70,24 @@ public class ItemLoaderTest {
 // Checks that Food items are loaded in correctly
 	@Test
 	public void testLoadInFood() {
-		loadReadItem(this.food1, "food001", "Haggis");
+		loadReadItem(this.food1, "food010", "Haggis");
 	}
 
 // Checks that Drink items are loaded in correctly
 	@Test
 	public void testLoadInDrink() {
-		loadReadItem(this.drink1, "drnk001", "Fanta");
+		loadReadItem(this.drink1, "drnk010", "Fanta");
 	}
 
 // Checks that Snack items are loaded in correctly
 	@Test
 	public void testLoadInSnack() {
-		loadReadItem(this.snack1, "snck001", "Smokey Bacon Crisps");
+		loadReadItem(this.snack1, "snck010", "Smokey Bacon Crisps");
 	}
 // Checks that Discounts are loaded in correctly
 	@Test
 	public void testLoadInDiscount() {
-		loadReadItem(this.discount1, "disc001", "Meal Deal");
+		loadReadItem(this.discount1, "disc010", "Meal Deal");
 	}
 	
 
@@ -102,7 +102,7 @@ public class ItemLoaderTest {
 		}
 		
 		this.menu = this.itemLoader.loadItems();
-		Item testItem = menu.findItemById("drin123");
+		Item testItem = menu.findItemById("drin231");
 		if (testItem != null) {
 			fail();
 		}

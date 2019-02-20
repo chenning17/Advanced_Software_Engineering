@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -40,7 +41,6 @@ public class SnackTest {
 	@Test
 	public void test_getDescription() {
 		String message = "Failed to getDescription() for \"Granny smith\"";
-		System.out.println("getDescription test" + snack1get.getDescription());
 		assertEquals(message, "Granny smith", snack1get.getDescription());
 	}
 	
