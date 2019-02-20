@@ -109,7 +109,7 @@ public class OrderTest {
 	}
 	
 	//Tests constructor when an invalid customer id (negative number) is passed
-	@Test (expected = IllegalArgumentException.class)
+	@Test (expected = IllegalArgumentException.class) 
 	public void test_constructor_invalidCustomerId() {
 		Date testDate = new Date();
 
