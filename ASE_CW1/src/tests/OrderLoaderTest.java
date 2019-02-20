@@ -15,18 +15,21 @@ import org.junit.Test;
 import cafepackage.DuplicateIDException;
 import cafepackage.InvalidIDException;
 import cafepackage.OrderLoader;
+import cafepackage.Snack;
 import cafepackage.Item;
 import cafepackage.ItemCollection;
 import cafepackage.ItemLoader;
-import cafepackage.Order;;
+import cafepackage.Order;
+import cafepackage.OrderCollection;;
 
 public class OrderLoaderTest {
 	private BufferedWriter writer;
-	private ItemLoader itemLoader;
+	private OrderCollection orders;
 	private OrderLoader orderLoader;
 	private ItemCollection menu;
 	private String order1;
 	private String order2;
+	private Snack testSnack;
 
 	@Before
 	public void setUp() {
@@ -36,47 +39,41 @@ public class OrderLoaderTest {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		order1 = "2018-06-16T09:12:00.000,111111,snck364";
-		order2 = "2018-06-16T09:12:00.000,1176112,snck364";
-		this.menu = new ItemCollection();
-		itemLoader = new ItemLoader("Menu.csv", this.menu);
-		orderLoader = new OrderLoader("testFile.csv", this.menu);
-	}
-
-	public void loadReadOrder(String csvLine,int customerId) {
-		int id1 = customerId;
-		
+		order1 = "2018-06-16T09:12:00.00Z,111111,snck364";
+		order2 = "2018-06-16T09:12:00.00Z,1176112,snck364";
 		try {
-			writer.write(csvLine);
-			writer.close();
-		} catch (IOException e) {
+			testSnack = new Snack("KitKat", "Chocolate bar", 3.00, "snck364");
+		} catch (DuplicateIDException | InvalidIDException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		
-
-		//this. = this.orderLoader.loadOrders();
-		ItemCollection menu = this.menu;
-		int testOrder = Order.getCurrentCustomerID();
-		if (testOrder == 0) {
-			fail();
 		}
-		int id2 = Order.getCurrentCustomerID();
-		//assertEquals("Failed to read in item",customerId,Order.getCurrentCustomerID());
-		//assertEquals("test", id1, id2);
-		//assertTrue(0 == id1-id2);
-	}
+		this.menu = new ItemCollection();
+		this.menu.add(testSnack);
+		//itemLoader = new ItemLoader("testFile.csv", this.menu);
+		orderLoader = new OrderLoader("testFile.csv", this.menu);
 	}
 	
 // Tests that orders are placed and loaded correctly to the correct customer
 	@Test
 	public void testOrder() {
-		loadReadOrder(this.order1, 111111);
-		assertEquals("Failed to read in item",111111,Order.getCurrentCustomerID());
-	}
-	
-//Tests constructor when an invalid customerId is passed for an order
-	@Test
-	public void testOrderFail() {
-		loadReadOrder(this.order2, 11112);
+		try {
+			writer.write(this.order1);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		this.orders = this.orderLoader.loadOrders();
+		//no getters, so using iterator
+		Order order1 = null;
+		for(Order o : this.orders) {
+			order1 = o;
+		}
+		if (order1 == null) {
+			fail();
+		} else {
+			assertEquals("Incorrect order ID", 111111, order1.getCustomerId());
+		}
 	}
 
 	@After
