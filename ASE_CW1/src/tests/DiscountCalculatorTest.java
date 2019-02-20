@@ -60,7 +60,7 @@ public class DiscountCalculatorTest {
 		
 		Discount discount = DiscountCalculator.getBestDeal(itemList1);
 		
-		assertEquals(message1,"***MEAL DEAL DISCOUNT***",discount.getName());
+		assertEquals(message1,"*MEAL DEAL (-0.01)",discount.getName());
 		assertEquals(message2,0.01,discount.getCost(),0.001);
 	}	
 	
@@ -77,7 +77,7 @@ public class DiscountCalculatorTest {
 		
 		Discount discount2 = DiscountCalculator.getBestDeal(itemList2);
 		
-		assertEquals(message1,"***BOGOF DEAL DISCOUNT***",discount2.getName());
+		assertEquals(message1,"*BOGOF DEAL (-0.5)",discount2.getName());
 		assertEquals(message2,0.50,discount2.getCost(),0.001);
 	}
 	
@@ -99,10 +99,10 @@ public class DiscountCalculatorTest {
 		Discount discount3 = DiscountCalculator.getBestDeal(itemList3);
 		Discount discount4 = DiscountCalculator.getBestDeal(itemList3);
 		
-		assertEquals(message1+" in Deal One","***MEAL DEAL DISCOUNT***",discount3.getName());
+		assertEquals(message1+" in Deal One","*MEAL DEAL (-2.0)",discount3.getName());
 		assertEquals(message2+" in Deal One",2.0,discount3.getCost(),0.001);
 		
-		assertEquals(message1+" in Deal Two","***MEAL DEAL DISCOUNT***",discount4.getName());
+		assertEquals(message1+" in Deal Two","*MEAL DEAL (-0.01)",discount4.getName());
 		assertEquals(message2+" in Deal Two",0.01,discount4.getCost(),0.001);
 	}
 	
@@ -122,10 +122,10 @@ public class DiscountCalculatorTest {
 		Discount discount5 = DiscountCalculator.getBestDeal(itemList4);
 		Discount discount6 = DiscountCalculator.getBestDeal(itemList4);
 		
-		assertEquals(message1+" in Deal One","***BOGOF DEAL DISCOUNT***",discount5.getName());
+		assertEquals(message1+" in Deal One","*BOGOF DEAL (-0.5)",discount5.getName());
 		assertEquals(message2+" in Deal One",0.50,discount5.getCost(),0.001);
 		
-		assertEquals(message1+" in Deal Two","***BOGOF DEAL DISCOUNT***",discount6.getName());
+		assertEquals(message1+" in Deal Two","*BOGOF DEAL (-0.54)",discount6.getName());
 		assertEquals(message2+" in Deal Two",0.54,discount6.getCost(),0.001);
 	}
 	
@@ -146,10 +146,10 @@ public class DiscountCalculatorTest {
 		Discount discount7 = DiscountCalculator.getBestDeal(itemList5);
 		Discount discount8 = DiscountCalculator.getBestDeal(itemList5);
 		
-		assertEquals(message1+" in Deal One","***BOGOF DEAL DISCOUNT***",discount7.getName());
+		assertEquals(message1+" in Deal One","*BOGOF DEAL (-0.5)",discount7.getName());
 		assertEquals(message2+" in Deal One",0.5,discount7.getCost(),0.001);
 		
-		assertEquals(message1+" in Deal Two","***MEAL DEAL DISCOUNT***",discount8.getName());
+		assertEquals(message1+" in Deal Two","*MEAL DEAL (-0.05)",discount8.getName());
 		assertEquals(message2+" in Deal Two",0.05,discount8.getCost(),0.001);
 	}
 	
@@ -182,7 +182,7 @@ public class DiscountCalculatorTest {
 		Discount discount8 = DiscountCalculator.getBestDeal(itemList7);
 		Discount discount9 = DiscountCalculator.getBestDeal(itemList7);
 		
-		assertEquals(message1,"***BOGOF DEAL DISCOUNT***",discount8.getName());
+		assertEquals(message1,"*BOGOF DEAL (-0.5)",discount8.getName());
 		assertEquals(message1,0.5,discount8.getCost(),0.001);
 		assertEquals(message2,null,discount9);
 	}
