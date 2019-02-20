@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -17,13 +18,12 @@ public class DiscountTest {
 	@BeforeClass
 	public static void oneTimeSetUp() {
 		try {
-			discount1get = new Discount("Half price", "50% off order", 5.50, "disc001");
-			discount1set = new Discount("Half price", "50% off order", 5.50, "disc002");
+			discount1get = new Discount("Half price", "50% off order", 5.50, "disc501");
+			discount1set = new Discount("Half price", "50% off order", 5.50, "disc502");
 		} catch (DuplicateIDException | InvalidIDException e) {
 			fail();
 		}
 	}
-	
 
 	@Test
 	public void test_getName() {
@@ -66,8 +66,8 @@ public class DiscountTest {
 	
 	@Test
 	public void test_getID() {
-		String message = "Failed to getID() for id of \"disc001\"";
-		assertEquals(message, "disc001", discount1get.getID());
+		String message = "Failed to getID() for id of \"disc501\"";
+		assertEquals(message, "disc501", discount1get.getID());
 	}
 	
 	@Test
@@ -82,11 +82,11 @@ public class DiscountTest {
 	@Test
 	public void test_validateIDwithDuplicateID() {
 		try {
-			Discount bargain = new Discount("bargain", "free drink", 2.00, "disc003");
-			Discount hugeSavings = new Discount("hugeSavings", "99% off", 3.00, "disc003");
+			Discount bargain = new Discount("bargain", "free drink", 2.00, "disc503");
+			Discount hugeSavings = new Discount("hugeSavings", "99% off", 3.00, "disc503");
 			fail();
 		} catch (DuplicateIDException e) {
-			assertTrue(e.getMessage().contains("disc003"));
+			assertTrue(e.getMessage().contains("disc503"));
 		} catch (InvalidIDException e) {
 			fail();
 		}
@@ -131,7 +131,7 @@ public class DiscountTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void test_ConstructorPriceValidation() {
 		try {
-			Discount bargain = new Discount("bargain", "free drink", -2.00, "disc003");
+			Discount bargain = new Discount("bargain", "free drink", -2.00, "disc503");
 			fail();
 		} catch (InvalidIDException e) {
 			fail();
