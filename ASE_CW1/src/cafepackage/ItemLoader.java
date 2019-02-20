@@ -37,25 +37,32 @@ public class ItemLoader extends FileInput {
 			}
 
 			//checks if the item is in the food category
-			if(id.startsWith("food")) {
+			else if(id.startsWith("food")) {
 				item = new Food(name,description,cost,id);			
 			}
 
 			//checks if the item is in the drink category
-			if(id.startsWith("drnk")) {
+			else if(id.startsWith("drnk")) {
 				item = new Drink(name,description,cost,id);						
 			}
 
 			//checks if the item is in the discount category
-			if(id.startsWith("disc")) {
+			else if(id.startsWith("disc")) {
 				item = new Discount(name,description,cost,id);			
+			}
+			
+			else {
+				throw new InvalidIDException(id);
 			}
 
 			this.menu.add(item);
 
 		}
-		catch (Exception e) {
-			System.out.println(e);
+		//to do catch better excepetions
+		catch (InvalidIDException e) {
+			System.out.println(e.getMessage() +"\nItem not added.");
+		} catch (DuplicateIDException e) {
+			System.out.println(e.getMessage() + "\nItem not added.");
 		}
 	}
 

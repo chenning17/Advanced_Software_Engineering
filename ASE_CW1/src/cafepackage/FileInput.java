@@ -23,10 +23,7 @@ public abstract class FileInput {
 			}
 			
 			scanner.close();
-		}
-
-
-		catch (FileNotFoundException fnf){
+		} catch (FileNotFoundException fnf){
 			System.out.println( filename + " not found ");
 			System.exit(0);
 		}

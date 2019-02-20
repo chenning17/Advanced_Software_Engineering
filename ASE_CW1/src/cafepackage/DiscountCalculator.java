@@ -35,19 +35,19 @@ public class DiscountCalculator {
 		
 		if(mealDeal != null && bogofSnackDeal == null) {
 			//Return meal deal if no Bogof Snack deal
-			discount = createDiscountItem(mealDeal.NAME, mealDeal.DESCRIPTION, mealDeal.getValue(), discountIDString);
+			discount = createDiscountItem(mealDeal.NAME +" (-" + mealDeal.getValue() + ")", mealDeal.DESCRIPTION, mealDeal.getValue(), discountIDString);
 			mealDeal.Apply();
 		}else if(mealDeal == null && bogofSnackDeal != null) {
 			//Return bogof deal if no meal deal
-			discount = createDiscountItem(bogofSnackDeal.NAME, bogofSnackDeal.DESCRIPTION, bogofSnackDeal.getValue(), discountIDString);
+			discount = createDiscountItem(bogofSnackDeal.NAME +" (-" + bogofSnackDeal.getValue() + ")", bogofSnackDeal.DESCRIPTION, bogofSnackDeal.getValue(), discountIDString);
 			bogofSnackDeal.Apply();
 		}else {
 			//return best deal
 			if(mealDeal.getValue() > bogofSnackDeal.getValue()) {
-				discount = createDiscountItem(mealDeal.NAME, mealDeal.DESCRIPTION, mealDeal.getValue(), discountIDString);
+				discount = createDiscountItem(mealDeal.NAME +" (-" + mealDeal.getValue() + ")", mealDeal.DESCRIPTION, mealDeal.getValue(), discountIDString);
 				mealDeal.Apply();
 			}else {
-				discount = createDiscountItem(bogofSnackDeal.NAME, bogofSnackDeal.DESCRIPTION, bogofSnackDeal.getValue(), discountIDString);
+				discount = createDiscountItem(bogofSnackDeal.NAME +" (-" + bogofSnackDeal.getValue( )+ ")", bogofSnackDeal.DESCRIPTION, bogofSnackDeal.getValue(), discountIDString);
 				bogofSnackDeal.Apply();
 			}
 		}
@@ -172,7 +172,7 @@ public class DiscountCalculator {
 
 //Object to store details of a Bogof snack deal
 class BogofSnack{
-	public final String NAME = "***BOGOF DEAL DISCOUNT***";
+	public final String NAME = "*BOGOF DEAL";
 	public final String DESCRIPTION = "Buy one get one free on all snacks";
 	private Snack cheapSnack, expensiveSnack;
 	private ArrayList<Item> basket;
@@ -196,7 +196,7 @@ class BogofSnack{
 
 //Object to store details of a meal deal
 class MealDeal{
-	public final String NAME = "***MEAL DEAL DISCOUNT***";
+	public final String NAME = "*MEAL DEAL";
 	public final String DESCRIPTION = "£5.50 meal deal";
 	private Food food;
 	private Drink drink;
