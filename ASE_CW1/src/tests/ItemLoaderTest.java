@@ -92,9 +92,20 @@ public class ItemLoaderTest {
 	
 
 //Tests constructor when an invalid drink id (drin) is passed
-	@Test (expected = InvalidIDException.class)
+	@Test 
 	public void testLoadInDrink2() {
-		loadReadItem(this.drink2, "drin123", "Fanta");
+				try {
+			writer.write(this.drink2);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		this.menu = this.itemLoader.loadItems();
+		Item testItem = menu.findItemById("drin123");
+		if (testItem != null) {
+			fail();
+		}
 	}
 @After
 public void tearDown() {
