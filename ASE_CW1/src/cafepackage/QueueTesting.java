@@ -27,6 +27,12 @@ public class QueueTesting {
 		//print finished queue
 		System.out.println("\n--==PRINTING QUEUE==--\n");
 		queue.printQueue();
+		
+		System.out.println("\nRemoving first element: " + queue.get().getItem().getName());
+		System.out.println("\n--==PRINTING QUEUE==--\n");
+
+		queue.printQueue();
+
 	}
 
 }
