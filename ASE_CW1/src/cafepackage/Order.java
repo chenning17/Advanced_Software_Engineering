@@ -1,18 +1,19 @@
 package cafepackage;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
 
 	private Date timeStamp;
 	private int customerId;
-	private Item orderItem;
+	private ArrayList<Item> orderItem;
 	private static int currentCustomerID = 0; // tracks customerIDs assigned to orders, in order to automatically assign
 												// IDs to newly created orders
 	// changed orderItem to string (above and below)
 
 	// constructor used to read in existing orders from CSV files
-	public Order(Date timeStamp, int customerId, Item orderItem) {
+	public Order(Date timeStamp, int customerId, ArrayList<Item> orderItem) {
 
 		// Check valid parameters have been passed
 		if (timeStamp == null) {
@@ -53,7 +54,7 @@ public class Order {
 	}
 
 	// changed to string
-	public Item getItem() {
+	public ArrayList<Item> getItems() {
 		return this.orderItem;
 	}
 
