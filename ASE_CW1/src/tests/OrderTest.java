@@ -4,6 +4,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import cafepackage.Item;
@@ -21,15 +22,22 @@ public class OrderTest {
 	private static Item testItemFood;
 	private static Item testItemDrink;
 	private static Item testItemDiscount;
+	private static ArrayList<Item> testItemList;
 
 	@BeforeClass
 	public static void oneTimeSetUp() {
 		try {
+			testItemList = new ArrayList<Item>();
+			
 			testItemSnack = new Snack("Apple", "Granny smith", 1.20, "snck100");
+			testItemList.add(testItemSnack);
 			testItemFood = new Food("Panini", "Ham and cheese", 4.45, "food100");
+			testItemList.add(testItemFood);
 			testItemDrink = new Drink("Apple Juice", "Still", 1.20, "drnk100");
+			testItemList.add(testItemDrink);
 			testItemDiscount = new Discount("Half price", "50% off order", 5.50, "disc100");
-		
+			testItemList.add(testItemDiscount);
+			
 		} catch (DuplicateIDException | InvalidIDException e) {
 			fail();
 		}
@@ -41,12 +49,12 @@ public class OrderTest {
 		int testCustomerId = 1;
 		
 		Date date1 = new Date(1); //Invokes constructor which uses date in milliseconds
-		Order order1 = new Order(date1, testCustomerId, testItemSnack);
+		Order order1 = new Order(date1, testCustomerId, testItemList);
 		String message1 = "Failed for date: Millisecond time 1";
 		assertEquals(message1, date1, order1.getTimestamp());
 	
 		Date date2 = new Date();  //Current date
-		Order order2 = new Order(date2, testCustomerId, testItemSnack);
+		Order order2 = new Order(date2, testCustomerId, testItemList);
 		String message2 = "Failed for date: Current time";
 		assertEquals(message2, date2, order2.getTimestamp());
 	}
@@ -57,12 +65,12 @@ public class OrderTest {
 		Date testDate = new Date(); 
 		
 		int customerId1 = 1;
-		Order order1 = new Order(testDate, customerId1, testItemSnack);
+		Order order1 = new Order(testDate, customerId1, testItemList);
 		String message1 = "Failed for customer id: 1";
 		assertEquals(message1, customerId1, order1.getCustomerId());
 		
 		int customerId2 = 99;
-		Order order2 = new Order(testDate, customerId2, testItemSnack);
+		Order order2 = new Order(testDate, customerId2, testItemList);
 		String message2 = "Failed for customer id: 99";
 		assertEquals(message2, customerId2, order2.getCustomerId());	
 	}
@@ -73,21 +81,9 @@ public class OrderTest {
 		Date testDate = new Date();
 		int testCustomerId = 1;
 		
-		Order order1 = new Order(testDate, testCustomerId, testItemSnack);
+		Order order1 = new Order(testDate, testCustomerId, testItemList);
 		String message1 = "Failed for item of type snack";
-		assertEquals(message1, testItemSnack, order1.getItem());
-		
-		Order order2 = new Order(testDate, testCustomerId, testItemFood);
-		String message2 = "Failed for item of type food";
-		assertEquals(message2, testItemFood, order2.getItem());
-		
-		Order order3 = new Order(testDate, testCustomerId, testItemDrink);
-		String message3 = "Failed for item of type drink";
-		assertEquals(message3, testItemDrink, order3.getItem());
-		
-		Order order4 = new Order(testDate, testCustomerId, testItemDiscount);
-		String message4 = "Failed for item of type drink";
-		assertEquals(message4, testItemDiscount, order4.getItem());
+		assertEquals(message1, testItemList, order1.getItems());
 	}
 	
 	//Tests constructor when null is passed instead of an item object
@@ -105,7 +101,7 @@ public class OrderTest {
 
 		int testCustomerId = 1;
 		
-		Order order1 = new Order(null, testCustomerId, testItemFood);
+		Order order1 = new Order(null, testCustomerId, testItemList);
 	}
 	
 	//Tests constructor when an invalid customer id (negative number) is passed
@@ -114,7 +110,7 @@ public class OrderTest {
 		Date testDate = new Date();
 
 		
-		Order order1 = new Order(testDate, -1, testItemFood);
+		Order order1 = new Order(testDate, -1, testItemList);
 	}
 }
 
