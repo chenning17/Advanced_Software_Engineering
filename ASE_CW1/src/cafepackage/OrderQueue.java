@@ -95,6 +95,11 @@ public class OrderQueue implements Subject{
 			System.out.println(o.getCustomerId());
 		}
 	}
+	
+	public LinkedList<Order> getQueueCopy(){
+		return (LinkedList<Order>) this.currentQueue.clone();
+		//TODO - think of better solution
+	}
 
 	@Override
 	public void registerObserver(Observer observer) {

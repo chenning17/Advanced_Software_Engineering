@@ -20,10 +20,14 @@ public class QueueTesting {
 		//create an empty queue
 		OrderQueue queue = new OrderQueue();
 		
+		CafeStateGUI gui = new CafeStateGUI(7, queue);
+		
 		//create and run the producer
 		OrderProducer p = new OrderProducer(orders, timeModifier, queue);
 		p.run();
 		
+		
+		/*
 		//print finished queue
 		System.out.println("\n--==PRINTING QUEUE==--\n");
 		queue.printQueue();
@@ -40,6 +44,7 @@ public class QueueTesting {
 		System.out.println("\n--==PRINTING QUEUE==--\n");
 
 		queue.printQueue();
+		*/
 
 	}
 

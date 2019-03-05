@@ -10,14 +10,17 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * CafeStateGUI class used to display the current state of the cafe simulation
  * Contains info about the current queue, the status log and the current actions
  * of each server.
  */
-public class CafeStateGUI extends JFrame {
-
+public class CafeStateGUI extends JFrame implements Observer {
+	private OrderQueue queue;
+	
+	
 	// queue details, at top left of GUI
 	JPanel queueInfoPanel = new JPanel();
 	JLabel queueInfoTitle = new JLabel("Queue Status Log");
@@ -45,7 +48,10 @@ public class CafeStateGUI extends JFrame {
 	 * @param numServers
 	 *            integer used to set number of servers to display in the GUI
 	 */
-	public CafeStateGUI(int numServers) {
+	public CafeStateGUI(int numServers, OrderQueue queue) {
+		
+		this.queue = queue;
+		this.queue.registerObserver(this);
 
 		// set layout and size of GUI window
 		this.setSize(new Dimension(1200, 800));
@@ -152,6 +158,17 @@ public class CafeStateGUI extends JFrame {
 	public void setServerText(String newText, int serverNumber) {
 		// TODO make sure input server number is in valid range
 		servers.get(serverNumber).setServerText(newText);
+	}
+	
+	@Override
+	public void Update() {
+		LinkedList<Order> orders = this.queue.getQueueCopy();
+		String output = "";
+		for(Order order: orders) {
+			output = order.getCustomerId() + ": " + order.getItems().size() + " items\n" + output;
+		}
+		this.queueInfoText.setText(output);
+		
 	}
 
 	/**
