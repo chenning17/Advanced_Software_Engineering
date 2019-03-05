@@ -18,7 +18,7 @@ public class CafeSimulation {
 		//create an empty queue
 		OrderQueue queue = new OrderQueue();
 		
-		CafeStateGUI gui = new CafeStateGUI(7, queue);
+		CafeStateGUI gui = new CafeStateGUI(3, queue);
 		
 		//TODO: Instantiate controller and pass it view and model
 		
