@@ -11,21 +11,25 @@ public class LogFile {
 	private static LogFile single_Instance = null;
 
 	// Private constructor restricted only to this class
-	public LogFile() {
+	private LogFile() {
 		this.generateLogFile();
 	}
 
 	// Static method instance of Singleton Class
-	public static LogFile getInstance() {
+	public static synchronized LogFile getInstance() {
 
 		// to ensure only one instance is created
-		if (single_Instance == null)
-			single_Instance = new LogFile();
-
+		if (single_Instance == null) {
+			synchronized (LogFile.class) {
+				if (single_Instance == null) {
+					single_Instance = new LogFile();
+				}
+			}
+		}
 		return single_Instance;
 	}
 
-	public void generateLogFile() {
+	public synchronized void generateLogFile() {
 
 		BufferedWriter writer = null;
 
@@ -47,8 +51,8 @@ public class LogFile {
 			}
 		}
 	}
-	
-	public void writeToLogFile(String inputString) {
+
+	public synchronized void writeToLogFile(String inputString) {
 
 		BufferedWriter writer = null;
 
@@ -57,9 +61,9 @@ public class LogFile {
 			File outputFile = new File(filename);
 			writer = new BufferedWriter(new FileWriter(outputFile, true));
 
-			writer.write(String.format(inputString+"\n"));
+			writer.write(String.format(inputString + "\n"));
 
-			//System.out.println("Log File saved!");
+			// System.out.println("Log File saved!");
 		} catch (IOException e) {
 			System.out.println("Failed to save log file." + e.getMessage());
 		} finally {
