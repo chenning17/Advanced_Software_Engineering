@@ -4,9 +4,9 @@ public class ItemLoader extends FileInput {
 	private ItemCollection menu;
 	private String file;
 	
-	public ItemLoader(String filename, ItemCollection menu) {
+	public ItemLoader(String filename) {
 		this.file = filename;
-		this.menu = menu;		
+		this.menu = new ItemCollection();	
 	}
 
 	

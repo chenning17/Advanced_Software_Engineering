@@ -48,8 +48,7 @@ public class ItemLoaderTest {
 	snack1 = "snck010,Smokey Bacon Crisps,Crisps,0.90";
 	discount1 = "disc010,Meal Deal, Food offer,5.50";
 	drink2 = "drin231,Fanta,Soft Drink,1.25";
-	this.menu = new ItemCollection();
-	itemLoader = new ItemLoader("testFile.csv", this.menu);
+	itemLoader = new ItemLoader("testFile.csv");
 		}   	
 	
 	public void loadReadItem(String csvLine, String itemId, String itemName) {
