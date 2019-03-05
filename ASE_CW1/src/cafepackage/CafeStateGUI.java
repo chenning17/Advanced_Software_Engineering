@@ -97,24 +97,6 @@ public class CafeStateGUI extends JFrame {
 		this.add(serverInfoPanel);
 
 		this.setVisible(true);
-
-		/******* TESTING THE TEXT SETTER METHODS *********/
-		// add some text to test all the set methods
-
-		for (int i = 0; i < 25; i++) {
-			appendStatusLogText("10:04 hello");
-			appendStatusLogText("10:09 here's a tea");
-			appendStatusLogText("10 :24 bye!!!");
-		}
-
-		setQueueInfoTitle("there are 15 people in queue");
-		setQueueInfoText("jim");
-		setServerText("I have run out of muffins :(", 1);
-		setServerText("I am server number 4", 4);
-		setServerText("I don't work here :o", 6);
-
-		/* _________________________________________________ */
-
 	}
 
 	/**
