@@ -53,12 +53,11 @@ public class OrderCollection implements Iterable<Order> {
 		}
 
 		for (Order o : this.orderCollection) {
+			for(Item currentItem : o.getItems()) {
+				int counts = itemCounts.get(currentItem);
 
-			Item currentItem = o.getItem();
-
-			int counts = itemCounts.get(currentItem);
-
-			itemCounts.put(currentItem, counts + 1);
+				itemCounts.put(currentItem, counts + 1);
+			}
 		}
 
 		return itemCounts;
