@@ -9,10 +9,10 @@ public class OrderLoader extends FileInput {
 	private ItemCollection menu;
 	private String file;
 	
-	public OrderLoader(String filename, ItemCollection Menu) {
+	public OrderLoader(String filename) {
 		this.orders = new OrderCollection();
 		this.file = filename;
-		this.menu = Menu;
+		this.menu = new ItemCollection();
 	}
 	
 	public OrderCollection loadOrders() {

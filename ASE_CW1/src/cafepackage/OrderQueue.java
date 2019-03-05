@@ -96,6 +96,11 @@ public class OrderQueue implements Subject{
 		}
 	}
 	
+	/**
+	 * Returns a clone of queue so that data can be accessed by an external class
+	 * Clone ensures external class cannot actually edit queue.
+	 * @return Clone of queue containing orders
+	 */
 	public LinkedList<Order> getQueueCopy(){
 		return (LinkedList<Order>) this.currentQueue.clone();
 		//TODO - think of better solution

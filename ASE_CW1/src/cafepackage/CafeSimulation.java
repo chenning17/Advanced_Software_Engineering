@@ -1,21 +1,19 @@
 package cafepackage;
 
-public class QueueTesting {
+public class CafeSimulation {
 	public static void main(String[] args) {
+		
 		//filenames
+		//TODO: Allow user to set these 3 variable before simulation starts
 		String menuFile = "Menu.csv";
 		String orderFile = "OrderList.csv";
 		long timeModifier = 1; //CHANGE ME - to change speed of addition
 		
-		//create empty menu and orderlist
-		ItemCollection menu = new ItemCollection();
-		OrderCollection orders = new OrderCollection();
-		
 		//load in items from csvs
-		ItemLoader itemLoader = new ItemLoader(menuFile, menu);
-		OrderLoader orderLoader = new OrderLoader(orderFile, menu);
-		menu = itemLoader.loadItems();
-		orders = orderLoader.loadOrders();
+		ItemLoader itemLoader = new ItemLoader(menuFile);
+		OrderLoader orderLoader = new OrderLoader(orderFile);
+		ItemCollection menu = itemLoader.loadItems();
+		OrderCollection orders = orderLoader.loadOrders();
 
 		//create an empty queue
 		OrderQueue queue = new OrderQueue();
