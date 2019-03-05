@@ -28,7 +28,15 @@ public class QueueTesting {
 		System.out.println("\n--==PRINTING QUEUE==--\n");
 		queue.printQueue();
 		
-		System.out.println("\nRemoving first element: " + queue.get().getItem().getName());
+		Order o1 = queue.get();
+		System.out.println("\nRemoving first element: " + o1.getCustomerId());
+		System.out.println("Order contains: ");
+		for(Item i :o1.getItems()) {
+			System.out.println(i.getName());
+		}
+		
+		
+		
 		System.out.println("\n--==PRINTING QUEUE==--\n");
 
 		queue.printQueue();

@@ -14,15 +14,15 @@ public class OrderProducer implements Runnable {
 
 	@Override
 	public void run() {
-		for(Order o: allOrders) {
+		for(Order order: allOrders) {
 			try {
 				Thread.sleep(this.actualSleepTime);
 			}
 			catch (InterruptedException e) {
 				//do nothing
 			}
-			queue.put(o);
-			System.out.println("Adding: " + o.getItem().getName());
+			queue.put(order);
+			System.out.println("Adding customer: " + order.getCustomerId());
 		}
 		this.queue.markFinished();
 		

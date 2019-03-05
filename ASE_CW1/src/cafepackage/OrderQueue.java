@@ -89,7 +89,7 @@ public class OrderQueue {
 	 */
 	public void printQueue() {
 		for(Order o: this.currentQueue) {
-			System.out.println(o.getItem().getName());
+			System.out.println(o.getCustomerId());
 		}
 	}
 }
