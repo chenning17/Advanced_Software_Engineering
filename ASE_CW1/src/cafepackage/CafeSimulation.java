@@ -9,7 +9,7 @@ public class CafeSimulation {
 		String orderFile = "OrderList.csv";
 		long timeModifier = 1; //CHANGE ME - to change speed of addition
 		
-		//load in items from csvs
+		//Load in data from CSVs
 		ItemLoader itemLoader = new ItemLoader(menuFile);
 		OrderLoader orderLoader = new OrderLoader(orderFile);
 		ItemCollection menu = itemLoader.loadItems();
@@ -20,30 +20,11 @@ public class CafeSimulation {
 		
 		CafeStateGUI gui = new CafeStateGUI(7, queue);
 		
-		//create and run the producer
+		//TODO: Instantiate controller and pass it view and model
+		
+		//Run the order producer to begin the simulation
 		OrderProducer p = new OrderProducer(orders, timeModifier, queue);
 		p.run();
-		
-		
-		/*
-		//print finished queue
-		System.out.println("\n--==PRINTING QUEUE==--\n");
-		queue.printQueue();
-		
-		Order o1 = queue.get();
-		System.out.println("\nRemoving first element: " + o1.getCustomerId());
-		System.out.println("Order contains: ");
-		for(Item i :o1.getItems()) {
-			System.out.println(i.getName());
-		}
-		
-		
-		
-		System.out.println("\n--==PRINTING QUEUE==--\n");
-
-		queue.printQueue();
-		*/
-
 	}
 
 }
