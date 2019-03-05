@@ -39,8 +39,8 @@ public class Manager {
 		System.out.println("---\nOrders loaded: " + this.orders.count());
 
 		try {
-			cafeGUI frame = new cafeGUI(this.menu, this); // create gui giving it a menu and the manager itself
-			frame.setVisible(true);
+			//cafeGUI frame = new cafeGUI(this.menu, this); // create gui giving it a menu and the manager itself
+			//frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

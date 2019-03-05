@@ -3,12 +3,14 @@ package cafepackage;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
-public class OrderQueue {
+public class OrderQueue implements Subject{
+	private LinkedList<Observer> observers;
 	private LinkedList<Order> currentQueue;
 	private Boolean done;
 	private Boolean empty;
 	
 	public OrderQueue() {
+		this.observers = new LinkedList<Observer>();
 		this.currentQueue = new LinkedList<Order>();
 		this.empty = true;
 		this.done = false;		
@@ -31,14 +33,14 @@ public class OrderQueue {
 		
 		notifyAll();
 		
-		if(this.currentQueue.size() > 1) {
-			return this.currentQueue.remove();
-		}
-		else {
+		Order returnedOrder = this.currentQueue.remove();
+		if(this.currentQueue.size() == 0) {
 			this.empty = true;
-			return this.currentQueue.remove();
 		}
 		
+		this.notifyObservers();
+				
+		return returnedOrder;
 	}
 	
 	/**
@@ -50,6 +52,7 @@ public class OrderQueue {
 			this.empty = false;
 		}
 		this.currentQueue.add(o);
+		this.notifyObservers();
 	}
 	
 	/**
@@ -91,5 +94,25 @@ public class OrderQueue {
 		for(Order o: this.currentQueue) {
 			System.out.println(o.getCustomerId());
 		}
+	}
+
+	@Override
+	public void registerObserver(Observer observer) {
+		this.observers.add(observer);
+		
+	}
+
+	@Override
+	public void removeObserver(Observer observer) {
+		this.observers.remove(observer);
+		
+	}
+
+	@Override
+	public void notifyObservers() {
+		for(Observer observer : this.observers) {
+			observer.Update();
+		}
+		
 	}
 }
