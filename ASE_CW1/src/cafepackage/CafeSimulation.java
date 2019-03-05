@@ -1,5 +1,7 @@
 package cafepackage;
 
+import java.util.ArrayList;
+
 public class CafeSimulation {
 	public static void main(String[] args) {
 		
@@ -17,14 +19,24 @@ public class CafeSimulation {
 
 		//create an empty queue
 		OrderQueue queue = new OrderQueue();
+		ArrayList<SalesAssistant> servers = new ArrayList<SalesAssistant>();
+		SalesAssistant s1 = new SalesAssistant(queue, 4);
+		SalesAssistant s2 = new SalesAssistant(queue, 4);
+		servers.add(s1);
+		servers.add(s2);
 		
-		CafeStateGUI gui = new CafeStateGUI(3, queue);
+		CafeStateGUI gui = new CafeStateGUI(servers, queue);
 		
 		//TODO: Instantiate controller and pass it view and model
 		
 		//Run the order producer to begin the simulation
 		OrderProducer p = new OrderProducer(orders, timeModifier, queue);
-		p.run();
+		Thread number1 = new Thread(p);
+		number1.start();
+		for(SalesAssistant s: servers) {
+			Thread temp = new Thread(s);
+			temp.start();
+		}
 	}
 
 }
