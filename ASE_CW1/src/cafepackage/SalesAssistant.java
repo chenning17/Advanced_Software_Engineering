@@ -3,45 +3,64 @@ package cafepackage;
 import java.util.LinkedList;
 
 public class SalesAssistant implements Runnable, Subject{
-	private String currentOrderItems;
-	private long actualSleepTime;
-	private static final long DEFAULTSLEEPTIME = 250; //minimum time taken between adding orders
+	private String displayString;
+
 	private OrderQueue queue;
 	private LinkedList<Observer> observers;
 	
+	private Order currentOrder;
+	
+	private static final long DEFAULTSLEEPTIME = 250; //Default time taken between adding orders
+	private static final long DEFAULTWAKEUPTIME = 500; //Default time to wait before thread becomes active
+	
+	//Actual wait times are the default multiplied by the simulation speed
+	private long actualSleepTime;
+	private long actualWakeUpTime;
+	
 	public SalesAssistant(OrderQueue queue, long timeModifier) {
 		this.queue = queue;
-		this.actualSleepTime = DEFAULTSLEEPTIME * timeModifier;
 		this.observers = new LinkedList<Observer>();
-		this.currentOrderItems = "No current items";
+		this.updateDisplay();
+		
+		this.actualSleepTime = DEFAULTSLEEPTIME * timeModifier;
+		this.actualWakeUpTime = DEFAULTWAKEUPTIME * timeModifier;
 	}
 	
 	@Override
 	public void run() {
-		System.out.println("Running");
-		while(true) {
+		
+		//Wait a short time before taking first order
+		try {
+			Thread.sleep(actualWakeUpTime);
+		}catch (InterruptedException e) {
+			//do nothing
+		}
+		
+		while(!queue.isDone() || !queue.isEmpty()) {
 			try {
+				currentOrder = this.queue.get();
+				this.updateDisplay();
 				Thread.sleep(actualSleepTime);
-				Order currentOrder = this.queue.get();
-				
-				this.currentOrderItems = "" + currentOrder.getCustomerId();
-				/*
-				for(Item i: currentOrder.getItems()) {
-					this.currentOrderItems += "\n" + i.getName();
-				}
-				*/
-				
+				orderCompleted();
 			} catch (InterruptedException e) {
 				//do nothing
 			}
 		}
-		//orderCompleted();
-		//notifyObservers();
-		
 	}
 	
-	public void orderCompleted() {
-		this.currentOrderItems = "This Order has been completed";
+	public void orderCompleted() throws InterruptedException{
+		this.currentOrder = null;
+		updateDisplay();
+		Thread.sleep(actualSleepTime);
+	}
+	
+	private void updateDisplay() {
+		if(currentOrder != null) {
+			this.displayString = "" + currentOrder.getCustomerId();
+		}else {
+			this.displayString = "No current item.";
+		}
+		notifyObservers();
 	}
 
 	@Override
@@ -64,7 +83,7 @@ public class SalesAssistant implements Runnable, Subject{
 	}
 	
 	public String getCurrentOrder() {
-		return this.currentOrderItems;
+		return this.displayString;
 	}
 
 }
