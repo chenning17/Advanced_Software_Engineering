@@ -1,5 +1,6 @@
 package cafepackage;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class SalesAssistant implements Runnable, Subject{
@@ -61,9 +62,12 @@ public class SalesAssistant implements Runnable, Subject{
 	private void updateDisplay() {
 		if(currentOrder != null) {
 			this.displayString = "Serving customer " + currentOrder.getCustomerId();
-			/*for(Item item : currentOrder.getItems()) {
-				this.displayString += item.getName();
-			}*/
+			
+			ArrayList<Item> OrderItems = currentOrder.getItems();
+			
+			for(Item item : OrderItems) {
+				this.displayString += "\n" + item.getName();
+			}
 		}else {
 			this.displayString = "No current item.";
 		}
