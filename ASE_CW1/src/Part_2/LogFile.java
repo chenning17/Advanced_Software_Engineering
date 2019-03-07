@@ -61,7 +61,7 @@ public class LogFile {
 			File outputFile = new File(filename);
 			writer = new BufferedWriter(new FileWriter(outputFile, true));
 
-			writer.write(getCurrentTime() + " " + inputString + "\n");
+			writer.write(getCurrentTime() + "\t " + inputString + "\n");
 
 			// System.out.println("Log File saved!");
 		} catch (IOException e) {

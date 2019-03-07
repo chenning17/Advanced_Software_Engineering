@@ -32,11 +32,12 @@ public class OrderProducer implements Runnable {
 				}
 				finally {
 					groupSize = getRandomInt(this.maxGroupSize);
+					LogFile.getInstance().writeToLogFile("A group of " + groupSize + " joined the queue");
 				}
 			}
 			
 			queue.put(order);
-			LogFile.getInstance().writeToLogFile("Test");
+			LogFile.getInstance().writeToLogFile("Customer : " + order.getCustomerId() + " joined the queue");
 		}
 		this.queue.markFinished();	
 	}

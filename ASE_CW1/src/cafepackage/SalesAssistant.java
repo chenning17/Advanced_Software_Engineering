@@ -2,8 +2,11 @@ package cafepackage;
 
 import java.util.LinkedList;
 
+import Part_2.LogFile;
+
 public class SalesAssistant implements Runnable, Subject{
 	private String displayString;
+	private int id;
 
 	private OrderQueue queue;
 	private LinkedList<Observer> observers;
@@ -17,13 +20,15 @@ public class SalesAssistant implements Runnable, Subject{
 	private long actualSleepTime;
 	private long actualWakeUpTime;
 	
-	public SalesAssistant(OrderQueue queue, long timeModifier) {
+	public SalesAssistant(OrderQueue queue, long timeModifier, int id) {
 		this.queue = queue;
 		this.observers = new LinkedList<Observer>();
 		this.updateDisplay();
 		
 		this.actualSleepTime = DEFAULTSLEEPTIME * timeModifier;
 		this.actualWakeUpTime = DEFAULTWAKEUPTIME * timeModifier;
+		
+		this.id = id;
 	}
 	
 	@Override
@@ -47,6 +52,7 @@ public class SalesAssistant implements Runnable, Subject{
 	
 	private void processOrder() throws InterruptedException{
 		currentOrder = this.queue.get();
+		LogFile.getInstance().writeToLogFile("Server " +this.id+" : " + currentOrder.getCustomerId());
 		this.updateDisplay();
 		Thread.sleep(actualSleepTime * currentOrder.getItems().size());
 		orderCompleted();
