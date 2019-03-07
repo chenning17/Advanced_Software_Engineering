@@ -11,7 +11,7 @@ public class SalesAssistant implements Runnable, Subject{
 	private Order currentOrder;
 	
 	private static final long DEFAULTSLEEPTIME = 250; //Default time taken between adding orders
-	private static final long DEFAULTWAKEUPTIME = 500; //Default time to wait before thread becomes active
+	private static final long DEFAULTWAKEUPTIME = 100; //Default time to wait before thread becomes active
 	
 	//Actual wait times are the default multiplied by the simulation speed
 	private long actualSleepTime;
@@ -38,17 +38,21 @@ public class SalesAssistant implements Runnable, Subject{
 		
 		while(!queue.isDone() || !queue.isEmpty()) {
 			try {
-				currentOrder = this.queue.get();
-				this.updateDisplay();
-				Thread.sleep(actualSleepTime);
-				orderCompleted();
+				processOrder();
 			} catch (InterruptedException e) {
 				//do nothing
 			}
 		}
 	}
 	
-	public void orderCompleted() throws InterruptedException{
+	private void processOrder() throws InterruptedException{
+		currentOrder = this.queue.get();
+		this.updateDisplay();
+		Thread.sleep(actualSleepTime * currentOrder.getItems().size());
+		orderCompleted();
+	}
+	
+	private void orderCompleted() throws InterruptedException{
 		this.currentOrder = null;
 		updateDisplay();
 		Thread.sleep(actualSleepTime);
@@ -56,7 +60,10 @@ public class SalesAssistant implements Runnable, Subject{
 	
 	private void updateDisplay() {
 		if(currentOrder != null) {
-			this.displayString = "" + currentOrder.getCustomerId();
+			this.displayString = "Serving customer " + currentOrder.getCustomerId();
+			/*for(Item item : currentOrder.getItems()) {
+				this.displayString += item.getName();
+			}*/
 		}else {
 			this.displayString = "No current item.";
 		}
