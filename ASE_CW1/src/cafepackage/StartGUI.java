@@ -2,12 +2,14 @@ package cafepackage;
 
 import java.awt.CardLayout;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import javax.swing.JFileChooser;
 
 import javax.swing.*;
 
-public class StartGUI extends JFrame {
+public class StartGUI extends JFrame implements ActionListener {
 
 	JPanel pnl = new JPanel();
 
@@ -19,9 +21,6 @@ public class StartGUI extends JFrame {
 	JLabel chooseServerNum = new JLabel("Choose the number of servers:");
 	String[] numServers = new String[] { "1", "2", "3", "4", "5" };
 	JComboBox serverNum = new JComboBox<String>(numServers);
-
-	JFileChooser fileSelect1 = new JFileChooser();
-	JFileChooser fileSelect2 = new JFileChooser();
 
 	JPanel pnlThree = new JPanel();
 	JTextArea menuChoice = new JTextArea(1, 30);
@@ -68,15 +67,31 @@ public class StartGUI extends JFrame {
 		pnlThree.add(chooseMenu);
 		pnlThree.add(menuChoice);
 		pnlThree.add(menuButton);
-		//menuChoice.setText(fileSelect1.getSelectedFile().toString());
+		//menuButton.addActionListener();
 
 		pnlFour.add(chooseOrder);
 		pnlFour.add(orderChoice);
 		pnlFour.add(orderButton);
-		//orderChoice.setText(fileSelect2.getSelectedFile().toString());
+	
 
+	menuButton.addActionListener(this);
+	orderButton.addActionListener(this);
+	
 	}
-
+	
+	public void actionPerformed(ActionEvent e) {
+		JFileChooser fileSelect = new JFileChooser();
+		
+		fileSelect.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		
+		fileSelect.setAcceptAllFileFilterUsed(true);
+		
+		int rVal = fileSelect.showOpenDialog(null);
+		if (rVal == JFileChooser.APPROVE_OPTION) {
+			menuChoice.setText(fileSelect.getSelectedFile().toString());
+			orderChoice.setText(fileSelect.getSelectedFile().toString());
+		}
+	} 
 	public static void main(String[] args) {
 		StartGUI startgui = new StartGUI();
 
