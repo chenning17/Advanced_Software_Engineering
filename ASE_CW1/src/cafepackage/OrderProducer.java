@@ -31,6 +31,9 @@ public class OrderProducer implements Runnable {
 					//do nothing
 				}
 				finally {
+					//TODO remember to update this value so it is never larger than the amount of customers left in 
+					//the csv (currently if there are 2 customers left to be added and the random int is 4,
+					//will print "A group of 4 joined the queue" when only 2 were added.
 					groupSize = getRandomInt(this.maxGroupSize);
 					LogFile.getInstance().writeToLogFile("A group of " + groupSize + " joined the queue");
 				}
