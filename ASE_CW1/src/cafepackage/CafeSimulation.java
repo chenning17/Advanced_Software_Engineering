@@ -43,7 +43,7 @@ public class CafeSimulation {
 		ArrayList<SalesAssistant> assistants = new ArrayList<SalesAssistant>();
 		
 		for(int i = 0; i < count; i++) {
-			assistants.add(new SalesAssistant(queue,4));
+			assistants.add(new SalesAssistant(queue,4,i));
 		}
 		
 		return assistants;

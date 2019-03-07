@@ -3,8 +3,11 @@ package cafepackage;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import Part_2.LogFile;
+
 public class SalesAssistant implements Runnable, Subject{
 	private String displayString;
+	private int id;
 
 	private OrderQueue queue;
 	private LinkedList<Observer> observers;
@@ -12,19 +15,21 @@ public class SalesAssistant implements Runnable, Subject{
 	private Order currentOrder;
 	
 	private static final long DEFAULTSLEEPTIME = 250; //Default time taken between adding orders
-	private static final long DEFAULTWAKEUPTIME = 100; //Default time to wait before thread becomes active
+	private static final long DEFAULTWAKEUPTIME = 1100; //Default time to wait before thread becomes active
 	
 	//Actual wait times are the default multiplied by the simulation speed
 	private long actualSleepTime;
 	private long actualWakeUpTime;
 	
-	public SalesAssistant(OrderQueue queue, long timeModifier) {
+	public SalesAssistant(OrderQueue queue, long timeModifier, int id) {
 		this.queue = queue;
 		this.observers = new LinkedList<Observer>();
 		this.updateDisplay();
 		
 		this.actualSleepTime = DEFAULTSLEEPTIME * timeModifier;
 		this.actualWakeUpTime = DEFAULTWAKEUPTIME * timeModifier;
+		
+		this.id = id;
 	}
 	
 	@Override
@@ -48,6 +53,7 @@ public class SalesAssistant implements Runnable, Subject{
 	
 	private void processOrder() throws InterruptedException{
 		currentOrder = this.queue.get();
+		LogFile.getInstance().writeToLogFile("Server " +this.id+" : " + currentOrder.getCustomerId());
 		this.updateDisplay();
 		Thread.sleep(actualSleepTime * currentOrder.getItems().size());
 		orderCompleted();
