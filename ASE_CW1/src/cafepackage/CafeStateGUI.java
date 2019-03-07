@@ -19,6 +19,8 @@ import java.util.LinkedList;
  */
 public class CafeStateGUI extends JFrame implements Observer {
 	private OrderQueue queue;
+	private ArrayList<SalesAssistant> salesAssistant;
+	
 	
 	
 	// queue details, at top left of GUI
@@ -48,10 +50,14 @@ public class CafeStateGUI extends JFrame implements Observer {
 	 * @param numServers
 	 *            integer used to set number of servers to display in the GUI
 	 */
-	public CafeStateGUI(int numServers, OrderQueue queue) {
+	public CafeStateGUI(ArrayList<SalesAssistant> salesAssistants, OrderQueue queue) {
 		
 		this.queue = queue;
 		this.queue.registerObserver(this);
+		this.salesAssistant = salesAssistants;
+		for(SalesAssistant s: this.salesAssistant) {
+			s.registerObserver(this);
+		}
 
 		// set layout and size of GUI window
 		this.setSize(new Dimension(1200, 800));
@@ -88,9 +94,9 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 		/********************* SERVER INFO PANEL ***********************/
 
-		serverInfoPanel.setLayout(new GridLayout(1, numServers));
+		serverInfoPanel.setLayout(new GridLayout(1, this.salesAssistant.size()));
 
-		for (int i = 0; i < numServers; i++) {
+		for (int i = 0; i < this.salesAssistant.size(); i++) {
 			Server server = new Server(i);
 			serverInfoPanel.add(server);
 			servers.add(server);
@@ -168,6 +174,11 @@ public class CafeStateGUI extends JFrame implements Observer {
 			output = order.getCustomerId() + ": " + order.getItems().size() + " items\n" + output;
 		}
 		this.queueInfoText.setText(output);
+		
+		for(int i = 0; i < this.salesAssistant.size(); i++) {
+			Server s = this.servers.get(i);
+			s.serverInfoText.setText(this.salesAssistant.get(i).getCurrentOrder());
+		}
 		
 	}
 
