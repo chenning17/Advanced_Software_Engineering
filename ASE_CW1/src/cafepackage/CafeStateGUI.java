@@ -174,6 +174,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 			output = order.getCustomerId() + ": " + order.getItems().size() + " items\n" + output;
 		}
 		this.queueInfoText.setText(output);
+		this.queueInfoTitle.setText("Queue size: " + orders.size());
 		
 		for(int i = 0; i < this.salesAssistant.size(); i++) {
 			Server s = this.servers.get(i);
