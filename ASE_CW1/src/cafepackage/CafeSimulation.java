@@ -10,7 +10,7 @@ public class CafeSimulation {
 		String menuFile = "Menu.csv";
 		String orderFile = "OrderList.csv";
 		long timeModifier = 1; //Simulation speed
-		int assistantsCount = 3;
+		int assistantsCount = 5;
 		
 		//Load in data from CSVs
 		ItemLoader itemLoader = new ItemLoader(menuFile);

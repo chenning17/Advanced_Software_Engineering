@@ -61,7 +61,7 @@ public class LogFile {
 			File outputFile = new File(filename);
 			writer = new BufferedWriter(new FileWriter(outputFile, true));
 
-			writer.write(String.format(inputString + "\n"));
+			writer.write(getCurrentTime() + " " + inputString + "\n");
 
 			// System.out.println("Log File saved!");
 		} catch (IOException e) {
@@ -75,4 +75,10 @@ public class LogFile {
 		}
 	}
 
+	String getCurrentTime() {
+		String result;
+		Date currentDate = new Date();
+		result = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+		return result;
+	}
 }

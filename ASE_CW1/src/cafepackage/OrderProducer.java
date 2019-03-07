@@ -1,5 +1,7 @@
 package cafepackage;
 
+import Part_2.LogFile;
+
 public class OrderProducer implements Runnable {
 	private OrderCollection allOrders;
 	private OrderQueue queue;
@@ -22,7 +24,7 @@ public class OrderProducer implements Runnable {
 				//do nothing
 			}
 			queue.put(order);
-			System.out.println("Adding customer: " + order.getCustomerId());
+			LogFile.getInstance().writeToLogFile("Test");
 		}
 		this.queue.markFinished();
 		
