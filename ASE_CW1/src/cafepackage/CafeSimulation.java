@@ -14,8 +14,8 @@ public class CafeSimulation {
 		
 		//Load in data from CSVs
 		ItemLoader itemLoader = new ItemLoader(menuFile);
-		OrderLoader orderLoader = new OrderLoader(orderFile);
 		ItemCollection menu = itemLoader.loadItems();
+		OrderLoader orderLoader = new OrderLoader(orderFile, menu);
 		OrderCollection orders = orderLoader.loadOrders();
 
 		//Create the model
