@@ -30,25 +30,26 @@ public class ItemLoader extends FileInput {
 			String name = parts[1];
 			String description = parts[2];
 			double cost = Double.parseDouble(parts[3]);
+			int processTime = Integer.parseInt(parts[4]);
 
 			//Checks if the item is a snack 
 			if(id.startsWith("snck")) {
-				item = new Snack(name,description,cost,id);
+				item = new Snack(name,description,cost,id, processTime);
 			}
 
 			//checks if the item is in the food category
 			else if(id.startsWith("food")) {
-				item = new Food(name,description,cost,id);			
+				item = new Food(name,description,cost,id, processTime);			
 			}
 
 			//checks if the item is in the drink category
 			else if(id.startsWith("drnk")) {
-				item = new Drink(name,description,cost,id);						
+				item = new Drink(name,description,cost,id, processTime);						
 			}
 
 			//checks if the item is in the discount category
 			else if(id.startsWith("disc")) {
-				item = new Discount(name,description,cost,id);			
+				item = new Discount(name,description,cost,id,processTime);			
 			}
 			
 			else {

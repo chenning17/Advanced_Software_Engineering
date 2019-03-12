@@ -11,7 +11,7 @@ public class CafeSimulation {
 		
 		//filenames
 		//TODO: Allow user to set these variables before simulation starts
-		String menuFile = "Menu.csv";
+		String menuFile = "Menu (version 2).csv";
 		String orderFile = "OrderList.csv";
 		long timeModifier = 1; //Simulation speed
 		int assistantsCount = 5;

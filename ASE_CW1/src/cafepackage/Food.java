@@ -26,10 +26,10 @@ public class Food extends Item {
 	 * @throws InvalidIDException
 	 *             if id is of an incorrect format
 	 */
-	public Food(String name, String description, double cost, String id)
+	public Food(String name, String description, double cost, String id, int processTime)
 			throws DuplicateIDException, InvalidIDException {
 
-		super(name, description, cost, id);
+		super(name, description, cost, id, processTime);
 
 		if (validateID(id, itemIdentifier) == false) {
 			throw new InvalidIDException(id);

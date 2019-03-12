@@ -8,6 +8,7 @@ public abstract class Item implements Comparable<Item> {
 	private String description;
 	private double cost;
 	private String id;
+	private int processTime;
 
 	/**
 	 * Item constructor, creates item instance and updates values for name,
@@ -21,8 +22,10 @@ public abstract class Item implements Comparable<Item> {
 	 *            float representing item's cost
 	 * @param id
 	 *            string representing item's id
+	 * @param processTime 
+	 * 			  integer representing factor of processing time
 	 */
-	public Item(String name, String description, double cost, String id)
+	public Item(String name, String description, double cost, String id, int processTime)
 			throws InvalidIDException, DuplicateIDException, IllegalArgumentException {
 
 		if (cost < 0) {
@@ -33,6 +36,7 @@ public abstract class Item implements Comparable<Item> {
 		this.setDescription(description);
 		this.setCost(cost);
 		this.setID(id);
+		this.setProcessTime(processTime);
 	}
 
 	/**
@@ -109,6 +113,25 @@ public abstract class Item implements Comparable<Item> {
 	 */
 	public String getID() {
 		return this.id;
+	}
+	
+	/**
+	 * Returns int representing item's processTime
+	 * 
+	 * @return
+	 */	
+	public int getProcessTime() {
+		return this.processTime;
+	}
+	
+	/**
+	 * Function used to update an item's processTime
+	 * 
+	 * @param id
+	 *            input string used to update item ID
+	 */
+	public void setProcessTime(int processTime) {
+		this.processTime = processTime;
 	}
 
 	@Override

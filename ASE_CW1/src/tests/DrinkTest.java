@@ -18,8 +18,8 @@ public class DrinkTest {
 	@BeforeClass
 	public static void oneTimeSetUp() {
 		try {
-			drink1get = new Drink("Apple Juice", "Still", 1.20, "drnk001");
-			drink1set = new Drink("Apple Juice", "Still", 1.20, "drnk002");
+			drink1get = new Drink("Apple Juice", "Still", 1.20, "drnk001",1);
+			drink1set = new Drink("Apple Juice", "Still", 1.20, "drnk002",1);
 		} catch (DuplicateIDException | InvalidIDException e) {
 			fail();
 		}
@@ -84,8 +84,8 @@ public class DrinkTest {
 	@Test
 	public void test_validateIDwithDuplicateID() {
 		try {
-			Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnk003");
-			Drink Milkshake = new Drink("Milkshake", "Chocolate", 3.00, "drnk003");
+			Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnk003",1);
+			Drink Milkshake = new Drink("Milkshake", "Chocolate", 3.00, "drnk003",1);
 			fail();
 		} catch (DuplicateIDException e) {
 			assertTrue(e.getMessage().contains("drnk003"));
@@ -97,7 +97,7 @@ public class DrinkTest {
 	@Test
 	public void test_validateIDwithInvalidIDNotEnoughNumbers() {
 		try {
-			Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnk00");
+			Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnk00",1);
 			fail();
 		} catch (InvalidIDException e) {
 			assertTrue(e.getMessage().contains("drnk00"));
@@ -109,7 +109,7 @@ public class DrinkTest {
 	@Test
 	public void test_validateIDwithInvalidIDTooManyNumbers() {
 		try {
-			Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnk0000");
+			Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnk0000",1);
 			fail();
 		} catch (InvalidIDException e) {
 			assertTrue(e.getMessage().contains("drnk0000"));
@@ -121,7 +121,7 @@ public class DrinkTest {
 	@Test
 	public void test_validateIDwithInvalidIDCharactersNotNumbers() {
 		try {
-			Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnkaaa");
+			Drink smoothie = new Drink("Smoothie", "Blueberry", 5.00, "drnkaaa",1);
 			fail();
 		} catch (InvalidIDException e) {
 			assertTrue(e.getMessage().contains("drnkaaa"));
@@ -133,7 +133,7 @@ public class DrinkTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void test_ConstructorPriceValidation() {
 		try {
-			Drink smoothie = new Drink("Smoothie", "Blueberry", -1.00, "drnk003");
+			Drink smoothie = new Drink("Smoothie", "Blueberry", -1.00, "drnk003",1);
 			fail();
 		} catch (InvalidIDException e) {
 			fail();
