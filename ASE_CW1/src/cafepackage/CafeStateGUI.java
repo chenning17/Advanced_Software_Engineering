@@ -20,8 +20,6 @@ import java.util.LinkedList;
 public class CafeStateGUI extends JFrame implements Observer {
 	private OrderQueue queue;
 	
-	
-	
 	// queue details, at top left of GUI
 	JPanel queueInfoPanel = new JPanel();
 	JLabel queueInfoTitle = new JLabel("Queue Status Log");
@@ -53,12 +51,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		
 		this.queue = queue;
 		this.queue.registerObserver(this);
-		//this.salesAssistant = salesAssistants;
-		//for(SalesAssistant s: this.salesAssistant) {
-		//	s.registerObserver(this);
-		//}
-
-		// set layout and size of GUI window
+		
 		this.setSize(new Dimension(1200, 800));
 		this.setLayout(new GridLayout(2, 1));
 
@@ -184,7 +177,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 	private class Server extends JPanel implements Observer {
 		JLabel serverTitle;
 		JTextPane serverInfoText = new JTextPane();
-		private SalesAssistant s;
+		private SalesAssistant assistant;
 
 		/**
 		 * Server constructor, takes one argument the current server number for use in
@@ -193,6 +186,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		 * @param serverNumber
 		 *            the index of the current server, used to set the title (title
 		 *            number will be serverNumber +1)
+		 * @param s Sales assistant the server observes
 		 */
 		private Server(Integer serverNumber, SalesAssistant s) {
 			serverTitle = new JLabel("Server " + (++serverNumber).toString());
@@ -203,8 +197,10 @@ public class CafeStateGUI extends JFrame implements Observer {
 			serverInfoText.setText("I am currently on my break...");
 			serverInfoText.setEditable(false);
 			this.add(serverInfoText, BorderLayout.CENTER);
-			this.s = s;
-			s.registerObserver(this);
+			
+			//store sales assistant, register server as observer
+			this.assistant = s;
+			this.assistant.registerObserver(this);
 		}
 
 		// set the server's text box info
@@ -212,9 +208,10 @@ public class CafeStateGUI extends JFrame implements Observer {
 			this.serverInfoText.setText(newServerInfo);
 		}
 		
+		//update server box when order changes
 		@Override
 		public void Update() {
-			this.serverInfoText.setText(this.s.getCurrentOrder());			
+			this.serverInfoText.setText(this.assistant.getCurrentOrder());			
 		}
 
 	}
