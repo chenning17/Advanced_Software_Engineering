@@ -87,35 +87,16 @@ public class StartGUI extends JFrame implements ActionListener {
 		pnlThree.add(chooseMenu);
 		pnlThree.add(menuChoice);
 		pnlThree.add(menuButton);
-<<<<<<< HEAD
-=======
 		menuButton.addActionListener(this);
->>>>>>> 8346ca7a076acb27cb2d1bbf723f9a3869c36b36
+
 
 		//adding panel 4 - choose order list
 		pnlFour.add(chooseOrder);
 		pnlFour.add(orderChoice);
 		pnlFour.add(orderButton);
-<<<<<<< HEAD
-	
-	//Implements the buttons use
-	menuButton.addActionListener(this);
-	orderButton.addActionListener(this);
-	
-	}
-	
-	/**
-	 * StartGUI constructor, takes one argument - a String used to set the
-	 * action performed by the GUI.
-	 * 
-	 * @param fileSelect
-	 *       
-	 */
-=======
-		orderButton.addActionListener(this);
-	}
+		orderButton.addActionListener(this);	
+}	
 
->>>>>>> 8346ca7a076acb27cb2d1bbf723f9a3869c36b36
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fileSelect = new JFileChooser();
 		fileSelect.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
