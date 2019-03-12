@@ -69,7 +69,7 @@ public class SalesAssistant implements Runnable, Subject{
 					makeReport = false;
 				}
 			}catch(NullPointerException npe) {
-				//Do nothing if assistant alread deleted
+				//Do nothing if assistant already deleted
 			}
 
 		}
@@ -88,7 +88,18 @@ public class SalesAssistant implements Runnable, Subject{
 		currentOrder = this.queue.get();
 		LogFile.getInstance().writeToLogFile("Server " +this.id+" : " + currentOrder.getCustomerId());
 		this.updateDisplay();
-		Thread.sleep(actualSleepTime * currentOrder.getItems().size());
+		//insert processing times
+
+	
+		long totalTime = 0;
+		for (int i = 0; i<currentOrder.getItems().size(); i++) {
+			long time = currentOrder.getItems().get(i).getProcessTime();
+			totalTime = totalTime + time;
+		}
+		
+		long processSleepTime = actualSleepTime * totalTime;
+		
+		Thread.sleep(processSleepTime);
 		report.addOrder(currentOrder);
 		orderCompleted();
 	}
