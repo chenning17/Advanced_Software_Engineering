@@ -19,6 +19,7 @@ import java.util.LinkedList;
  */
 public class CafeStateGUI extends JFrame implements Observer {
 	private OrderQueue queue;
+	private OnlineOrderQueue onlineQueue;
 	private ArrayList<SalesAssistant> salesAssistant;
 	
 	
@@ -31,7 +32,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 	// status log details, at top right of GUI
 	JPanel statusLogPanel = new JPanel();
-	JLabel statusLogTitle = new JLabel("Queue Status Log");
+	JLabel statusLogTitle = new JLabel("Online Orders");
 	JScrollPane statusLogScrollArea;
 	JTextPane statusLogText = new JTextPane();
 
@@ -50,10 +51,14 @@ public class CafeStateGUI extends JFrame implements Observer {
 	 * @param numServers
 	 *            integer used to set number of servers to display in the GUI
 	 */
-	public CafeStateGUI(ArrayList<SalesAssistant> salesAssistants, OrderQueue queue) {
+	public CafeStateGUI(ArrayList<SalesAssistant> salesAssistants, OrderQueue queue, OnlineOrderQueue onlineQueue) {
 		
 		this.queue = queue;
 		this.queue.registerObserver(this);
+		
+		this.onlineQueue = onlineQueue;
+		this.onlineQueue.registerObserver(this);
+		
 		this.salesAssistant = salesAssistants;
 		for(SalesAssistant s: this.salesAssistant) {
 			s.registerObserver(this);
@@ -180,6 +185,18 @@ public class CafeStateGUI extends JFrame implements Observer {
 			Server s = this.servers.get(i);
 			s.serverInfoText.setText(this.salesAssistant.get(i).getCurrentOrder());
 		}
+		
+		//------------------
+		LinkedList<Order> onlineOrds = this.onlineQueue.getQueueCopy();
+		String output1 = "";
+		//this.statusLogTitle.setText("Collecting orders: " + onlineOrds.size());
+		output1 += "Unprocessed Online Orders: " + this.onlineQueue.pendingSize() + "\n";
+		output1 += "Online orders ready for collection: " + this.onlineQueue.processedSize() + "\n";
+		output1 += "\n Customers ready to collect:";
+		for(Order o : onlineOrds) {
+			output1 += o.getCustomerId();
+		}
+		this.statusLogText.setText(output1);
 		
 	}
 

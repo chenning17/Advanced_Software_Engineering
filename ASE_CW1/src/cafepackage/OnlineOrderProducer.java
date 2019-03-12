@@ -36,22 +36,25 @@ public class OnlineOrderProducer implements Runnable {
 
 	@Override
 	public void run() {
-		while(!this.orders.isDone()) {
+		while(!this.orders.isDone() || this.orders.isEmpty()) {
 			try {
 				Thread.sleep(2000);
 				Order currentOrder = GenerateOrder();
 				System.out.println("Generated Order : " + currentOrder.getCustomerId());
-				//for(Item i : currentOrder.getItems()) {
-				//	System.out.println(i.getName());
-				//}
 				this.onlineOrders.addPending(currentOrder);
+				Thread.sleep(2000);
+				this.onlineOrders.put(currentOrder);
 				
 			} catch (Exception e) {
 				//do something
 			}
 		}
 		System.out.println("Finished Generating Orders");
+		System.out.println("Remaining Pending orders: \n");
 		this.onlineOrders.printPending();
+		
+		System.out.println("Remaining Prepared orders: \n");
+		this.onlineOrders.printProcessed();
 
 	}
 	

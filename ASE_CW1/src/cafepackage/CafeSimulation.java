@@ -21,10 +21,10 @@ public class CafeSimulation {
 		//Create the model
 		OrderQueue queue = new OrderQueue();
 		OnlineOrderQueue onlineOrders = new OnlineOrderQueue();
-		ArrayList<SalesAssistant> salesAssistants = createAssistants(assistantsCount, timeModifier, queue);
+		ArrayList<SalesAssistant> salesAssistants = createAssistants(assistantsCount, timeModifier, queue, onlineOrders);
 		
 		//Create the view
-		CafeStateGUI gui = new CafeStateGUI(salesAssistants, queue);
+		CafeStateGUI gui = new CafeStateGUI(salesAssistants, queue, onlineOrders);
 		
 		//TODO: Instantiate controller and pass it view and model
 		
@@ -43,11 +43,11 @@ public class CafeSimulation {
 		}
 	}
 	
-	static ArrayList<SalesAssistant> createAssistants(int count, long timeModifier, OrderQueue queue){
+	static ArrayList<SalesAssistant> createAssistants(int count, long timeModifier, OrderQueue queue, OnlineOrderQueue onlineOrders){
 		ArrayList<SalesAssistant> assistants = new ArrayList<SalesAssistant>();
 		
 		for(int i = 0; i < count; i++) {
-			assistants.add(new SalesAssistant(queue,4,i));
+			assistants.add(new SalesAssistant(queue,4,i, onlineOrders));
 		}
 		
 		return assistants;
