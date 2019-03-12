@@ -1,8 +1,12 @@
 package cafepackage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CafeSimulation {
+	
+
+	
 	public static void main(String[] args) {
 		
 		//filenames
@@ -20,7 +24,8 @@ public class CafeSimulation {
 
 		//Create the model
 		OrderQueue queue = new OrderQueue();
-		ArrayList<SalesAssistant> salesAssistants = createAssistants(assistantsCount, timeModifier, queue);
+		Report report = new Report(menu);
+		ArrayList<SalesAssistant> salesAssistants = createAssistants(assistantsCount, timeModifier, queue, report);
 		
 		//Create the view
 		CafeStateGUI gui = new CafeStateGUI(salesAssistants, queue);
@@ -39,11 +44,11 @@ public class CafeSimulation {
 		}
 	}
 	
-	static ArrayList<SalesAssistant> createAssistants(int count, long timeModifier, OrderQueue queue){
+	static ArrayList<SalesAssistant> createAssistants(int count, long timeModifier, OrderQueue queue, Report report){
 		ArrayList<SalesAssistant> assistants = new ArrayList<SalesAssistant>();
 		
 		for(int i = 0; i < count; i++) {
-			assistants.add(new SalesAssistant(queue,4));
+			assistants.add(new SalesAssistant(queue,4, report));
 		}
 		
 		return assistants;
