@@ -76,7 +76,7 @@ public class OrderQueue implements Subject{
 	 * @return Boolean representing whether producer is finished 
 	 * adding to queue
 	 */
-	public Boolean isDone() {
+	public boolean isDone() {
 		return this.done;
 	}
 	

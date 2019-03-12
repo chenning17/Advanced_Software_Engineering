@@ -10,8 +10,8 @@ public class SalesAssistant implements Runnable, Subject{
 	private String displayString;
 	private int id;
 
-	private OrderQueue queue;
-	private OnlineOrderQueue onlineQueue;
+	private OrderQueue queue; //normal queue of customers
+	private OnlineOrderQueue onlineQueue; //online orders to be collected
 	private LinkedList<Observer> observers;
 	
 	private Order currentOrder;
@@ -45,20 +45,16 @@ public class SalesAssistant implements Runnable, Subject{
 			//do nothing
 		}
 		
-		while(!queue.isDone() || !queue.isEmpty()) {
-			//try {
-				checkForOrders();
-			//} catch (InterruptedException e) {
-				//do nothing
-			//} catch (NoSuchElementException e) {
-			//	System.out.println("No such element");
-			//}
-			
+		while(!queue.isDone() || !queue.isEmpty() || !this.onlineQueue.isDone()) {
+			checkForOrders();			
 		}
 	}
+	/**
+	 * Prioritise online orders: prepare them, then hand them over, then serve normal customers
+	 */
 	private void checkForOrders() {
 		try {
-			if(this.onlineQueue.needsWork()) {
+			if(this.onlineQueue.needsProcessed()) {
 				if(this.onlineQueue.arePending()) {
 					this.prepareOnlineOrder();
 				} else if(!this.onlineQueue.isEmpty()) {
@@ -68,11 +64,16 @@ public class SalesAssistant implements Runnable, Subject{
 					processOrder();
 			}
 		} catch (Exception e) {
-			//do nothing
+			e.printStackTrace();
 		}
 		
 	}
 	
+	/**
+	 * Method used when online order is being collected. Takes very little time, as order has already been prepared
+	 * @return boolean value representing success of operation
+	 * @throws InterruptedException
+	 */
 	private boolean provideOnlineOrder() throws InterruptedException {
 		currentOrder = this.onlineQueue.get();
 		LogFile.getInstance().writeToLogFile("Server " +this.id+" : handing over online order " + currentOrder.getCustomerId());
@@ -89,6 +90,11 @@ public class SalesAssistant implements Runnable, Subject{
 		return false;		
 	}
 	
+	/**
+	 * Take an order from the pending orders, spend time "preparing" it, then add it to the processed orders list
+	 * @return boolean value representing success
+	 * @throws InterruptedException
+	 */
 	private boolean prepareOnlineOrder() throws InterruptedException {
 		if(this.onlineQueue.arePending()) {
 			currentOrder = this.onlineQueue.getPending();
@@ -102,6 +108,10 @@ public class SalesAssistant implements Runnable, Subject{
 		return false;
 	}
 	
+	/**
+	 * Process customer from regular queue
+	 * @throws InterruptedException
+	 */
 	private void processOrder() throws InterruptedException{
 		currentOrder = this.queue.get();
 		LogFile.getInstance().writeToLogFile("Server " +this.id+" : " + currentOrder.getCustomerId());
@@ -110,12 +120,18 @@ public class SalesAssistant implements Runnable, Subject{
 		orderCompleted();
 	}
 	
+	/**
+	 * Used when finished processing an order
+	 * @throws InterruptedException
+	 */
 	private void orderCompleted() throws InterruptedException{
 		this.currentOrder = null;
 		updateDisplay();
 		Thread.sleep(actualSleepTime);
 	}
-	
+	/**
+	 * Construct a string to be displayed in GUI, then notifies obervsers
+	 */
 	private void updateDisplay() {
 		if(currentOrder != null) {
 			this.displayString = "Serving customer " + currentOrder.getCustomerId();
@@ -130,6 +146,10 @@ public class SalesAssistant implements Runnable, Subject{
 		}
 		notifyObservers();
 	}
+	
+	/**
+	 * Construct a string to be displayed in GUI, then notifies observers
+	 */
 	private void updateDisplay1() {
 		if(currentOrder != null) {
 			this.displayString = "Fetching online order for: " + currentOrder.getCustomerId();

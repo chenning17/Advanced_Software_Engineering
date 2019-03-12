@@ -186,7 +186,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 			s.serverInfoText.setText(this.salesAssistant.get(i).getCurrentOrder());
 		}
 		
-		//------------------
+		//------------------ Update RHS panel----------------
 		LinkedList<Order> onlineOrds = this.onlineQueue.getQueueCopy();
 		String output1 = "";
 		//this.statusLogTitle.setText("Collecting orders: " + onlineOrds.size());

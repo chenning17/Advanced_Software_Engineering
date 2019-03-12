@@ -1,21 +1,17 @@
 package cafepackage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 import Part_2.LogFile;
 
 public class OnlineOrderQueue extends OrderQueue {
-	private LinkedList<Order> pendingOrders;
-	private LinkedList<Order> processedOrders;
+	private LinkedList<Order> pendingOrders; //Orders that have been requested but not processed
+	private LinkedList<Order> processedOrders; //orders that have been processed by not collected
 	
 	private boolean pending = false;
 	private boolean processed = false;
 
-	
-	
 	public OnlineOrderQueue() {
 		this.observers = new LinkedList<Observer>();
 		this.currentQueue = new LinkedList<Order>();
@@ -23,26 +19,45 @@ public class OnlineOrderQueue extends OrderQueue {
 		this.processedOrders = new LinkedList<Order>();
 	}
 	
-	public synchronized boolean needsWork() {
+	/**
+	 * 
+	 * @return true if there are still orders needing processed
+	 */
+	public synchronized boolean needsProcessed() {
 		return (this.pending || !this.empty);
 	}
+
+	@Override
+	public synchronized boolean isDone() {
+		return (this.pending || this.processed || !this.isEmpty());
+	}
 	
-	//adds an order to pending, updates boolean
+	/**
+	 * Add a new order to pending orders
+	 * @param o order to be added
+	 */
 	public synchronized void addPending(Order o) {
 		this.pendingOrders.add(o);
 			if(this.pendingOrders.size() > 0) {
 				this.pending = true;
 		}
-			LogFile.getInstance().writeToLogFile("Online order for : " + o.getCustomerId());
+		LogFile.getInstance().writeToLogFile("Online order for : " + o.getCustomerId());
 		this.notifyObservers();
 	}
 	
+	/**
+	 * Remove an order from Processed orders at specified index
+	 * @param i index to remove item at
+	 */
 	public synchronized void removePreparedAt(int i) {
-		Order temp = this.processedOrders.remove(i);
-		
+		this.processedOrders.remove(i);
+		notifyObservers();
 	}
 	
-	//removes and returns the next order from pending
+	/**
+	 * Get the first order from the pending order list
+	 * @return first order needing processed
+	 */
 	public synchronized Order getPending() {
 		if(!this.pending) {
 			throw new NoSuchElementException();
@@ -56,11 +71,18 @@ public class OnlineOrderQueue extends OrderQueue {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return Number of orders in pending list
+	 */
 	public synchronized int pendingSize() {
 		return this.pendingOrders.size();
 	}
 	
-	//add processed order ready for collection
+	/**
+	 * Add order to processed list, ready for collection
+	 * @param o order to be added
+	 */
 	public synchronized void addProcessed(Order o) {
 		this.processedOrders.add(o);
 		if(this.processedOrders.size() > 0) {
@@ -69,11 +91,17 @@ public class OnlineOrderQueue extends OrderQueue {
 		this.notifyObservers();
 	}
 	
+	/**
+	 * 
+	 * @return LinkedList of processed orders, awaiting collection
+	 */
 	public synchronized LinkedList<Order> getProcessed() {
 		return this.processedOrders;
 	}
 	
-	//remove processed order upon collection
+	/**
+	 * Remove first element from the processed list
+	 */
 	public synchronized void removeProcessed() {
 		if(!this.processed) {
 			throw new NoSuchElementException();
@@ -87,30 +115,19 @@ public class OnlineOrderQueue extends OrderQueue {
 		
 	}
 	
+	/**
+	 * 
+	 * @return number of orders that have been processed and are awaiting collection
+	 */
 	public synchronized int processedSize() {
 		return this.processedOrders.size();
 	}
 	
+	/**
+	 * Getter for pending boolean
+	 * @return true if there are orders in the pending list
+	 */
 	public synchronized boolean arePending() {
 		return this.pending;
 	}
-	
-	public synchronized void printPending() {
-		for(Order o: this.pendingOrders) {
-			System.out.println(o.getCustomerId());
-			for(Item i: o.getItems()) {
-				System.out.println(i.getName());
-			}
-		}
-	}
-	
-	public synchronized void printProcessed() {
-		for(Order o: this.processedOrders) {
-			System.out.println(o.getCustomerId());
-			for(Item i: o.getItems()) {
-				System.out.println(i.getName());
-			}
-		}
-	}
-
 }

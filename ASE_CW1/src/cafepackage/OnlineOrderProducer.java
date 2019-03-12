@@ -35,14 +35,18 @@ public class OnlineOrderProducer implements Runnable {
 	}
 
 	@Override
+	/**
+	 * Randomly generates an order and adds it to the OnlineOrderQueue as long as there are still normal orders
+	 * to process
+	 */
 	public void run() {
 		while(!this.orders.isDone() || this.orders.isEmpty()) {
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 				Order currentOrder = GenerateOrder();
 				System.out.println("Generated Order : " + currentOrder.getCustomerId());
 				this.onlineOrders.addPending(currentOrder);
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 				this.onlineOrders.put(currentOrder);
 				
 			} catch (Exception e) {
@@ -50,12 +54,6 @@ public class OnlineOrderProducer implements Runnable {
 			}
 		}
 		System.out.println("Finished Generating Orders");
-		System.out.println("Remaining Pending orders: \n");
-		this.onlineOrders.printPending();
-		
-		System.out.println("Remaining Prepared orders: \n");
-		this.onlineOrders.printProcessed();
-
 	}
 	
 }
