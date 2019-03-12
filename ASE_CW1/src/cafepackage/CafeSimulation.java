@@ -20,6 +20,7 @@ public class CafeSimulation {
 
 		//Create the model
 		OrderQueue queue = new OrderQueue();
+		OnlineOrderQueue onlineOrders = new OnlineOrderQueue();
 		ArrayList<SalesAssistant> salesAssistants = createAssistants(assistantsCount, timeModifier, queue);
 		
 		//Create the view
@@ -29,9 +30,12 @@ public class CafeSimulation {
 		
 		//Run the order producer to begin the simulation
 		OrderProducer p = new OrderProducer(orders, timeModifier, queue);
+		OnlineOrderProducer o = new OnlineOrderProducer(menu, onlineOrders, queue);
 		
-		Thread producerThread = new Thread(p);
-		producerThread.start();
+		Thread producerThread1 = new Thread(p);
+		Thread producerThread2 = new Thread(o);
+		producerThread1.start();
+		producerThread2.start();
 		
 		for(SalesAssistant assistant: salesAssistants) {
 			Thread assistantThread = new Thread(assistant);

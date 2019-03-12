@@ -12,6 +12,9 @@ public class OrderProducer implements Runnable {
 	private int maxGroupSize = 4; //max no of customers added to queue at once
 	private int delayModifier = 2; //multiplies delay between adding customers by a random number between 1 and delayModifier
 	
+	private ItemCollection menu;
+	private OnlineOrderQueue online;
+	
 	public OrderProducer(OrderCollection orders, long timeModifier, OrderQueue q) {
 		this.allOrders = orders;
 		this.queue = q;

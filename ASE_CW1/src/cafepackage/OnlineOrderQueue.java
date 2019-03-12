@@ -63,5 +63,14 @@ public class OnlineOrderQueue extends OrderQueue {
 	public int processedSize() {
 		return this.processedOrders.size();
 	}
+	
+	public void printPending() {
+		for(Order o: this.pendingOrders) {
+			System.out.println(o.getCustomerId());
+			for(Item i: o.getItems()) {
+				System.out.println(i.getName());
+			}
+		}
+	}
 
 }
