@@ -19,7 +19,6 @@ import java.util.LinkedList;
  */
 public class CafeStateGUI extends JFrame implements Observer {
 	private OrderQueue queue;
-	private ArrayList<SalesAssistant> salesAssistant;
 	
 	
 	
@@ -54,10 +53,10 @@ public class CafeStateGUI extends JFrame implements Observer {
 		
 		this.queue = queue;
 		this.queue.registerObserver(this);
-		this.salesAssistant = salesAssistants;
-		for(SalesAssistant s: this.salesAssistant) {
-			s.registerObserver(this);
-		}
+		//this.salesAssistant = salesAssistants;
+		//for(SalesAssistant s: this.salesAssistant) {
+		//	s.registerObserver(this);
+		//}
 
 		// set layout and size of GUI window
 		this.setSize(new Dimension(1200, 800));
@@ -94,10 +93,10 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 		/********************* SERVER INFO PANEL ***********************/
 
-		serverInfoPanel.setLayout(new GridLayout(1, this.salesAssistant.size()));
+		serverInfoPanel.setLayout(new GridLayout(1, salesAssistants.size()));
 
-		for (int i = 0; i < this.salesAssistant.size(); i++) {
-			Server server = new Server(i);
+		for (int i = 0; i < salesAssistants.size(); i++) {
+			Server server = new Server(i, salesAssistants.get(i));
 			serverInfoPanel.add(server);
 			servers.add(server);
 		}
@@ -174,13 +173,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 			output = order.getCustomerId() + ": " + order.getItems().size() + " items\n" + output;
 		}
 		this.queueInfoText.setText(output);
-		this.queueInfoTitle.setText("Queue size: " + orders.size());
-		
-		for(int i = 0; i < this.salesAssistant.size(); i++) {
-			Server s = this.servers.get(i);
-			s.serverInfoText.setText(this.salesAssistant.get(i).getCurrentOrder());
-		}
-		
+		this.queueInfoTitle.setText("Queue size: " + orders.size());		
 	}
 
 	/**
@@ -188,9 +181,10 @@ public class CafeStateGUI extends JFrame implements Observer {
 	 * servers to cafe state gui simple
 	 *
 	 */
-	private class Server extends JPanel {
+	private class Server extends JPanel implements Observer {
 		JLabel serverTitle;
 		JTextPane serverInfoText = new JTextPane();
+		private SalesAssistant s;
 
 		/**
 		 * Server constructor, takes one argument the current server number for use in
@@ -200,7 +194,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		 *            the index of the current server, used to set the title (title
 		 *            number will be serverNumber +1)
 		 */
-		private Server(Integer serverNumber) {
+		private Server(Integer serverNumber, SalesAssistant s) {
 			serverTitle = new JLabel("Server " + (++serverNumber).toString());
 
 			this.setLayout(new BorderLayout());
@@ -209,11 +203,18 @@ public class CafeStateGUI extends JFrame implements Observer {
 			serverInfoText.setText("I am currently on my break...");
 			serverInfoText.setEditable(false);
 			this.add(serverInfoText, BorderLayout.CENTER);
+			this.s = s;
+			s.registerObserver(this);
 		}
 
 		// set the server's text box info
 		private void setServerText(String newServerInfo) {
 			this.serverInfoText.setText(newServerInfo);
+		}
+		
+		@Override
+		public void Update() {
+			this.serverInfoText.setText(this.s.getCurrentOrder());			
 		}
 
 	}
