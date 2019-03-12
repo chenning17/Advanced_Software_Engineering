@@ -18,8 +18,8 @@ public class CafeSimulation {
 		
 		//Load in data from CSVs
 		ItemLoader itemLoader = new ItemLoader(menuFile);
-		OrderLoader orderLoader = new OrderLoader(orderFile);
 		ItemCollection menu = itemLoader.loadItems();
+		OrderLoader orderLoader = new OrderLoader(orderFile, menu);
 		OrderCollection orders = orderLoader.loadOrders();
 
 		//Create the model
@@ -48,7 +48,9 @@ public class CafeSimulation {
 		ArrayList<SalesAssistant> assistants = new ArrayList<SalesAssistant>();
 		
 		for(int i = 0; i < count; i++) {
-			assistants.add(new SalesAssistant(queue,4, report));
+
+			assistants.add(new SalesAssistant(queue,4, report, i));
+
 		}
 		
 		return assistants;

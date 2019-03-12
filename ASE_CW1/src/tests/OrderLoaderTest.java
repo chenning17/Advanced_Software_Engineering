@@ -47,8 +47,10 @@ public class OrderLoaderTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.menu = new ItemCollection();
 		this.menu.add(testSnack);
-		orderLoader = new OrderLoader("testFile.csv");
+		//itemLoader = new ItemLoader("testFile.csv", this.menu);
+		orderLoader = new OrderLoader("testFile.csv", this.menu);
 	}
 	
 // Tests that orders are placed and loaded correctly to the correct customer

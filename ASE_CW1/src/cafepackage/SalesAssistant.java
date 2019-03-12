@@ -3,8 +3,11 @@ package cafepackage;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import Part_2.LogFile;
+
 public class SalesAssistant implements Runnable, Subject{
 	private String displayString;
+	private int id;
 
 	private OrderQueue queue;
 	private LinkedList<Observer> observers;
@@ -12,16 +15,17 @@ public class SalesAssistant implements Runnable, Subject{
 	private Order currentOrder;
 	
 	private static final long DEFAULTSLEEPTIME = 250; //Default time taken between adding orders
-	private static final long DEFAULTWAKEUPTIME = 100; //Default time to wait before thread becomes active
+	private static final long DEFAULTWAKEUPTIME = 1100; //Default time to wait before thread becomes active
 	
 	//Actual wait times are the default multiplied by the simulation speed
 	private long actualSleepTime;
 	private long actualWakeUpTime;
 	
+
 	static ArrayList<SalesAssistant> assistants;
 	boolean done = false;
 	
-	public SalesAssistant(OrderQueue queue, long timeModifier, Report report) {
+	public SalesAssistant(OrderQueue queue, long timeModifier, Report report, int id) {
 		this.queue = queue;
 		this.observers = new LinkedList<Observer>();
 		this.report = report;
@@ -29,10 +33,14 @@ public class SalesAssistant implements Runnable, Subject{
 		
 		this.actualSleepTime = DEFAULTSLEEPTIME * timeModifier;
 		this.actualWakeUpTime = DEFAULTWAKEUPTIME * timeModifier;
+
 		if(assistants == null) {
 			assistants = new ArrayList<SalesAssistant>();
 		}
 		assistants.add(this);
+
+		this.id = id;
+
 	}
 	
 	@Override
@@ -78,6 +86,7 @@ public class SalesAssistant implements Runnable, Subject{
 	
 	private void processOrder() throws InterruptedException{
 		currentOrder = this.queue.get();
+		LogFile.getInstance().writeToLogFile("Server " +this.id+" : " + currentOrder.getCustomerId());
 		this.updateDisplay();
 		Thread.sleep(actualSleepTime * currentOrder.getItems().size());
 		report.addOrder(currentOrder);
@@ -93,9 +102,12 @@ public class SalesAssistant implements Runnable, Subject{
 	private void updateDisplay() {
 		if(currentOrder != null) {
 			this.displayString = "Serving customer " + currentOrder.getCustomerId();
-			/*for(Item item : currentOrder.getItems()) {
-				this.displayString += item.getName();
-			}*/
+			
+			ArrayList<Item> OrderItems = currentOrder.getItems();
+			
+			for(Item item : OrderItems) {
+				this.displayString += "\n" + item.getName();
+			}
 		}else {
 			this.displayString = "No current item.";
 		}

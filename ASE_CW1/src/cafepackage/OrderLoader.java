@@ -9,10 +9,10 @@ public class OrderLoader extends FileInput {
 	private ItemCollection menu;
 	private String file;
 	
-	public OrderLoader(String filename) {
+	public OrderLoader(String filename, ItemCollection menu) {
 		this.orders = new OrderCollection();
 		this.file = filename;
-		this.menu = new ItemCollection();
+		this.menu = menu;
 	}
 	
 	public OrderCollection loadOrders() {
@@ -36,7 +36,8 @@ public class OrderLoader extends FileInput {
 			//Remaining values on line are items in order
 			for(int i = 2; i < parts.length; i++) {
 				String itemId = parts[i];
-				orderItems.add(this.menu.findItemById(itemId));
+				Item temp = this.menu.findItemById(itemId);
+				orderItems.add(temp);
 			}
 			
 			Order order = new Order(timestamp, customerID, orderItems);
