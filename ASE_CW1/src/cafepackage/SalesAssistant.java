@@ -84,19 +84,23 @@ public class SalesAssistant implements Runnable, Subject{
 		return this.done;
 	}
 	
+	
 	private void processOrder() throws InterruptedException{
 		currentOrder = this.queue.get();
 		LogFile.getInstance().writeToLogFile("Server " +this.id+" : " + currentOrder.getCustomerId());
+		
+		//Gives a wait time for taking the order, relative to the size of the order
+		this.takeOrderDisplay();
+		Thread.sleep(actualSleepTime*(currentOrder.getItems().size()));
+		
+		
 		this.updateDisplay();
-		//insert processing times
-
-	
+		//changes the processing times based on the menu item
 		long totalTime = 0;
 		for (int i = 0; i<currentOrder.getItems().size(); i++) {
 			long time = currentOrder.getItems().get(i).getProcessTime();
 			totalTime = totalTime + time;
 		}
-		
 		long processSleepTime = actualSleepTime * totalTime;
 		
 		Thread.sleep(processSleepTime);
@@ -108,6 +112,15 @@ public class SalesAssistant implements Runnable, Subject{
 		this.currentOrder = null;
 		updateDisplay();
 		Thread.sleep(actualSleepTime);
+	}
+	
+	private void takeOrderDisplay() {
+		if(currentOrder != null) {
+			this.displayString = "Taking customer " + currentOrder.getCustomerId() + "'s order";
+		}else {
+			this.displayString = "No current item.";
+		}
+		notifyObservers();
 	}
 	
 	private void updateDisplay() {
