@@ -152,11 +152,11 @@ public class SalesAssistant implements Runnable, Subject{
 		logMessage("serving customer " + currentOrder.getCustomerId());
 		
 		//Gives a wait time for taking the order, relative to the size of the order
-		this.Display();
+		this.updateDisplay("Serving customer: ");
 		Thread.sleep(actualSleepTime*(currentOrder.getItems().size()));
 		
 		
-		this.updateDisplay("Serving customer: ");
+
 		//changes the processing times based on the menu item
 		long totalTime = 0;
 		for (int i = 0; i<currentOrder.getItems().size(); i++) {
