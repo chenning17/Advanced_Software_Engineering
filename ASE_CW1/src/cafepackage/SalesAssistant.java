@@ -22,6 +22,9 @@ public class SalesAssistant implements Runnable, Subject{
 	//Actual wait times are the default multiplied by the simulation speed
 	private long actualSleepTime;
 	private long actualWakeUpTime;
+	
+	static ArrayList<SalesAssistant> assistants;
+	boolean done = false;
 
 	public SalesAssistant(OrderQueue queue, long timeModifier, int id, OnlineOrderQueue onlineQueue, Report report) {
 		this.queue = queue;
@@ -75,7 +78,6 @@ public class SalesAssistant implements Runnable, Subject{
 		}
 	}
 
-	}
 	/**
 	 * Method where sales assistant checks for an order to process. Prioritise online orders: prepare them, then hand them over, then serve normal customers
 	 */
@@ -143,6 +145,7 @@ public class SalesAssistant implements Runnable, Subject{
 	}
 	public boolean getDone() {
 		return this.done;
+	}
 
 	/**
 	 * Process customer from regular queue
