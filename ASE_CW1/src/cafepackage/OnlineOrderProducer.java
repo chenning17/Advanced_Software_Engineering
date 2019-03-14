@@ -42,11 +42,11 @@ public class OnlineOrderProducer implements Runnable {
 	public void run() {
 		while(!this.orders.isDone() || this.orders.isEmpty()) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(500);
 				Order currentOrder = GenerateOrder();
 				System.out.println("Generated Order : " + currentOrder.getCustomerId());
 				this.onlineOrders.addPending(currentOrder);
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 				this.onlineOrders.put(currentOrder);
 				
 			} catch (Exception e) {

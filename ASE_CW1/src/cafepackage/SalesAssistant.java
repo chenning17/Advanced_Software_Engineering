@@ -79,6 +79,7 @@ public class SalesAssistant implements Runnable, Subject{
 	 */
 	private boolean provideOnlineOrder() throws InterruptedException {
 		currentOrder = this.onlineQueue.get();
+		this.updateDisplay("Providing pre-order: ");
 		//remove from prepared orders
 		boolean foundCustomer = false;
 		
@@ -89,7 +90,6 @@ public class SalesAssistant implements Runnable, Subject{
 				if(temp.getCustomerId() == currentOrder.getCustomerId()) {
 					this.onlineQueue.removePreparedAt(i);
 					logMessage("handing over online order " + currentOrder.getCustomerId());
-					this.updateDisplay("Providing pre-order: ");
 					this.orderCompleted();
 					return true;
 				}

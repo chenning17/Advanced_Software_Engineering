@@ -38,12 +38,16 @@ public class OrderProducer implements Runnable {
 					//the csv (currently if there are 2 customers left to be added and the random int is 4,
 					//will print "A group of 4 joined the queue" when only 2 were added.
 					groupSize = getRandomInt(this.maxGroupSize);
-					LogFile.getInstance().writeToLogFile("A group of " + groupSize + " joined the queue");
+					if(groupSize == 1) {
+						LogFile.getInstance().writeToLogFile("1 person joined the queue");
+					} else {
+						LogFile.getInstance().writeToLogFile("A group of " + groupSize + " joined the queue");
+					}
 				}
 			}
 			
 			queue.put(order);
-			LogFile.getInstance().writeToLogFile("Customer : " + order.getCustomerId() + " joined the queue");
+			LogFile.getInstance().writeToLogFile("\tCustomer " + order.getCustomerId() + " joined the queue");
 		}
 		this.queue.markFinished();	
 	}
