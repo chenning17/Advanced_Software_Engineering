@@ -4,10 +4,10 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 public class OrderQueue implements Subject{
-	private LinkedList<Observer> observers;
-	private LinkedList<Order> currentQueue;
+	protected LinkedList<Observer> observers;
+	protected LinkedList<Order> currentQueue;
 	private Boolean done;
-	private Boolean empty;
+	protected Boolean empty;
 	
 	public OrderQueue() {
 		this.observers = new LinkedList<Observer>();
@@ -76,7 +76,7 @@ public class OrderQueue implements Subject{
 	 * @return Boolean representing whether producer is finished 
 	 * adding to queue
 	 */
-	public Boolean isDone() {
+	public boolean isDone() {
 		return this.done;
 	}
 	
