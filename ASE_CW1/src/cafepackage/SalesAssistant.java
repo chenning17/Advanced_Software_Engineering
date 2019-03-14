@@ -156,6 +156,7 @@ public class SalesAssistant implements Runnable, Subject{
 		//Gives a wait time for taking the order, relative to the size of the order
 		this.takeOrderDisplay();
 		Thread.sleep(actualSleepTime*(currentOrder.getItems().size()));
+		
 		this.updateDisplay("Preparing order for customer ");
 		
 		//changes the processing times based on the menu item
@@ -164,7 +165,7 @@ public class SalesAssistant implements Runnable, Subject{
 			long time = currentOrder.getItems().get(i).getProcessTime();
 			totalTime = totalTime + time;
 		}
-		long processSleepTime = getSleepTime();
+		long processSleepTime = actualSleepTime * totalTime;
 		
 		Thread.sleep(processSleepTime);
 
