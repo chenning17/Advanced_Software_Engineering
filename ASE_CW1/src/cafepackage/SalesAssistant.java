@@ -75,6 +75,7 @@ public class SalesAssistant implements Runnable, Subject{
 		if(makeReport) {
 			System.out.println("report made");
 			report.generateReport();
+			System.exit(0);
 		}
 	}
 
@@ -116,6 +117,7 @@ public class SalesAssistant implements Runnable, Subject{
 				if(temp.getCustomerId() == currentOrder.getCustomerId()) {
 					this.onlineQueue.removePreparedAt(i);
 					logMessage("handing over online order " + currentOrder.getCustomerId());
+					report.addOrder(currentOrder);
 					this.orderCompleted();
 					return true;
 				}
@@ -152,23 +154,33 @@ public class SalesAssistant implements Runnable, Subject{
 		logMessage("serving customer " + currentOrder.getCustomerId());
 		
 		//Gives a wait time for taking the order, relative to the size of the order
-		this.updateDisplay("Serving customer: ");
+		this.takeOrderDisplay();
 		Thread.sleep(actualSleepTime*(currentOrder.getItems().size()));
+		this.updateDisplay("Preparing order for customer ");
 		
-		
-
 		//changes the processing times based on the menu item
 		long totalTime = 0;
 		for (int i = 0; i<currentOrder.getItems().size(); i++) {
 			long time = currentOrder.getItems().get(i).getProcessTime();
 			totalTime = totalTime + time;
 		}
-		long processSleepTime = actualSleepTime * totalTime;
+		long processSleepTime = getSleepTime();
 		
 		Thread.sleep(processSleepTime);
 
 		report.addOrder(currentOrder);
 		orderCompleted();
+	}
+	
+	private long getSleepTime() {
+		//changes the processing times based on the menu item
+			long totalTime = 0;
+			for (int i = 0; i<currentOrder.getItems().size(); i++) {
+				long time = currentOrder.getItems().get(i).getProcessTime();
+				totalTime = totalTime + time;
+			}
+			long processSleepTime = actualSleepTime * totalTime;
+			return processSleepTime;
 	}
 
 	/**
