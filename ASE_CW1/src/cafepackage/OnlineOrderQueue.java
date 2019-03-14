@@ -127,7 +127,7 @@ public class OnlineOrderQueue extends OrderQueue {
 	 * Getter for pending boolean
 	 * @return true if there are orders in the pending list
 	 */
-	public synchronized boolean arePending() {
+	public synchronized boolean isPending() {
 		return this.pending;
 	}
 }

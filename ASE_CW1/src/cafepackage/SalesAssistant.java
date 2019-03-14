@@ -26,7 +26,7 @@ public class SalesAssistant implements Runnable, Subject{
 	public SalesAssistant(OrderQueue queue, long timeModifier, int id, OnlineOrderQueue onlineQueue) {
 		this.queue = queue;
 		this.observers = new LinkedList<Observer>();
-		this.updateDisplay();
+		this.updateDisplay("");
 		this.onlineQueue = onlineQueue;
 		
 		this.actualSleepTime = DEFAULTSLEEPTIME * timeModifier;
@@ -48,14 +48,17 @@ public class SalesAssistant implements Runnable, Subject{
 		while(!queue.isDone() || !queue.isEmpty() || !this.onlineQueue.isDone()) {
 			checkForOrders();			
 		}
+		for(Order o: this.onlineQueue.getProcessed()) {
+			System.out.println(o.getCustomerId());
+		}
 	}
 	/**
-	 * Prioritise online orders: prepare them, then hand them over, then serve normal customers
+	 * Method where sales assistant checks for an order to process. Prioritise online orders: prepare them, then hand them over, then serve normal customers
 	 */
 	private void checkForOrders() {
 		try {
 			if(this.onlineQueue.needsProcessed()) {
-				if(this.onlineQueue.arePending()) {
+				if(this.onlineQueue.isPending()) {
 					this.prepareOnlineOrder();
 				} else if(!this.onlineQueue.isEmpty()) {
 					this.provideOnlineOrder();
@@ -76,17 +79,24 @@ public class SalesAssistant implements Runnable, Subject{
 	 */
 	private boolean provideOnlineOrder() throws InterruptedException {
 		currentOrder = this.onlineQueue.get();
-		LogFile.getInstance().writeToLogFile("Server " +this.id+" : handing over online order " + currentOrder.getCustomerId());
 		//remove from prepared orders
-		for(int i = 0; i < this.onlineQueue.getProcessed().size(); i++) {
-			Order temp = this.onlineQueue.getProcessed().get(i);
-			if(temp.getCustomerId() == currentOrder.getCustomerId()) {
-				this.onlineQueue.removePreparedAt(i);
-				this.updateDisplay1();
-				this.orderCompleted();
-				return true;
+		boolean foundCustomer = false;
+		
+		//while loop fixes bug where they're looking for a customer who hasn't joined the queue yet?
+		while(!foundCustomer) {
+			for(int i = 0; i < this.onlineQueue.getProcessed().size(); i++) {
+				Order temp = this.onlineQueue.getProcessed().get(i);
+				if(temp.getCustomerId() == currentOrder.getCustomerId()) {
+					this.onlineQueue.removePreparedAt(i);
+					logMessage("handing over online order " + currentOrder.getCustomerId());
+					this.updateDisplay("Providing pre-order: ");
+					this.orderCompleted();
+					return true;
+				}
 			}
+			Thread.sleep(500);
 		}
+		
 		return false;		
 	}
 	
@@ -96,10 +106,10 @@ public class SalesAssistant implements Runnable, Subject{
 	 * @throws InterruptedException
 	 */
 	private boolean prepareOnlineOrder() throws InterruptedException {
-		if(this.onlineQueue.arePending()) {
+		if(this.onlineQueue.isPending()) {
 			currentOrder = this.onlineQueue.getPending();
-			LogFile.getInstance().writeToLogFile("Server " +this.id+" preparing online order: " + currentOrder.getCustomerId());
-			this.updateDisplay();
+			logMessage("preparing online order " + currentOrder.getCustomerId());
+			this.updateDisplay("Preparing online order: ");
 			Thread.sleep(actualSleepTime * currentOrder.getItems().size());
 			this.onlineQueue.addProcessed(currentOrder);
 			orderCompleted();
@@ -114,8 +124,8 @@ public class SalesAssistant implements Runnable, Subject{
 	 */
 	private void processOrder() throws InterruptedException{
 		currentOrder = this.queue.get();
-		LogFile.getInstance().writeToLogFile("Server " +this.id+" : " + currentOrder.getCustomerId());
-		this.updateDisplay();
+		logMessage("serving customer " + currentOrder.getCustomerId());
+		this.updateDisplay("Serving customer: ");
 		Thread.sleep(actualSleepTime * currentOrder.getItems().size());
 		orderCompleted();
 	}
@@ -126,15 +136,17 @@ public class SalesAssistant implements Runnable, Subject{
 	 */
 	private void orderCompleted() throws InterruptedException{
 		this.currentOrder = null;
-		updateDisplay();
+		updateDisplay("");
 		Thread.sleep(actualSleepTime);
 	}
 	/**
-	 * Construct a string to be displayed in GUI, then notifies obervsers
+	 * Construct a string to be displayed in GUI, then notifies obervsers.
+	 * String will be ignored if no current order is present.
+	 * @param currentAction String describing what sales assistant is doing
 	 */
-	private void updateDisplay() {
+	private void updateDisplay(String currentAction) {
 		if(currentOrder != null) {
-			this.displayString = "Serving customer " + currentOrder.getCustomerId();
+			this.displayString = currentAction + currentOrder.getCustomerId();
 			
 			ArrayList<Item> OrderItems = currentOrder.getItems();
 			
@@ -146,23 +158,12 @@ public class SalesAssistant implements Runnable, Subject{
 		}
 		notifyObservers();
 	}
-	
 	/**
-	 * Construct a string to be displayed in GUI, then notifies observers
+	 * Gets instance of singleton and writes message to log file
+	 * @param message to be written to log file
 	 */
-	private void updateDisplay1() {
-		if(currentOrder != null) {
-			this.displayString = "Fetching online order for: " + currentOrder.getCustomerId();
-			
-			ArrayList<Item> OrderItems = currentOrder.getItems();
-			
-			for(Item item : OrderItems) {
-				this.displayString += "\n" + item.getName();
-			}
-		}else {
-			this.displayString = "No current item.";
-		}
-		notifyObservers();
+	private void logMessage(String message) {
+		LogFile.getInstance().writeToLogFile("Server " +this.id+" : " + message);
 	}
 
 	@Override
