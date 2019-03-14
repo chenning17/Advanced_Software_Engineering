@@ -18,8 +18,8 @@ public class DiscountTest {
 	@BeforeClass
 	public static void oneTimeSetUp() {
 		try {
-			discount1get = new Discount("Half price", "50% off order", 5.50, "disc501");
-			discount1set = new Discount("Half price", "50% off order", 5.50, "disc502");
+			discount1get = new Discount("Half price", "50% off order", 5.50, "disc501",1);
+			discount1set = new Discount("Half price", "50% off order", 5.50, "disc502",1);
 		} catch (DuplicateIDException | InvalidIDException e) {
 			fail();
 		}
@@ -82,8 +82,8 @@ public class DiscountTest {
 	@Test
 	public void test_validateIDwithDuplicateID() {
 		try {
-			Discount bargain = new Discount("bargain", "free drink", 2.00, "disc503");
-			Discount hugeSavings = new Discount("hugeSavings", "99% off", 3.00, "disc503");
+			Discount bargain = new Discount("bargain", "free drink", 2.00, "disc503",1);
+			Discount hugeSavings = new Discount("hugeSavings", "99% off", 3.00, "disc503",1);
 			fail();
 		} catch (DuplicateIDException e) {
 			assertTrue(e.getMessage().contains("disc503"));
@@ -95,7 +95,7 @@ public class DiscountTest {
 	@Test
 	public void test_validateIDwithInvalidIDNotEnoughNumbers() {
 		try {
-			Discount bargain = new Discount("bargain", "free drink", 2.00, "disc00");
+			Discount bargain = new Discount("bargain", "free drink", 2.00, "disc00",1);
 			fail();
 		} catch (InvalidIDException e) {
 			assertTrue(e.getMessage().contains("disc00"));
@@ -107,7 +107,7 @@ public class DiscountTest {
 	@Test
 	public void test_validateIDwithInvalidIDTooManyNumbers() {
 		try {
-			Discount bargain = new Discount("bargain", "free drink", 2.00, "disc0000");
+			Discount bargain = new Discount("bargain", "free drink", 2.00, "disc0000",1);
 			fail();
 		} catch (InvalidIDException e) {
 			assertTrue(e.getMessage().contains("disc0000"));
@@ -119,7 +119,7 @@ public class DiscountTest {
 	@Test
 	public void test_validateIDwithInvalidIDCharactersNotNumbers() {
 		try {
-			Discount bargain = new Discount("bargain", "free drink", 2.00, "discaaa");
+			Discount bargain = new Discount("bargain", "free drink", 2.00, "discaaa",1);
 			fail();
 		} catch (InvalidIDException e) {
 			assertTrue(e.getMessage().contains("discaaa"));
@@ -131,7 +131,7 @@ public class DiscountTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void test_ConstructorPriceValidation() {
 		try {
-			Discount bargain = new Discount("bargain", "free drink", -2.00, "disc503");
+			Discount bargain = new Discount("bargain", "free drink", -2.00, "disc503",1);
 			fail();
 		} catch (InvalidIDException e) {
 			fail();

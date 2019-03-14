@@ -18,8 +18,8 @@ public class FoodTest {
 	@BeforeClass
 	public static void oneTimeSetUp() {
 		try {
-			food1get = new Food("Panini", "Ham and cheese", 4.45, "food001");
-			food1set = new Food("Panini", "Ham and cheese", 4.45, "food002");
+			food1get = new Food("Panini", "Ham and cheese", 4.45, "food001",1);
+			food1set = new Food("Panini", "Ham and cheese", 4.45, "food002",1);
 		} catch (DuplicateIDException | InvalidIDException e) {
 			fail();
 		}
@@ -82,8 +82,8 @@ public class FoodTest {
 	@Test
 	public void test_validateIDwithDuplicateID() {
 		try {
-			Food sandwich = new Food("Sandwich", "Pickle", 5.00, "food003");
-			Food chips = new Food("Chips", "Very salty", 3.00, "food003");
+			Food sandwich = new Food("Sandwich", "Pickle", 5.00, "food003",1);
+			Food chips = new Food("Chips", "Very salty", 3.00, "food003",1);
 			fail();
 		} catch (DuplicateIDException e) {
 			assertTrue(e.getMessage().contains("food003"));
@@ -95,7 +95,7 @@ public class FoodTest {
 	@Test
 	public void test_validateIDwithInvalidIDNotEnoughNumbers() {
 		try {
-			Food sandwich = new Food("Sandwich", "Pickle", 5.00, "food00");
+			Food sandwich = new Food("Sandwich", "Pickle", 5.00, "food00",1);
 			fail();
 		} catch (InvalidIDException e) {
 			assertTrue(e.getMessage().contains("food00"));
@@ -107,7 +107,7 @@ public class FoodTest {
 	@Test
 	public void test_validateIDwithInvalidIDTooManyNumbers() {
 		try {
-			Food sandwich = new Food("Sandwich", "Pickle", 5.00, "food0000");
+			Food sandwich = new Food("Sandwich", "Pickle", 5.00, "food0000",1);
 			fail();
 		} catch (InvalidIDException e) {
 			assertTrue(e.getMessage().contains("food0000"));
@@ -119,7 +119,7 @@ public class FoodTest {
 	@Test
 	public void test_validateIDwithInvalidIDCharactersNotNumbers() {
 		try {
-			Food sandwich = new Food("Sandwich", "Pickle", 5.00, "foodaaa");
+			Food sandwich = new Food("Sandwich", "Pickle", 5.00, "foodaaa",1);
 			fail();
 		} catch (InvalidIDException e) {
 			assertTrue(e.getMessage().contains("foodaaa"));
@@ -131,7 +131,7 @@ public class FoodTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void test_ConstructorPriceValidation() {
 		try {
-			Food sandwich = new Food("Sandwich", "Pickle", -5.00, "food004");
+			Food sandwich = new Food("Sandwich", "Pickle", -5.00, "food004",1);
 			fail();
 		} catch (InvalidIDException e) {
 			fail();

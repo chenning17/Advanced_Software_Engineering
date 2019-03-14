@@ -39,10 +39,10 @@ public class OrderLoaderTest {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		order1 = "2018-06-16T09:12:00.00Z,111111,snck364";
-		order2 = "2018-06-16T09:12:00.00Z,1176112,snck364";
+		order1 = "2018-06-16T09:12:00.00Z,111111,snck364,1";
+		order2 = "2018-06-16T09:12:00.00Z,1176112,snck364,1";
 		try {
-			testSnack = new Snack("KitKat", "Chocolate bar", 3.00, "snck364");
+			testSnack = new Snack("KitKat", "Chocolate bar", 3.00, "snck364",1);
 		} catch (DuplicateIDException | InvalidIDException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -35,19 +35,19 @@ public class DiscountCalculator {
 		
 		if(mealDeal != null && bogofSnackDeal == null) {
 			//Return meal deal if no Bogof Snack deal
-			discount = createDiscountItem(mealDeal.NAME +" (-" + mealDeal.getValue() + ")", mealDeal.DESCRIPTION, mealDeal.getValue(), discountIDString);
+			discount = createDiscountItem(mealDeal.NAME +" (-" + mealDeal.getValue() + ")", mealDeal.DESCRIPTION, mealDeal.getValue(), discountIDString, 0);
 			mealDeal.Apply();
 		}else if(mealDeal == null && bogofSnackDeal != null) {
 			//Return bogof deal if no meal deal
-			discount = createDiscountItem(bogofSnackDeal.NAME +" (-" + bogofSnackDeal.getValue() + ")", bogofSnackDeal.DESCRIPTION, bogofSnackDeal.getValue(), discountIDString);
+			discount = createDiscountItem(bogofSnackDeal.NAME +" (-" + bogofSnackDeal.getValue() + ")", bogofSnackDeal.DESCRIPTION, bogofSnackDeal.getValue(), discountIDString, 0);
 			bogofSnackDeal.Apply();
 		}else {
 			//return best deal
 			if(mealDeal.getValue() > bogofSnackDeal.getValue()) {
-				discount = createDiscountItem(mealDeal.NAME +" (-" + mealDeal.getValue() + ")", mealDeal.DESCRIPTION, mealDeal.getValue(), discountIDString);
+				discount = createDiscountItem(mealDeal.NAME +" (-" + mealDeal.getValue() + ")", mealDeal.DESCRIPTION, mealDeal.getValue(), discountIDString, 0);
 				mealDeal.Apply();
 			}else {
-				discount = createDiscountItem(bogofSnackDeal.NAME +" (-" + bogofSnackDeal.getValue( )+ ")", bogofSnackDeal.DESCRIPTION, bogofSnackDeal.getValue(), discountIDString);
+				discount = createDiscountItem(bogofSnackDeal.NAME +" (-" + bogofSnackDeal.getValue( )+ ")", bogofSnackDeal.DESCRIPTION, bogofSnackDeal.getValue(), discountIDString, 0);
 				bogofSnackDeal.Apply();
 			}
 		}
@@ -154,12 +154,14 @@ public class DiscountCalculator {
 	 *            double value holding the value of the discount item
 	 * @param discountIDString
 	 *            string used as the ID for a discount item
+	 * @param processTime
+	 * 			  integer used as the process time of the discount
 	 * @return
 	 */
 	private static Discount createDiscountItem(String discountName, String discountDescription, double bestDeal,
-			String discountIDString) {
+			String discountIDString, int processTime) {
 		try {
-			Discount discount = new Discount(discountName, discountDescription, bestDeal, discountIDString);
+			Discount discount = new Discount(discountName, discountDescription, bestDeal, discountIDString, processTime);
 			return discount;
 		} catch (DuplicateIDException | InvalidIDException e) {
 			e.printStackTrace();

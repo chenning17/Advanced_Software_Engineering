@@ -29,13 +29,13 @@ public class OrderTest {
 		try {
 			testItemList = new ArrayList<Item>();
 			
-			testItemSnack = new Snack("Apple", "Granny smith", 1.20, "snck100");
+			testItemSnack = new Snack("Apple", "Granny smith", 1.20, "snck100",1);
 			testItemList.add(testItemSnack);
-			testItemFood = new Food("Panini", "Ham and cheese", 4.45, "food100");
+			testItemFood = new Food("Panini", "Ham and cheese", 4.45, "food100",1);
 			testItemList.add(testItemFood);
-			testItemDrink = new Drink("Apple Juice", "Still", 1.20, "drnk100");
+			testItemDrink = new Drink("Apple Juice", "Still", 1.20, "drnk100",1);
 			testItemList.add(testItemDrink);
-			testItemDiscount = new Discount("Half price", "50% off order", 5.50, "disc100");
+			testItemDiscount = new Discount("Half price", "50% off order", 5.50, "disc100",1);
 			testItemList.add(testItemDiscount);
 			
 		} catch (DuplicateIDException | InvalidIDException e) {

@@ -67,7 +67,7 @@ public class SalesAssistant implements Runnable, Subject{
 					makeReport = false;
 				}
 			}catch(NullPointerException npe) {
-				//Do nothing if assistant alread deleted
+				//Do nothing if assistant already deleted
 			}
 
 		}
@@ -147,15 +147,26 @@ public class SalesAssistant implements Runnable, Subject{
 		return this.done;
 	}
 
-	/**
-	 * Process customer from regular queue
-	 * @throws InterruptedException
-	 */
 	private void processOrder() throws InterruptedException{
 		currentOrder = this.queue.get();
 		logMessage("serving customer " + currentOrder.getCustomerId());
+		
+		//Gives a wait time for taking the order, relative to the size of the order
 		this.updateDisplay("Serving customer: ");
-		Thread.sleep(actualSleepTime * currentOrder.getItems().size());
+		Thread.sleep(actualSleepTime*(currentOrder.getItems().size()));
+		
+		
+
+		//changes the processing times based on the menu item
+		long totalTime = 0;
+		for (int i = 0; i<currentOrder.getItems().size(); i++) {
+			long time = currentOrder.getItems().get(i).getProcessTime();
+			totalTime = totalTime + time;
+		}
+		long processSleepTime = actualSleepTime * totalTime;
+		
+		Thread.sleep(processSleepTime);
+
 		report.addOrder(currentOrder);
 		orderCompleted();
 	}
@@ -169,12 +180,24 @@ public class SalesAssistant implements Runnable, Subject{
 		updateDisplay("");
 		Thread.sleep(actualSleepTime);
 	}
+
+	
+	private void takeOrderDisplay() {
+		if(currentOrder != null) {
+			this.displayString = "Taking customer " + currentOrder.getCustomerId() + "'s order";
+		}else {
+			this.displayString = "No current item.";
+		}
+		notifyObservers();
+	}
+
 	/**
 	 * Construct a string to be displayed in GUI, then notifies obervsers.
 	 * String will be ignored if no current order is present.
 	 * @param currentAction String describing what sales assistant is doing
 	 */
 	private void updateDisplay(String currentAction) {
+
 		if(currentOrder != null) {
 			this.displayString = currentAction + currentOrder.getCustomerId();
 

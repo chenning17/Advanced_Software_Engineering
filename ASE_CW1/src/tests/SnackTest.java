@@ -18,8 +18,8 @@ public class SnackTest {
 	@BeforeClass
 	public static void oneTimeSetUp() {
 		try {
-			snack1get = new Snack("Apple", "Granny smith", 1.20, "snck001");
-			snack1set = new Snack("Apple", "Granny smith", 1.20, "snck002");
+			snack1get = new Snack("Apple", "Granny smith", 1.20, "snck001",1);
+			snack1set = new Snack("Apple", "Granny smith", 1.20, "snck002",1);
 		} catch (DuplicateIDException | InvalidIDException e) {
 			fail();
 		}
@@ -84,8 +84,8 @@ public class SnackTest {
 	@Test
 	public void test_validateIDwithDuplicateID() {
 		try {
-			Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snck003");
-			Snack crisps = new Snack("Crisps", "Plain", 3.00, "snck003");
+			Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snck003",1);
+			Snack crisps = new Snack("Crisps", "Plain", 3.00, "snck003",1);
 			fail();
 		} catch (DuplicateIDException e) {
 			assertTrue(e.getMessage().contains("snck003"));
@@ -97,7 +97,7 @@ public class SnackTest {
 	@Test
 	public void test_validateIDwithInvalidIDNotEnoughNumbers() {
 		try {
-			Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snck00");
+			Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snck00",1);
 			fail();
 		} catch (InvalidIDException e) {
 			assertTrue(e.getMessage().contains("snck00"));
@@ -109,7 +109,7 @@ public class SnackTest {
 	@Test
 	public void test_validateIDwithInvalidIDTooManyNumbers() {
 		try {
-			Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snck0000");
+			Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snck0000",1);
 			fail();
 		} catch (InvalidIDException e) {
 			assertTrue(e.getMessage().contains("snck0000"));
@@ -121,7 +121,7 @@ public class SnackTest {
 	@Test
 	public void test_validateIDwithInvalidIDCharactersNotNumbers() {
 		try {
-			Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snckaaa");
+			Snack donut = new Snack("Donut", "Chocolate filled", 5.00, "snckaaa",1);
 			fail();
 		} catch (InvalidIDException e) {
 			assertTrue(e.getMessage().contains("snckaaa"));
@@ -133,7 +133,7 @@ public class SnackTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void test_ConstructorPriceValidation() {
 		try {
-			Snack orange = new Snack("Orange", "Small boy", -1.00, "snck004");
+			Snack orange = new Snack("Orange", "Small boy", -1.00, "snck004",1);
 		} catch (InvalidIDException e) {
 			fail();
 		} catch (DuplicateIDException e) {

@@ -33,16 +33,16 @@ public class DiscountCalculatorTest {
 	
 	@BeforeClass
 	public static void setUp() throws DuplicateIDException, InvalidIDException {
-		food1 = new Food("Food","",3.50,"food711");
-		food2 = new Food("Food","",5.00,"food712");
-		food3 = new Food("Food","",7.29,"food713");
-		snack1 = new Snack("Snack","",0.50,"snck711");
-		snack2 = new Snack("Snack","",0.75,"snck712");
-		snack3 = new Snack("Snack","",0.54,"snck713");
-		snack4 = new Snack("Snack","",0.75,"snck714");
-		drink1 = new Drink("Drink","",1.51,"drnk711");
-		drink2 = new Drink("Drink","",1.75,"drnk712");
-		drink3 = new Drink("Drink","",0.5,"drnk713");
+		food1 = new Food("Food","",3.50,"food711",1);
+		food2 = new Food("Food","",5.00,"food712",1);
+		food3 = new Food("Food","",7.29,"food713",1);
+		snack1 = new Snack("Snack","",0.50,"snck711",1);
+		snack2 = new Snack("Snack","",0.75,"snck712",1);
+		snack3 = new Snack("Snack","",0.54,"snck713",1);
+		snack4 = new Snack("Snack","",0.75,"snck714",1);
+		drink1 = new Drink("Drink","",1.51,"drnk711",1);
+		drink2 = new Drink("Drink","",1.75,"drnk712",1);
+		drink3 = new Drink("Drink","",0.5,"drnk713",1);
 	}
 	
 	
