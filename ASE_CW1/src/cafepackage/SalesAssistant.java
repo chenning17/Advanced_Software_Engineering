@@ -171,17 +171,6 @@ public class SalesAssistant implements Runnable, Subject{
 		report.addOrder(currentOrder);
 		orderCompleted();
 	}
-	
-	private long getSleepTime() {
-		//changes the processing times based on the menu item
-			long totalTime = 0;
-			for (int i = 0; i<currentOrder.getItems().size(); i++) {
-				long time = currentOrder.getItems().get(i).getProcessTime();
-				totalTime = totalTime + time;
-			}
-			long processSleepTime = actualSleepTime * totalTime;
-			return processSleepTime;
-	}
 
 	/**
 	 * Used when finished processing an order
