@@ -7,12 +7,14 @@ import java.util.*;
 public class ItemCollection implements Iterable<Item> {
 
 	private TreeSet<Item> itemCollection;
+	private ArrayList<String> ids; //Used for selecting a random item
 
 	/**
 	 * Default Constructor
 	 */
 	public ItemCollection() {
 		itemCollection = new TreeSet<Item>();
+		ids = new ArrayList<String>();
 	}
 
 	/**
@@ -23,6 +25,7 @@ public class ItemCollection implements Iterable<Item> {
 	 */
 	public void add(Item item) {
 		this.itemCollection.add(item);
+		this.ids.add(item.getID());
 	}
 
 
@@ -59,6 +62,15 @@ public class ItemCollection implements Iterable<Item> {
 	 */
 	public int count() {
 		return itemCollection.size();
+	}
+	
+	/**
+	 * Gets a random item from the set
+	 * @return The item selected randomly
+	 */
+	public Item randomItem() {
+		int itemIndex = (int) Math.ceil(Math.random() * itemCollection.size());
+		return this.findItemById(ids.get(itemIndex));
 	}
 
 }

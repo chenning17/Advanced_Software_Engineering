@@ -19,7 +19,11 @@ import java.util.LinkedList;
  */
 public class CafeStateGUI extends JFrame implements Observer {
 	private OrderQueue queue;
-	
+	private OnlineOrderQueue onlineQueue;
+	private ArrayList<SalesAssistant> salesAssistant;
+
+
+
 	// queue details, at top left of GUI
 	JPanel queueInfoPanel = new JPanel();
 	JLabel queueInfoTitle = new JLabel("Queue Status Log");
@@ -28,7 +32,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 	// status log details, at top right of GUI
 	JPanel statusLogPanel = new JPanel();
-	JLabel statusLogTitle = new JLabel("Queue Status Log");
+	JLabel statusLogTitle = new JLabel("Online Orders");
 	JScrollPane statusLogScrollArea;
 	JTextPane statusLogText = new JTextPane();
 
@@ -43,15 +47,24 @@ public class CafeStateGUI extends JFrame implements Observer {
 	/**
 	 * CafeStateGUI constructor, takes one argument - an integer used to set the
 	 * number of servers displayed in the GUI.
-	 * 
+	 *
 	 * @param numServers
 	 *            integer used to set number of servers to display in the GUI
 	 */
-	public CafeStateGUI(ArrayList<SalesAssistant> salesAssistants, OrderQueue queue) {
-		
+	public CafeStateGUI(ArrayList<SalesAssistant> salesAssistants, OrderQueue queue, OnlineOrderQueue onlineQueue) {
+
 		this.queue = queue;
 		this.queue.registerObserver(this);
-		
+
+		this.onlineQueue = onlineQueue;
+		this.onlineQueue.registerObserver(this);
+
+		this.salesAssistant = salesAssistants;
+		for(SalesAssistant s: this.salesAssistant) {
+			s.registerObserver(this);
+		}
+
+		// set layout and size of GUI window
 		this.setSize(new Dimension(1200, 800));
 		this.setLayout(new GridLayout(2, 1));
 
@@ -105,7 +118,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 	/**
 	 * Update the queue info text with the given string
-	 * 
+	 *
 	 * @param newText
 	 *            string to set the QueueInfoText to
 	 */
@@ -115,7 +128,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 	/**
 	 * Update the queue info title to be the input string
-	 * 
+	 *
 	 * @param queueInfoTitle
 	 *            string to be used as the new title
 	 */
@@ -125,7 +138,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 	/**
 	 * Appends text to the end of the text held in the status Log info text box
-	 * 
+	 *
 	 * @param toBeAdded
 	 *            string to be appended to end of the log info text
 	 */
@@ -137,7 +150,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 	/**
 	 * Update the status log title to be the given string
-	 * 
+	 *
 	 * @param statusLogTitle
 	 *            string to be used as the new status log title
 	 */
@@ -147,7 +160,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 	/**
 	 * Update the server text for the given inputted server number
-	 * 
+	 *
 	 * @param newText
 	 *            string used to update the text for the server
 	 * @param serverNumber
@@ -157,7 +170,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		// TODO make sure input server number is in valid range
 		servers.get(serverNumber).setServerText(newText);
 	}
-	
+
 	@Override
 	public void Update() {
 		LinkedList<Order> orders = this.queue.getQueueCopy();
@@ -166,7 +179,21 @@ public class CafeStateGUI extends JFrame implements Observer {
 			output = order.getCustomerId() + ": " + order.getItems().size() + " items\n" + output;
 		}
 		this.queueInfoText.setText(output);
-		this.queueInfoTitle.setText("Queue size: " + orders.size());		
+		this.queueInfoTitle.setText("Queue size: " + orders.size());
+
+
+		//------------------ Update RHS panel----------------
+		LinkedList<Order> onlineOrds = this.onlineQueue.getQueueCopy();
+		String output1 = "";
+		//this.statusLogTitle.setText("Collecting orders: " + onlineOrds.size());
+		output1 += "Unprocessed Online Orders: " + this.onlineQueue.pendingSize() + "\n";
+		output1 += "Online orders ready for collection: " + this.onlineQueue.processedSize() + "\n";
+		output1 += "\n Customers ready to collect:";
+		for(Order o : onlineOrds) {
+			output1 += o.getCustomerId();
+		}
+		this.statusLogText.setText(output1);
+
 	}
 
 	/**
@@ -182,7 +209,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		/**
 		 * Server constructor, takes one argument the current server number for use in
 		 * the server title
-		 * 
+		 *
 		 * @param serverNumber
 		 *            the index of the current server, used to set the title (title
 		 *            number will be serverNumber +1)
@@ -197,7 +224,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 			serverInfoText.setText("I am currently on my break...");
 			serverInfoText.setEditable(false);
 			this.add(serverInfoText, BorderLayout.CENTER);
-			
+
 			//store sales assistant, register server as observer
 			this.assistant = s;
 			this.assistant.registerObserver(this);
@@ -207,11 +234,11 @@ public class CafeStateGUI extends JFrame implements Observer {
 		private void setServerText(String newServerInfo) {
 			this.serverInfoText.setText(newServerInfo);
 		}
-		
+
 		//update server box when order changes
 		@Override
 		public void Update() {
-			this.serverInfoText.setText(this.assistant.getCurrentOrder());			
+			this.serverInfoText.setText(this.assistant.getCurrentOrder());
 		}
 
 	}
