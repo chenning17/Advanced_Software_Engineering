@@ -53,8 +53,12 @@ public class Report {
 			for (Item item : this.menu) {
 				if (item instanceof Food) {
 					String name = item.getName();
-					int count = itemCounts.get(item);
-					double totalValue = item.getCost() * count;
+					int count = 0;
+					double totalValue = 0;
+					if(itemCounts.containsKey(item)) {
+						count = itemCounts.get(item);
+						totalValue = item.getCost() * count;
+					}
 					totalIncome += totalValue;
 					writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
 				}
@@ -64,8 +68,13 @@ public class Report {
 			for (Item item : this.menu) {
 				if (item instanceof Snack) {
 					String name = item.getName();
-					int count = itemCounts.get(item);
-					double totalValue = item.getCost() * count;
+					int count = 0;
+					double totalValue = 0;
+					if(itemCounts.containsKey(item)) {
+						count = itemCounts.get(item);
+						totalValue = item.getCost() * count;
+					}
+					
 					totalIncome += totalValue;
 					writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
 				}
@@ -75,8 +84,12 @@ public class Report {
 			for (Item item : this.menu) {
 				if (item instanceof Drink) {
 					String name = item.getName();
-					int count = itemCounts.get(item);
-					double totalValue = item.getCost() * count;
+					int count = 0;
+					double totalValue = 0;
+					if(itemCounts.containsKey(item)) {
+						count = itemCounts.get(item);
+						totalValue = item.getCost() * count;
+					}
 					totalIncome += totalValue;
 					writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
 				}
@@ -86,8 +99,12 @@ public class Report {
 			for (Item item : this.menu) {
 				if (item instanceof Discount) {
 					String name = item.getName();
-					int count = itemCounts.get(item);
-					double totalValue = item.getCost() * count * -1;
+					int count = 0;
+					double totalValue = 0;
+					if(itemCounts.containsKey(item)) {
+						count = itemCounts.get(item);
+						totalValue = item.getCost() * count * -1;
+					}
 					totalIncome += totalValue;
 					writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
 				}
