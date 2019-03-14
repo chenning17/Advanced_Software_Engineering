@@ -13,44 +13,68 @@ public class SalesAssistant implements Runnable, Subject{
 	private OrderQueue queue; //normal queue of customers
 	private OnlineOrderQueue onlineQueue; //online orders to be collected
 	private LinkedList<Observer> observers;
-	
+	private Report report;
 	private Order currentOrder;
-	
+
 	private static final long DEFAULTSLEEPTIME = 250; //Default time taken between adding orders
 	private static final long DEFAULTWAKEUPTIME = 1100; //Default time to wait before thread becomes active
-	
+
 	//Actual wait times are the default multiplied by the simulation speed
 	private long actualSleepTime;
 	private long actualWakeUpTime;
-	
-	public SalesAssistant(OrderQueue queue, long timeModifier, int id, OnlineOrderQueue onlineQueue) {
+
+	public SalesAssistant(OrderQueue queue, long timeModifier, int id, OnlineOrderQueue onlineQueue, Report report) {
 		this.queue = queue;
 		this.observers = new LinkedList<Observer>();
 		this.updateDisplay("");
 		this.onlineQueue = onlineQueue;
-		
+				this.report = report;
+
 		this.actualSleepTime = DEFAULTSLEEPTIME * timeModifier;
 		this.actualWakeUpTime = DEFAULTWAKEUPTIME * timeModifier;
-		
+
+		if(assistants == null) {
+			assistants = new ArrayList<SalesAssistant>();
+		}
+		assistants.add(this);
+
 		this.id = id;
+
 	}
-	
+
 	@Override
 	public void run() {
-		
+
 		//Wait a short time before taking first order
 		try {
 			Thread.sleep(actualWakeUpTime);
 		}catch (InterruptedException e) {
 			//do nothing
 		}
-		
+
 		while(!queue.isDone() || !queue.isEmpty() || !this.onlineQueue.isDone()) {
-			checkForOrders();			
+			checkForOrders();
 		}
-		for(Order o: this.onlineQueue.getProcessed()) {
-			System.out.println(o.getCustomerId());
+		this.done = true;
+		boolean makeReport = true;
+
+		for(int i = 0; i< assistants.size(); i++) {
+			try {
+				if(!assistants.get(i).getDone()) {
+					makeReport = false;
+				}
+			}catch(NullPointerException npe) {
+				//Do nothing if assistant alread deleted
+			}
+
 		}
+
+		if(makeReport) {
+			System.out.println("report made");
+			report.generateReport();
+		}
+	}
+
 	}
 	/**
 	 * Method where sales assistant checks for an order to process. Prioritise online orders: prepare them, then hand them over, then serve normal customers
@@ -69,9 +93,9 @@ public class SalesAssistant implements Runnable, Subject{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	/**
 	 * Method used when online order is being collected. Takes very little time, as order has already been prepared
 	 * @return boolean value representing success of operation
@@ -82,7 +106,7 @@ public class SalesAssistant implements Runnable, Subject{
 		this.updateDisplay("Providing pre-order: ");
 		//remove from prepared orders
 		boolean foundCustomer = false;
-		
+
 		//while loop fixes bug where they're looking for a customer who hasn't joined the queue yet?
 		while(!foundCustomer) {
 			for(int i = 0; i < this.onlineQueue.getProcessed().size(); i++) {
@@ -96,10 +120,10 @@ public class SalesAssistant implements Runnable, Subject{
 			}
 			Thread.sleep(500);
 		}
-		
-		return false;		
+
+		return false;
 	}
-	
+
 	/**
 	 * Take an order from the pending orders, spend time "preparing" it, then add it to the processed orders list
 	 * @return boolean value representing success
@@ -117,7 +141,9 @@ public class SalesAssistant implements Runnable, Subject{
 		}
 		return false;
 	}
-	
+	public boolean getDone() {
+		return this.done;
+
 	/**
 	 * Process customer from regular queue
 	 * @throws InterruptedException
@@ -127,9 +153,10 @@ public class SalesAssistant implements Runnable, Subject{
 		logMessage("serving customer " + currentOrder.getCustomerId());
 		this.updateDisplay("Serving customer: ");
 		Thread.sleep(actualSleepTime * currentOrder.getItems().size());
+		report.addOrder(currentOrder);
 		orderCompleted();
 	}
-	
+
 	/**
 	 * Used when finished processing an order
 	 * @throws InterruptedException
@@ -147,9 +174,9 @@ public class SalesAssistant implements Runnable, Subject{
 	private void updateDisplay(String currentAction) {
 		if(currentOrder != null) {
 			this.displayString = currentAction + currentOrder.getCustomerId();
-			
+
 			ArrayList<Item> OrderItems = currentOrder.getItems();
-			
+
 			for(Item item : OrderItems) {
 				this.displayString += "\n" + item.getName();
 			}
@@ -169,13 +196,13 @@ public class SalesAssistant implements Runnable, Subject{
 	@Override
 	public void registerObserver(Observer observer) {
 		this.observers.add(observer);
-		
+
 	}
 
 	@Override
 	public void removeObserver(Observer observer) {
 		this.observers.remove(observer);
-		
+
 	}
 
 	@Override
@@ -184,7 +211,7 @@ public class SalesAssistant implements Runnable, Subject{
 			observer.Update();
 		}
 	}
-	
+
 	public String getCurrentOrder() {
 		return this.displayString;
 	}
