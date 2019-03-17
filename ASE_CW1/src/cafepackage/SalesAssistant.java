@@ -16,17 +16,17 @@ public class SalesAssistant implements Runnable, Subject{
 	private Report report;
 	private Order currentOrder;
 
-	private static final long DEFAULTSLEEPTIME = 250; //Default time taken between adding orders
-	private static final long DEFAULTWAKEUPTIME = 1100; //Default time to wait before thread becomes active
+	private static final int DEFAULTSLEEPTIME = 250; //Default time taken between adding orders
+	private static final int DEFAULTWAKEUPTIME = 1100; //Default time to wait before thread becomes active
 
 	//Actual wait times are the default multiplied by the simulation speed
-	private long actualSleepTime;
-	private long actualWakeUpTime;
+	private int actualSleepTime;
+	private int actualWakeUpTime;
 	
 	static ArrayList<SalesAssistant> assistants;
 	boolean done = false;
 
-	public SalesAssistant(OrderQueue queue, long timeModifier, int id, OnlineOrderQueue onlineQueue, Report report) {
+	public SalesAssistant(OrderQueue queue, int timeModifier, int id, OnlineOrderQueue onlineQueue, Report report) {
 		this.queue = queue;
 		this.observers = new LinkedList<Observer>();
 		this.updateDisplay("");
@@ -160,12 +160,12 @@ public class SalesAssistant implements Runnable, Subject{
 		this.updateDisplay("Preparing order for customer ");
 		
 		//changes the processing times based on the menu item
-		long totalTime = 0;
+		int totalTime = 0;
 		for (int i = 0; i<currentOrder.getItems().size(); i++) {
-			long time = currentOrder.getItems().get(i).getProcessTime();
+			int time = currentOrder.getItems().get(i).getProcessTime();
 			totalTime = totalTime + time;
 		}
-		long processSleepTime = actualSleepTime * totalTime;
+		int processSleepTime = actualSleepTime * totalTime;
 		
 		Thread.sleep(processSleepTime);
 
