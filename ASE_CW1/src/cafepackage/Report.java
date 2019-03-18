@@ -12,7 +12,7 @@ public class Report {
 	HashMap<Item, Integer> itemCounts;
 	ItemCollection menu;
 /**
- * writes report of items sold	
+ *  Method writes report of items sold and accumulates a total value
  */
 	
 	public Report(ItemCollection menu) {
