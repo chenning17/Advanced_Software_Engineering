@@ -8,7 +8,7 @@ public class OrderProducer implements Runnable {
 	private OrderCollection allOrders;
 	private OrderQueue queue;
 	private long actualSleepTime;
-	private static final long DEFAULTSLEEPTIME = 1000; //minimum time taken between adding orders
+	private static final long DEFAULTSLEEPTIME = 1; //minimum time taken between adding orders
 	private int maxGroupSize = 4; //max no of customers added to queue at once
 	private int delayModifier = 2; //multiplies delay between adding customers by a random number between 1 and delayModifier
 	
@@ -28,7 +28,12 @@ public class OrderProducer implements Runnable {
 			groupSize--;
 			if(groupSize == 0) {
 				try {
-					Thread.sleep(this.actualSleepTime * getRandomInt(delayModifier));
+					System.out.println("Target timestamp: " + order.getTimestamp().toString());
+					while(!SimulationTime.getInstance().getCurrentDateTime().equals(order.getTimestamp())) {
+						Thread.sleep(this.actualSleepTime);
+						SimulationTime.getInstance().increment();
+						System.out.println(SimulationTime.getInstance().getCurrentDateTime().toString());
+					}					
 				}
 				catch (InterruptedException e) {
 					//do nothing

@@ -38,9 +38,9 @@ public class CafeSimulation {
 		OnlineOrderProducer o = new OnlineOrderProducer(menu, onlineOrders, queue);
 
 		Thread producerThread1 = new Thread(p);
-		Thread producerThread2 = new Thread(o);
+		//Thread producerThread2 = new Thread(o);
 		producerThread1.start();
-		producerThread2.start();
+		//producerThread2.start();
 
 		for(SalesAssistant assistant: salesAssistants) {
 			Thread assistantThread = new Thread(assistant);

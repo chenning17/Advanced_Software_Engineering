@@ -1,7 +1,6 @@
 package cafepackage;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class OnlineOrderProducer implements Runnable {
 	private ItemCollection menu;
@@ -22,7 +21,7 @@ public class OnlineOrderProducer implements Runnable {
 	 */
 	private Order GenerateOrder() {
 		int id = Order.getCurrentCustomerID(); //Get latest customer id
-		Date date = new Date(); //Use current date
+		Date date = SimulationTime.getInstance().getCurrentDateTime(); //Use current date
 		ArrayList<Item> items = new ArrayList<Item>();
 		int numItems = (int) Math.ceil(Math.random() * 4);
 		

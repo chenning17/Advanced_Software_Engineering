@@ -14,6 +14,15 @@ public class Date {
 		this.day = day;
 	}
 	
+	public Date() {
+		this.hours = 0;
+		this.minutes = 0;
+		this.seconds = 0;
+		this.year = 2000;
+		this.month = 1;
+		this.day = 1;
+	}
+	
 	/**
 	 * Checks if this date object refers to the same date as another
 	 * @param other The date to be compared to
@@ -27,6 +36,20 @@ public class Date {
 		}else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Returns a copy of this object
+	 */
+	public Date clone() {
+		return new Date(this.hours, this.minutes, this.seconds, this.year, this.month, this.day);
+	}
+	
+	/**
+	 * Returns string representation of date in form "HH:MM:SS DD/MM/YYYY"
+	 */
+	public String toString() {
+		return hours + ":" + minutes + ":" + seconds + " " + day + "/" + month + "/" + year;
 	}
 	
 	//---------Getters---------
