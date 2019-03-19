@@ -25,8 +25,8 @@ public class StartGUI extends JFrame implements ActionListener {
 	// Inserts a selection list to choose number of servers, second section of GUI
 	JPanel pnlTwo = new JPanel();
 	JLabel chooseServerNum = new JLabel("Choose the number of servers:");
-	String[] numServers = new String[] { "1", "2", "3", "4", "5" };
-	JComboBox<String> serverNum = new JComboBox<String>(numServers);
+	Integer[] numServers = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	JComboBox<Integer> serverNum = new JComboBox<Integer>(numServers);
 
 	// Button to select and browse files for Menu.csv, third part of GUI
 	JPanel pnlThree = new JPanel();
@@ -40,23 +40,46 @@ public class StartGUI extends JFrame implements ActionListener {
 	JLabel chooseOrder = new JLabel("Choose Order:");
 	JButton orderButton = new JButton("Select File");
 
+	// Panel containing buttons to submit preferences or to cancel the operation
+	JPanel confirmationPanel = new JPanel();
+	JButton okButton = new JButton("OK");
+	JButton cancelButton = new JButton("Cancel");
+
+	SimulationSettings settings;
+	
 	// creates overall frame for GUI
-	public StartGUI() {
-		super("WELCOME!"); // window name
-		setSize(500, 350);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setLocation(450, 400);
-		setVisible(true);
-		add(pnl);
+	public StartGUI(SimulationSettings settings) {
+		super("Settings Input"); // window name
+		
+		this.settings = settings;
+		this.setSize(500, 450);
+		
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+				
+		this.setLocation(450, 400);
+		
+		this.add(pnl);
+		
 		pnl.setLayout(new BoxLayout(pnl, BoxLayout.Y_AXIS));
 		pnl.add(pnlOne);
 		pnl.add(pnlTwo);
 		pnl.add(pnlThree);
 		pnl.add(pnlFour);
+		pnl.add(confirmationPanel);
+
 		menuChoice.setLineWrap(true);
 		menuChoice.setWrapStyleWord(true);
+		
+		//////////
+		menuChoice.setText(settings.getMenuFile());
+		//////////
+		
 		orderChoice.setLineWrap(true);
 		orderChoice.setWrapStyleWord(true);
+		
+		//////////
+		orderChoice.setText(settings.getOrderFile());
+		//////////
 
 		// adding panel 1 - choosing simulation speed
 		pnlOne.add(chooseSimSpeed);
@@ -71,6 +94,7 @@ public class StartGUI extends JFrame implements ActionListener {
 		position.put(5, new JLabel("5"));
 		position.put(10, new JLabel("10"));
 		simSpeed.setLabelTable(position);
+		speed.setText("5");
 		// display speed beside the component
 		simSpeed.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -93,24 +117,57 @@ public class StartGUI extends JFrame implements ActionListener {
 		pnlFour.add(orderChoice);
 		pnlFour.add(orderButton);
 		orderButton.addActionListener(this);
+
+		okButton.addActionListener(this);
+		cancelButton.addActionListener(this);
+		confirmationPanel.add(okButton);
+		confirmationPanel.add(cancelButton);
+
+		
+		this.setVisible(true);
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		JFileChooser fileSelect = new JFileChooser();
-		fileSelect.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		fileSelect.setAcceptAllFileFilterUsed(true);
-		int file = fileSelect.showOpenDialog(null);
-		if (file == JFileChooser.APPROVE_OPTION) {
-			if (e.getSource() == menuButton) {
+		if (e.getSource() == menuButton) {
+			JFileChooser fileSelect = new JFileChooser();
+			fileSelect.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			fileSelect.setAcceptAllFileFilterUsed(true);
+			int file = fileSelect.showOpenDialog(null);
+			if (file == JFileChooser.APPROVE_OPTION) {
 				menuChoice.setText(fileSelect.getSelectedFile().getName());
 			}
-			if (e.getSource() == orderButton) {
+		}
+		if (e.getSource() == orderButton) {
+			JFileChooser fileSelect = new JFileChooser();
+			fileSelect.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			fileSelect.setAcceptAllFileFilterUsed(true);
+			int file = fileSelect.showOpenDialog(null);
+			if (file == JFileChooser.APPROVE_OPTION) {
 				orderChoice.setText(fileSelect.getSelectedFile().getName());
 			}
 		}
+		
+		if (e.getSource() == okButton) {
+			//update chosen setting for the simulation
+			settings.setMenuFile(this.menuChoice.getText());
+			settings.setOrderFile(this.orderChoice.getText());
+			settings.setAssistantsCount((int)this.serverNum.getSelectedItem());
+			settings.setTimeModifier(this.simSpeed.getValue());
+			
+			//hide this window to allow simulation to start
+			this.setVisible(false);
+		}
+		
+		if(e.getSource() == cancelButton) {
+			//if cancel is chosen, close window and end program
+			this.dispose();
+			System.exit(0);
+		}
+		
+		
 	}
 
-	public static void main(String[] args) {
-		new StartGUI();
-	}
+	// public static void main(String[] args) {
+	// new StartGUI();
+	// }
 }

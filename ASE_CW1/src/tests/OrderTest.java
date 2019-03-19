@@ -5,7 +5,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import cafepackage.Item;
 import cafepackage.Snack;
@@ -15,6 +14,7 @@ import cafepackage.InvalidIDException;
 import cafepackage.Drink;
 import cafepackage.DuplicateIDException;
 import cafepackage.Order;
+import cafepackage.Date;
 
 public class OrderTest {
 
@@ -48,7 +48,7 @@ public class OrderTest {
 	public void test_getTimestamp() {
 		int testCustomerId = 1;
 		
-		Date date1 = new Date(1); //Invokes constructor which uses date in milliseconds
+		Date date1 = new Date(); //Invokes constructor which uses date in milliseconds
 		Order order1 = new Order(date1, testCustomerId, testItemList);
 		String message1 = "Failed for date: Millisecond time 1";
 		assertEquals(message1, date1, order1.getTimestamp());

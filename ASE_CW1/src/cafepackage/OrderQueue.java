@@ -22,17 +22,10 @@ public class OrderQueue implements Subject{
 	 * @throws NoSuchElementException Thrown when the queue is empty
 	 */
 	public synchronized Order get() throws NoSuchElementException {
-		while(this.empty) {
-			try {
-				wait();
-			}
-			catch (InterruptedException e) {
-				//do nothing?
-			}
+		if(this.empty) {
+			throw new NoSuchElementException("No orders to get");
 		}
-		
-		notifyAll();
-		
+
 		Order returnedOrder = this.currentQueue.remove();
 		if(this.currentQueue.size() == 0) {
 			this.empty = true;
@@ -53,6 +46,7 @@ public class OrderQueue implements Subject{
 		}
 		this.currentQueue.add(o);
 		this.notifyObservers();
+		notifyAll();
 	}
 	
 	/**
