@@ -13,10 +13,10 @@ public class SimulationSettings {
 	//number of sales assistants	
 	private int assistantsCount;
 		
-	public SimulationSettings(String menuFile, String orderFile, int timeModifier, int assistantsCount) {
+	public SimulationSettings(String menuFile, String orderFile, int assistantsCount) {
 		this.setMenuFile(menuFile); 				
 		this.setOrderFile(orderFile); 				 
-		this.setTimeModifier(timeModifier); 		
+		this.setTimeModifier(1); 		
 		this.setAssistantsCount(assistantsCount); 	
 	}
 
