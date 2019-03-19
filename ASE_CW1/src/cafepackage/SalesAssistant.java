@@ -231,9 +231,9 @@ public class SalesAssistant implements Runnable, Subject{
 			for(Item item : OrderItems) {
 				this.displayString += "\n" + item.getName();
 			}
-			this.displayString += String.format("\nTotal cost: �%.2f", this.currentOrder.getCost());
+			this.displayString += String.format("\nTotal cost: £%.2f", this.currentOrder.getCost());
 			if(this.currentDiscount!= null) {
-				this.displayString += String.format("\nDiscount: �%.2f", this.currentDiscount.getCost());
+				this.displayString += String.format("\nDiscount: £%.2f", this.currentDiscount.getCost());
 			}
 			
 		}else {
