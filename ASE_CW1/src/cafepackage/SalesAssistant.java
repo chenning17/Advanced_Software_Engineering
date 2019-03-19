@@ -258,7 +258,8 @@ public class SalesAssistant implements Runnable, Subject{
 	}
 	
 	public Discount getDiscount() {
-		Discount discount = (DiscountCalculator.getBestDeal(this.currentOrder.getItems()));
+		ArrayList<Item> items = (ArrayList<Item>)this.currentOrder.getItems().clone();
+		Discount discount = (DiscountCalculator.getBestDeal(items));
 		return discount;
 	}
 
