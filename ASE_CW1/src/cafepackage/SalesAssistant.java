@@ -2,7 +2,6 @@ package cafepackage;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 
 import Part_2.LogFile;
 
@@ -58,6 +57,12 @@ public class SalesAssistant implements Runnable, Subject{
 		}
 
 		while(queue.isDone() == false || queue.isEmpty() == false || this.onlineQueue.isDone() == false) {
+			//Wait a short time before taking next order
+			try {
+				Thread.sleep(actualWakeUpTime);
+			}catch (InterruptedException e) {
+				//do nothing
+			}
 			checkForOrders();
 		}
 		
@@ -101,7 +106,7 @@ public class SalesAssistant implements Runnable, Subject{
 		} catch (Exception e) {
 			//e.printStackTrace();
 			try {
-				Thread.sleep(500);
+				Thread.sleep(actualSleepTime);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -135,7 +140,7 @@ public class SalesAssistant implements Runnable, Subject{
 					return true;
 				}
 			}
-			Thread.sleep(500);
+			Thread.sleep(actualSleepTime);
 		}
 
 		return false;
@@ -226,9 +231,9 @@ public class SalesAssistant implements Runnable, Subject{
 			for(Item item : OrderItems) {
 				this.displayString += "\n" + item.getName();
 			}
-			this.displayString += String.format("\nTotal cost: £%.2f", this.currentOrder.getCost());
+			this.displayString += String.format("\nTotal cost: ï¿½%.2f", this.currentOrder.getCost());
 			if(this.currentDiscount!= null) {
-				this.displayString += String.format("\nDiscount: £%.2f", this.currentDiscount.getCost());
+				this.displayString += String.format("\nDiscount: ï¿½%.2f", this.currentDiscount.getCost());
 			}
 			
 		}else {

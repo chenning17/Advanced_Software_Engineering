@@ -7,13 +7,7 @@ public class CafeSimulation {
 
 	public static void main(String[] args) {
 
-		//filenames
-		//Default values, user can set these variables before simulation starts
-		String menuFile = "Menu (version 2).csv";
-		String orderFile = "OrderList.csv";
-		int assistantsCount = 5;
-
-		SimulationSettings settings = new SimulationSettings(menuFile, orderFile, assistantsCount);
+		SimulationSettings settings = new SimulationSettings();
 
 		StartGUI startUp = new StartGUI(settings);
 
@@ -46,7 +40,7 @@ public class CafeSimulation {
 
 		//Run the order producer to begin the simulation
 		OrderProducer p = new OrderProducer(orders, settings.getTimeModifier(), queue);
-		OnlineOrderProducer o = new OnlineOrderProducer(menu, onlineOrders, queue);
+		OnlineOrderProducer o = new OnlineOrderProducer(menu, settings.getTimeModifier(), onlineOrders, queue);
 
 		Thread producerThread1 = new Thread(p);
 		Thread producerThread2 = new Thread(o);

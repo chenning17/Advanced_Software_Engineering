@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
+import cafepackage.SimulationTime;
+
 public class LogFile {
 
 	private static LogFile single_Instance = null;
@@ -38,7 +40,7 @@ public class LogFile {
 			File outputFile = new File(filename);
 			writer = new BufferedWriter(new FileWriter(outputFile, true));
 
-			writer.write(String.format("Log File created on: %s \n\n", new Date().toString().substring(0, 16)));
+			writer.write(String.format("\nLog File created on: %s \n\n", new Date().toString().substring(0, 16)));
 
 			System.out.println("Log File saved!");
 		} catch (IOException e) {
@@ -66,7 +68,7 @@ public class LogFile {
 			File outputFile = new File(filename);
 			writer = new BufferedWriter(new FileWriter(outputFile, true));
 
-			writer.write(getCurrentTime() + "\t " + inputString + "\n");
+			writer.write(getCurrentSimTime() + "\t " + inputString + "\n");
 
 			// System.out.println("Log File saved!");
 		} catch (IOException e) {
@@ -85,5 +87,9 @@ public class LogFile {
 		Date currentDate = new Date();
 		result = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
 		return result;
+	}
+	
+	String getCurrentSimTime() {
+		return SimulationTime.getInstance().getCurrentDateTime().toString();		
 	}
 }
