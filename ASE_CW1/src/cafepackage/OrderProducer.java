@@ -22,7 +22,7 @@ public class OrderProducer implements Runnable {
 					while(!SimulationTime.getInstance().getCurrentDateTime().equals(order.getTimestamp())) {
 						Thread.sleep(this.actualSleepTime);
 						SimulationTime.getInstance().increment();
-						System.out.println(SimulationTime.getInstance().getCurrentDateTime().toString());
+						//System.out.println(SimulationTime.getInstance().getCurrentDateTime().toString());
 					}					
 				}
 				catch (InterruptedException e) {
@@ -36,7 +36,7 @@ public class OrderProducer implements Runnable {
 				}
 			
 			queue.put(order);
-			LogFile.getInstance().writeToLogFile("\tCustomer " + order.getCustomerId() + " joined the queue");
+			LogFile.getInstance().writeToLogFile("Customer " + order.getCustomerId() + " joined the queue");
 		}
 		this.queue.markFinished();	
 	}

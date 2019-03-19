@@ -1,11 +1,11 @@
 package cafepackage;
 
 public class SimulationSettings {
-	//menu file name
-	private String menuFile;
+	//menu file name, defaults to given project menu file
+	private String menuFile = "Menu (version 2).csv";
 	
-	//order file name
-	private String orderFile;
+	//order file name, default to given project order file
+	private String orderFile = "OrderList.csv";
 	
 	//Simulation speed	
 	private int timeModifier;
@@ -13,11 +13,9 @@ public class SimulationSettings {
 	//number of sales assistants	
 	private int assistantsCount;
 		
-	public SimulationSettings(String menuFile, String orderFile, int assistantsCount) {
-		this.setMenuFile(menuFile); 				
-		this.setOrderFile(orderFile); 				 
-		this.setTimeModifier(1); 		
-		this.setAssistantsCount(assistantsCount); 	
+	//default constructor
+	public SimulationSettings() {
+			
 	}
 
 

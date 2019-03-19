@@ -6,11 +6,15 @@ public class OnlineOrderProducer implements Runnable {
 	private ItemCollection menu;
 	private OnlineOrderQueue onlineOrders;
 	private OrderQueue orders;
+	private long actualSleepTime;
+	private static final long DEFAULTSLEEPTIME = 500; //minimum time taken between adding orders
 	
-	public OnlineOrderProducer(ItemCollection menu, OnlineOrderQueue online, OrderQueue orders) {
+	
+	public OnlineOrderProducer(ItemCollection menu, int timeModifier, OnlineOrderQueue online, OrderQueue orders) {
 		this.menu = menu;
 		this.onlineOrders = online;
 		this.orders = orders;
+		this.actualSleepTime = DEFAULTSLEEPTIME * timeModifier; //allows changing of speed of orders being added to queue
 	}
 	
 	/**
@@ -42,11 +46,11 @@ public class OnlineOrderProducer implements Runnable {
 		while(!this.orders.isDone() || this.orders.isEmpty()) {
 			if(SimulationTime.getInstance().getCurrentDateTime().getHours() < 15) {
 				try {
-					Thread.sleep(500);
+					Thread.sleep(this.actualSleepTime);
 					Order currentOrder = GenerateOrder();
 					System.out.println("Generated Order : " + currentOrder.getCustomerId());
 					this.onlineOrders.addPending(currentOrder);
-					Thread.sleep(2000);
+					Thread.sleep(this.actualSleepTime * 4); //allow customer to arrive before order is ready
 					this.onlineOrders.put(currentOrder);
 					
 				} catch (Exception e) {

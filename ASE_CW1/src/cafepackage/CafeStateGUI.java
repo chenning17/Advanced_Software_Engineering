@@ -171,7 +171,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		// TODO make sure input server number is in valid range
 		servers.get(serverNumber).setServerText(newText);
 	}
-
+			
 	@Override
 	public void Update() {
 		LinkedList<Order> orders = this.queue.getQueueCopy();
@@ -235,7 +235,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		private void setServerText(String newServerInfo) {
 			this.serverInfoText.setText(newServerInfo);
 		}
-
+				
 		//update server box when order changes
 		@Override
 		public void Update() {
