@@ -9,9 +9,6 @@ public class OrderProducer implements Runnable {
 	private long actualSleepTime;
 	private static final long DEFAULTSLEEPTIME = 1; //minimum time taken between adding orders
 	
-	private ItemCollection menu;
-	private OnlineOrderQueue online;
-	
 	public OrderProducer(OrderCollection orders, long timeModifier, OrderQueue q) {
 		this.allOrders = orders;
 		this.queue = q;
@@ -25,7 +22,6 @@ public class OrderProducer implements Runnable {
 					while(!SimulationTime.getInstance().getCurrentDateTime().equals(order.getTimestamp())) {
 						Thread.sleep(this.actualSleepTime);
 						SimulationTime.getInstance().increment();
-						System.out.println(SimulationTime.getInstance().getCurrentDateTime().toString());
 					}					
 				}
 				catch (InterruptedException e) {

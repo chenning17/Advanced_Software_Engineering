@@ -53,6 +53,7 @@ public class OrderQueue implements Subject{
 		}
 		this.currentQueue.add(o);
 		this.notifyObservers();
+		notifyAll();
 	}
 	
 	/**

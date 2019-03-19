@@ -5,19 +5,13 @@ import java.util.HashMap;
 
 public class CafeSimulation {
 
-
-
 	public static void main(String[] args) {
 
-		
-
-		
-				
 		//filenames
 		//Default values, user can set these variables before simulation starts
 		String menuFile = "Menu (version 2).csv";
 		String orderFile = "OrderList.csv";
-		int timeModifier = 5; //Simulation speed
+		int timeModifier = 1; //Simulation speed
 
 		int assistantsCount = 5;
 		
@@ -53,13 +47,13 @@ public class CafeSimulation {
 		//TODO: Instantiate controller and pass it view and model
 
 		//Run the order producer to begin the simulation
-		OrderProducer p = new OrderProducer(orders, timeModifier, queue);
+		OrderProducer p = new OrderProducer(orders, settings.getTimeModifier(), queue);
 		OnlineOrderProducer o = new OnlineOrderProducer(menu, onlineOrders, queue);
 
 		Thread producerThread1 = new Thread(p);
-		//Thread producerThread2 = new Thread(o);
+		Thread producerThread2 = new Thread(o);
 		producerThread1.start();
-		//producerThread2.start();
+		producerThread2.start();
 
 		for(SalesAssistant assistant: salesAssistants) {
 			Thread assistantThread = new Thread(assistant);

@@ -56,10 +56,12 @@ public class SalesAssistant implements Runnable, Subject{
 			//do nothing
 		}
 
-		while(!queue.isDone() || !queue.isEmpty() || !this.onlineQueue.isDone()) {
+		while(queue.isDone() == false || queue.isEmpty() == false || this.onlineQueue.isDone() == false) {
 			checkForOrders();
 		}
+		
 		this.done = true;
+		System.out.println("Assistant finished" + this.id);
 		boolean makeReport = true;
 
 		for(int i = 0; i< assistants.size(); i++) {
