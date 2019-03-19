@@ -48,7 +48,6 @@ public class OnlineOrderProducer implements Runnable {
 				try {
 					Thread.sleep(this.actualSleepTime);
 					Order currentOrder = GenerateOrder();
-					System.out.println("Generated Order : " + currentOrder.getCustomerId());
 					this.onlineOrders.addPending(currentOrder);
 					Thread.sleep(this.actualSleepTime * 4); //allow customer to arrive before order is ready
 					this.onlineOrders.put(currentOrder);

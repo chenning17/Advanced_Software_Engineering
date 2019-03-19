@@ -1,7 +1,6 @@
 package cafepackage;
 
 import java.util.HashSet;
-import java.util.Set;
 
 public class Discount extends Item {
 

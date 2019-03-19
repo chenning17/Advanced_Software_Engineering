@@ -1,7 +1,6 @@
 package cafepackage;
 
 import java.util.TreeSet;
-import java.security.InvalidParameterException;
 import java.util.*;
 
 public class ItemCollection implements Iterable<Item> {

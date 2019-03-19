@@ -1,7 +1,7 @@
 package cafepackage;
 
 
-import Part_2.LogFile;
+import logFilePackage.LogFile;
 
 public class OrderProducer implements Runnable {
 	private OrderCollection allOrders;

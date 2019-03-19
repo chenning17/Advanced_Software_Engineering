@@ -3,7 +3,6 @@ package cafepackage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -110,21 +109,6 @@ public class Report {
 					writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
 				}
 			}
-			/*
-			for (Item item : this.menu) {
-				if (item instanceof Discount) {
-					String name = item.getName();
-					int count = 0;
-					double totalValue = 0;
-					if(itemCounts.containsKey(item)) {
-						count = itemCounts.get(item);
-						totalValue = item.getCost() * count * -1;
-					}
-					totalIncome += totalValue;
-					writer.write(String.format("%-35s\t %-10d\t £% -10.2f\t\n", name, count, totalValue));
-				}
-			}
-			*/
 
 			writer.write(String.format("\nTotal Earnings: %34s%.2f", "£", totalIncome));
 

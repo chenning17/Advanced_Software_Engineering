@@ -1,4 +1,4 @@
-package Part_2;
+package logFilePackage;
 
 import java.io.BufferedWriter;
 import java.io.File;

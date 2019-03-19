@@ -3,7 +3,7 @@ package cafepackage;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import Part_2.LogFile;
+import logFilePackage.LogFile;
 
 public class SalesAssistant implements Runnable, Subject{
 	private String displayString;
@@ -67,7 +67,7 @@ public class SalesAssistant implements Runnable, Subject{
 		}
 		
 		this.done = true;
-		System.out.println("Assistant finished" + this.id);
+		System.out.println("Assistant " + (this.id + 1)  + " finished ");
 		boolean makeReport = true;
 
 		for(int i = 0; i< assistants.size(); i++) {
@@ -82,7 +82,7 @@ public class SalesAssistant implements Runnable, Subject{
 		}
 
 		if(makeReport) {
-			System.out.println("report made");
+			System.out.println("Report made");
 			report.generateReport();
 			System.exit(0);
 		}
@@ -211,7 +211,7 @@ public class SalesAssistant implements Runnable, Subject{
 		if(currentOrder != null) {
 			this.displayString = "Taking customer " + currentOrder.getCustomerId() + "'s order";
 		}else {
-			this.displayString = "No current item.";
+			this.displayString = "Not currently serving";
 		}
 		notifyObservers();
 	}
@@ -231,13 +231,13 @@ public class SalesAssistant implements Runnable, Subject{
 			for(Item item : OrderItems) {
 				this.displayString += "\n" + item.getName();
 			}
-			this.displayString += String.format("\nTotal cost: Â£%.2f", this.currentOrder.getCost());
+			this.displayString += String.format("\nTotal cost: £%.2f", this.currentOrder.getCost());
 			if(this.currentDiscount!= null) {
-				this.displayString += String.format("\nDiscount: Â£%.2f", this.currentDiscount.getCost());
+				this.displayString += String.format("\nDiscount: £%.2f", this.currentDiscount.getCost());
 			}
 			
 		}else {
-			this.displayString =  "No current item.";
+			this.displayString =  "Not currently serving";
 		}
 		notifyObservers();
 	}

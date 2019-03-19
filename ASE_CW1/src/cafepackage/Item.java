@@ -1,7 +1,5 @@
 package cafepackage;
 
-import java.util.HashSet;
-
 public abstract class Item implements Comparable<Item> {
 
 	private String name;

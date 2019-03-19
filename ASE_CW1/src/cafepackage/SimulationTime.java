@@ -1,7 +1,5 @@
 package cafepackage;
 
-import Part_2.LogFile;
-
 public class SimulationTime {
 	private int hours, minutes, seconds;
 	private int year, month, day;
