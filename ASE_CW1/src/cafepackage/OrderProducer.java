@@ -28,7 +28,6 @@ public class OrderProducer implements Runnable {
 			groupSize--;
 			if(groupSize == 0) {
 				try {
-					System.out.println("Target timestamp: " + order.getTimestamp().toString());
 					while(!SimulationTime.getInstance().getCurrentDateTime().equals(order.getTimestamp())) {
 						Thread.sleep(this.actualSleepTime);
 						SimulationTime.getInstance().increment();

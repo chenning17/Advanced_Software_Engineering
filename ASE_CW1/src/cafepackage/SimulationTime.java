@@ -43,8 +43,8 @@ public class SimulationTime {
 			minutes = 0;
 			hours++;
 		}
-		if(hours >= 24) {
-			hours = 0;
+		if(hours > 17) {
+			hours = 9;
 			day++;
 		}
 		//TODO: Know bug, number of days in each month is always 31. Should be changed to reflect actual number of days

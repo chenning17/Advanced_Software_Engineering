@@ -16,7 +16,7 @@ public class SalesAssistant implements Runnable, Subject{
 	private Report report;
 	private Order currentOrder;
 
-	private static final long DEFAULTSLEEPTIME = 250; //Default time taken between adding orders
+	private static final long DEFAULTSLEEPTIME = 500; //Default time taken between adding orders
 	private static final long DEFAULTWAKEUPTIME = 1100; //Default time to wait before thread becomes active
 
 	//Actual wait times are the default multiplied by the simulation speed
