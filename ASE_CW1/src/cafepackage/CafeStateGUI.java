@@ -113,6 +113,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		this.add(combinedQueueLogPanel);
 		this.add(serverInfoPanel);
 
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
 

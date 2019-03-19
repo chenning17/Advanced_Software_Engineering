@@ -9,24 +9,43 @@ public class CafeSimulation {
 
 	public static void main(String[] args) {
 
+		
+
+		
+				
 		//filenames
-		//TODO: Allow user to set these variables before simulation starts
+		//Default values, user can set these variables before simulation starts
 		String menuFile = "Menu (version 2).csv";
 		String orderFile = "OrderList.csv";
-		long timeModifier = 4; //Simulation speed
-		int assistantsCount = 5;
+		int timeModifier = 5; //Simulation speed
 
+		int assistantsCount = 5;
+		
+		SimulationSettings settings = new SimulationSettings(menuFile, orderFile, timeModifier, assistantsCount);
+		
+		StartGUI startUp = new StartGUI(settings);
+
+		while(startUp.isVisible()) {
+			//wait for window to close before moving on
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 		//Load in data from CSVs
-		ItemLoader itemLoader = new ItemLoader(menuFile);
+		ItemLoader itemLoader = new ItemLoader(settings.getMenuFile());
 		ItemCollection menu = itemLoader.loadItems();
-		OrderLoader orderLoader = new OrderLoader(orderFile, menu);
+		OrderLoader orderLoader = new OrderLoader(settings.getOrderFile(), menu);
 		OrderCollection orders = orderLoader.loadOrders();
 
 		//Create the model
 		OrderQueue queue = new OrderQueue();
 		OnlineOrderQueue onlineOrders = new OnlineOrderQueue();
 		Report report = new Report(menu);
-		ArrayList<SalesAssistant> salesAssistants = createAssistants(assistantsCount, timeModifier, queue, onlineOrders, report);
+		ArrayList<SalesAssistant> salesAssistants = createAssistants(settings.getAssistantsCount(), settings.getTimeModifier(), queue, onlineOrders, report);
 
 		//Create the view
 		CafeStateGUI gui = new CafeStateGUI(salesAssistants, queue, onlineOrders);
@@ -48,11 +67,11 @@ public class CafeSimulation {
 		}
 	}
 
-	static ArrayList<SalesAssistant> createAssistants(int count, long timeModifier, OrderQueue queue, OnlineOrderQueue onlineOrders, Report report){
+	static ArrayList<SalesAssistant> createAssistants(int count, int timeModifier, OrderQueue queue, OnlineOrderQueue onlineOrders, Report report){
 		ArrayList<SalesAssistant> assistants = new ArrayList<SalesAssistant>();
 
 		for(int i = 0; i < count; i++) {
-			assistants.add(new SalesAssistant(queue,4,i, onlineOrders, report));
+			assistants.add(new SalesAssistant(queue,timeModifier,i, onlineOrders, report));
 		}
 
 		return assistants;
