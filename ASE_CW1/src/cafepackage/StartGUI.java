@@ -19,13 +19,15 @@ public class StartGUI extends JFrame implements ActionListener {
 	// Changes the cafe simulation speed, at the top of GUI
 	JPanel pnlOne = new JPanel();
 	JLabel chooseSimSpeed = new JLabel("Choose Simulation Speed:");
-	JSlider simSpeed = new JSlider(0, 10);
+	JSlider simSpeed = new JSlider(1, 9);
 	JLabel speed = new JLabel(); // Shows which speed is selected
 
+	
+	
 	// Inserts a selection list to choose number of servers, second section of GUI
 	JPanel pnlTwo = new JPanel();
 	JLabel chooseServerNum = new JLabel("Choose the number of servers:");
-	Integer[] numServers = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	Integer[] numServers = new Integer[] { 1, 2, 3, 4, 5};
 	JComboBox<Integer> serverNum = new JComboBox<Integer>(numServers);
 
 	// Button to select and browse files for Menu.csv, third part of GUI
@@ -84,17 +86,21 @@ public class StartGUI extends JFrame implements ActionListener {
 		// adding panel 1 - choosing simulation speed
 		pnlOne.add(chooseSimSpeed);
 		pnlOne.add(simSpeed);
-		pnlOne.add(speed);
+		//pnlOne.add(speed);
 		// setting up the slider
-		simSpeed.setMajorTickSpacing(5);
+		simSpeed.setMajorTickSpacing(1);
 		simSpeed.setPaintTicks(true);
 		simSpeed.setPaintLabels(true);
+		
+		simSpeed.setInverted(true);
 		Hashtable<Integer, JLabel> position = new Hashtable<Integer, JLabel>();
-		position.put(0, new JLabel("0"));
-		position.put(5, new JLabel("5"));
-		position.put(10, new JLabel("10"));
+		position.put(1, new JLabel("fast"));
+		position.put(5, new JLabel("medium"));
+		position.put(9, new JLabel("slow"));
 		simSpeed.setLabelTable(position);
 		speed.setText("5");
+		//speed.setVisible(false);
+		
 		// display speed beside the component
 		simSpeed.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
