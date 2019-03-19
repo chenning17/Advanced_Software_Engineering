@@ -19,6 +19,7 @@ public class SalesAssistant implements Runnable, Subject{
 	private static final int DEFAULTSLEEPTIME = 250; //Default time taken between adding orders
 	private static final int DEFAULTWAKEUPTIME = 1100; //Default time to wait before thread becomes active
 
+
 	//Actual wait times are the default multiplied by the simulation speed
 	private int actualSleepTime;
 	private int actualWakeUpTime;

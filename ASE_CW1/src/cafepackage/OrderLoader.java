@@ -1,8 +1,6 @@
 package cafepackage;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.time.Instant;
 
 public class OrderLoader extends FileInput {
 	private OrderCollection orders;
@@ -26,15 +24,21 @@ public class OrderLoader extends FileInput {
 		
 		try {
 			String parts [] = inputLine.split(",");
-
-			Instant time = Instant.parse(parts[0]); //First value on line is time
-			Date timestamp = Date.from(time);
-			int customerID = Integer.parseInt(parts[1]); //Second value on line is date
+			int year = Integer.parseInt(parts[0]);
+			int month = Integer.parseInt(parts[1]);
+			int day = Integer.parseInt(parts[2]);
+			int hour = Integer.parseInt(parts[3]);
+			int minute = Integer.parseInt(parts[4]);
+			int seconds= Integer.parseInt(parts[5]);
+			
+			Date timestamp = new Date(hour, minute, seconds, year, month, day);
+			
+			int customerID = Integer.parseInt(parts[6]);
 			
 			ArrayList<Item> orderItems = new ArrayList<Item>();
 			
 			//Remaining values on line are items in order
-			for(int i = 2; i < parts.length; i++) {
+			for(int i = 7; i < parts.length; i++) {
 				String itemId = parts[i];
 				Item temp = this.menu.findItemById(itemId);
 				orderItems.add(temp);

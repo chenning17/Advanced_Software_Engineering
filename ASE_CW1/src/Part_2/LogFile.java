@@ -52,6 +52,11 @@ public class LogFile {
 		}
 	}
 
+	/** Method used to write the the log file of 
+	 * the time customers are server
+	 * when an online order is added
+	 * when all orders have been processed **/
+	
 	public synchronized void writeToLogFile(String inputString) {
 
 		BufferedWriter writer = null;
