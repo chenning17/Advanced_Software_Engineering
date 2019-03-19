@@ -55,5 +55,25 @@ public class Order {
 	public ArrayList<Item> getItems() {
 		return this.orderItems;
 	}
+	
+	/**
+	 * Add an item to the order
+	 * @param i item to add
+	 */
+	public void addItemToOrder(Item i) {
+		this.orderItems.add(i);
+	}
+	
+	public double getCost() {
+		double cost = 0;
+		for(Item i : this.orderItems) {
+			if (i instanceof Discount) {
+				cost += i.getCost() * -1;
+			} else {
+				cost += i.getCost();
+			}
+		}
+		return cost;
+	}
 
 }

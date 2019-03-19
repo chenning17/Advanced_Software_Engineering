@@ -19,7 +19,6 @@ public class DiscountCalculator {
 	 * 				Best available discount
 	 */
 	public static Discount getBestDeal(ArrayList<Item> itemList) {
-
 		// call all available deals to compare their values
 		MealDeal mealDeal = applyMealDeal(itemList);
 		BogofSnack bogofSnackDeal = applyBOGOFSnackDeal(itemList);

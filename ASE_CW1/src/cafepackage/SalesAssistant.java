@@ -15,6 +15,7 @@ public class SalesAssistant implements Runnable, Subject{
 	private LinkedList<Observer> observers;
 	private Report report;
 	private Order currentOrder;
+	private Discount currentDiscount;
 
 	private static final long DEFAULTSLEEPTIME = 250; //Default time taken between adding orders
 	private static final long DEFAULTWAKEUPTIME = 1100; //Default time to wait before thread becomes active
@@ -117,8 +118,10 @@ public class SalesAssistant implements Runnable, Subject{
 				if(temp.getCustomerId() == currentOrder.getCustomerId()) {
 					this.onlineQueue.removePreparedAt(i);
 					logMessage("handing over online order " + currentOrder.getCustomerId());
+					this.currentDiscount = getDiscount();
 					report.addOrder(currentOrder);
 					this.orderCompleted();
+					this.currentDiscount = null;
 					return true;
 				}
 			}
@@ -136,11 +139,13 @@ public class SalesAssistant implements Runnable, Subject{
 	private boolean prepareOnlineOrder() throws InterruptedException {
 		if(this.onlineQueue.isPending()) {
 			currentOrder = this.onlineQueue.getPending();
+			currentDiscount = this.getDiscount();
 			logMessage("preparing online order " + currentOrder.getCustomerId());
 			this.updateDisplay("Preparing online order: ");
 			Thread.sleep(actualSleepTime * currentOrder.getItems().size());
 			this.onlineQueue.addProcessed(currentOrder);
 			orderCompleted();
+			this.currentDiscount = null;
 			return true;
 		}
 		return false;
@@ -151,6 +156,8 @@ public class SalesAssistant implements Runnable, Subject{
 
 	private void processOrder() throws InterruptedException{
 		currentOrder = this.queue.get();
+		currentDiscount = getDiscount();
+		
 		logMessage("serving customer " + currentOrder.getCustomerId());
 		
 		//Gives a wait time for taking the order, relative to the size of the order
@@ -168,9 +175,10 @@ public class SalesAssistant implements Runnable, Subject{
 		long processSleepTime = actualSleepTime * totalTime;
 		
 		Thread.sleep(processSleepTime);
-
+		currentOrder.addItemToOrder(this.currentDiscount);
 		report.addOrder(currentOrder);
 		orderCompleted();
+		currentDiscount = null;
 	}
 
 	/**
@@ -208,8 +216,13 @@ public class SalesAssistant implements Runnable, Subject{
 			for(Item item : OrderItems) {
 				this.displayString += "\n" + item.getName();
 			}
+			this.displayString += String.format("\nTotal cost: £%.2f", this.currentOrder.getCost());
+			if(this.currentDiscount!= null) {
+				this.displayString += String.format("\nDiscount: £%.2f", this.currentDiscount.getCost());
+			}
+			
 		}else {
-			this.displayString = "No current item.";
+			this.displayString =  "No current item.";
 		}
 		notifyObservers();
 	}
@@ -242,6 +255,12 @@ public class SalesAssistant implements Runnable, Subject{
 
 	public String getCurrentOrder() {
 		return this.displayString;
+	}
+	
+	public Discount getDiscount() {
+		ArrayList<Item> items = (ArrayList<Item>)this.currentOrder.getItems().clone();
+		Discount discount = (DiscountCalculator.getBestDeal(items));
+		return discount;
 	}
 
 }
