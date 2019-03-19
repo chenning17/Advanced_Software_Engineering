@@ -191,7 +191,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		output1 += "Online orders ready for collection: " + this.onlineQueue.processedSize() + "\n";
 		output1 += "\n Customers ready to collect:";
 		for(Order o : onlineOrds) {
-			output1 += o.getCustomerId();
+			output1 += "\n"+ o.getCustomerId();
 		}
 		this.statusLogText.setText(output1);
 
@@ -222,7 +222,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 			this.setLayout(new BorderLayout());
 			this.add(serverTitle, BorderLayout.NORTH);
 
-			serverInfoText.setText("I am currently on my break...");
+			serverInfoText.setText("Not currently serving");
 			serverInfoText.setEditable(false);
 			this.add(serverInfoText, BorderLayout.CENTER);
 
