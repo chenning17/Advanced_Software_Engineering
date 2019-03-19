@@ -172,17 +172,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		// TODO make sure input server number is in valid range
 		servers.get(serverNumber).setServerText(newText);
 	}
-	
-	
-	/**
-	 * Update the color of the chosen server text box
-	 * @param color the color to change the box to
-	 * @param serverNumber the number of the server to be updated
-	 */
-	public void setServerTextColor(Color color, int serverNumber) {
-		servers.get(serverNumber).setServerTextColor(color);
-	}
-
+			
 	@Override
 	public void Update() {
 		LinkedList<Order> orders = this.queue.getQueueCopy();
@@ -246,11 +236,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		private void setServerText(String newServerInfo) {
 			this.serverInfoText.setText(newServerInfo);
 		}
-		
-		private void setServerTextColor(Color color) {
-			serverInfoText.setBackground(color);
-		}
-
+				
 		//update server box when order changes
 		@Override
 		public void Update() {
