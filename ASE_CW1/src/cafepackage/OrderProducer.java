@@ -22,6 +22,7 @@ public class OrderProducer implements Runnable {
 					while(!SimulationTime.getInstance().getCurrentDateTime().equals(order.getTimestamp())) {
 						Thread.sleep(this.actualSleepTime);
 						SimulationTime.getInstance().increment();
+						System.out.println(SimulationTime.getInstance().getCurrentDateTime().toString());
 					}					
 				}
 				catch (InterruptedException e) {

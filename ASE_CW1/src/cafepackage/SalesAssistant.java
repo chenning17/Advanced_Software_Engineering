@@ -93,11 +93,18 @@ public class SalesAssistant implements Runnable, Subject{
 				} else if(!this.onlineQueue.isEmpty()) {
 					this.provideOnlineOrder();
 				}
-			} else {
+			} else if(!this.queue.isEmpty()){
+				
 					processOrder();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 	}

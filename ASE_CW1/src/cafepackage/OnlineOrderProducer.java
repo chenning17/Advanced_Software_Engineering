@@ -40,19 +40,23 @@ public class OnlineOrderProducer implements Runnable {
 	 */
 	public void run() {
 		while(!this.orders.isDone() || this.orders.isEmpty()) {
-			try {
-				Thread.sleep(500);
-				Order currentOrder = GenerateOrder();
-				System.out.println("Generated Order : " + currentOrder.getCustomerId());
-				this.onlineOrders.addPending(currentOrder);
-				Thread.sleep(2000);
-				this.onlineOrders.put(currentOrder);
-				
-			} catch (Exception e) {
-				//do something
+			if(SimulationTime.getInstance().getCurrentDateTime().getHours() < 15) {
+				try {
+					Thread.sleep(500);
+					Order currentOrder = GenerateOrder();
+					System.out.println("Generated Order : " + currentOrder.getCustomerId());
+					this.onlineOrders.addPending(currentOrder);
+					Thread.sleep(2000);
+					this.onlineOrders.put(currentOrder);
+					
+				} catch (Exception e) {
+					//do something
+				}
 			}
+			
 		}
 		System.out.println("Finished Generating Orders");
+		this.onlineOrders.markFinished();
 	}
 	
 }
