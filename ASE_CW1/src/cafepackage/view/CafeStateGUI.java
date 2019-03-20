@@ -32,15 +32,18 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 	// queue details, at top left of GUI
 	JPanel queueInfoPanel = new JPanel();
-	JLabel queueInfoTitle = new JLabel("Queue Status Log");
+	JLabel queueInfoTitle = new JLabel("Queue Size: 0");
 	JScrollPane queueInfoScrollArea;
 	JTextPane queueInfoText = new JTextPane();
 
 	// status log details, at top right of GUI
-	JPanel statusLogPanel = new JPanel();
+	JPanel onlineQueuePanel = new JPanel();
 	JLabel statusLogTitle = new JLabel("Online Orders");
-	JScrollPane statusLogScrollArea;
-	JTextPane statusLogText = new JTextPane();
+	JScrollPane onlineQueueScrollArea;
+	JTextPane onlineQueueText = new JTextPane();
+	
+	//Clock panel
+	ClockPanel clockPanel = new ClockPanel();
 
 	// Panel at top to contain both the queue info panel and the status log panel
 	JPanel combinedQueueLogPanel = new JPanel();
@@ -48,7 +51,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 	// server info panel, at bottom of GUI
 	JPanel serverInfoPanel = new JPanel();
 
-	ArrayList<Server> servers = new ArrayList<Server>();
+	ArrayList<SalesAssistantPanel> servers = new ArrayList<SalesAssistantPanel>();
 
 	/**
 	 * CafeStateGUI constructor, takes one argument - an integer used to set the
@@ -71,7 +74,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		}
 
 		// set layout and size of GUI window
-		this.setSize(new Dimension(1200, 800));
+		this.setSize(new Dimension(800, 400));
 		this.setLayout(new GridLayout(2, 1));
 
 		/******************** QUEUE INFO PANEL *************************/
@@ -79,6 +82,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		queueInfoPanel.setLayout(new BorderLayout());
 		queueInfoScrollArea = new JScrollPane(queueInfoText);
 
+		queueInfoText.setText("Queue Empty");
 		queueInfoText.setEditable(false);
 
 		queueInfoPanel.add(queueInfoTitle, BorderLayout.NORTH);
@@ -86,29 +90,30 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 		/* ___________________________________________________________ */
 
-		/******************** STATUS LOG PANEL *************************/
+		/******************** ONLINE QUEUE PANEL *************************/
 
-		statusLogPanel.setLayout(new BorderLayout());
-		statusLogScrollArea = new JScrollPane(statusLogText);
+		onlineQueuePanel.setLayout(new BorderLayout());
+		onlineQueueScrollArea = new JScrollPane(onlineQueueText);
 
-		statusLogText.setEditable(false);
+		onlineQueueText.setText("Not currently taking online orders");
+		onlineQueueText.setEditable(false);
 
-		statusLogPanel.add(statusLogTitle, BorderLayout.NORTH);
-		statusLogPanel.add(statusLogScrollArea, BorderLayout.CENTER);
+		onlineQueuePanel.add(statusLogTitle, BorderLayout.NORTH);
+		onlineQueuePanel.add(onlineQueueScrollArea, BorderLayout.CENTER);
 
 		/* ___________________________________________________________ */
 
-		// add queue panel and status panel to the combined panel
 		combinedQueueLogPanel.setLayout(new GridLayout(1, 2));
 		combinedQueueLogPanel.add(queueInfoPanel);
-		combinedQueueLogPanel.add(statusLogPanel);
+		combinedQueueLogPanel.add(onlineQueuePanel);
+		combinedQueueLogPanel.add(clockPanel);
 
 		/********************* SERVER INFO PANEL ***********************/
 
 		serverInfoPanel.setLayout(new GridLayout(1, salesAssistants.size()));
 
 		for (int i = 0; i < salesAssistants.size(); i++) {
-			Server server = new Server(i, salesAssistants.get(i));
+			SalesAssistantPanel server = new SalesAssistantPanel(i, salesAssistants.get(i));
 			serverInfoPanel.add(server);
 			servers.add(server);
 		}
@@ -150,9 +155,9 @@ public class CafeStateGUI extends JFrame implements Observer {
 	 *            string to be appended to end of the log info text
 	 */
 	public void appendStatusLogText(String toBeAdded) {
-		String prevText = this.statusLogText.getText();
+		String prevText = this.onlineQueueText.getText();
 		String newText = prevText + "\n" + toBeAdded;
-		this.statusLogText.setText(newText);
+		this.onlineQueueText.setText(newText);
 	}
 
 	/**
@@ -182,9 +187,15 @@ public class CafeStateGUI extends JFrame implements Observer {
 	public void Update() {
 		LinkedList<Order> orders = this.queue.getQueueCopy();
 		String output = "";
-		for(Order order: orders) {
-			output = order.getCustomerId() + ": " + order.getItems().size() + " items\n" + output;
+
+		if(orders.size() == 0) {
+			output = "Queue empty";
+		}else {
+			for(Order order: orders) {
+				output = order.getCustomerId() + ": " + order.getItems().size() + " items\n" + output;
+			}
 		}
+		
 		this.queueInfoText.setText(output);
 		this.queueInfoTitle.setText("Queue size: " + orders.size());
 
@@ -199,55 +210,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		for(Order o : onlineOrds) {
 			output1 += "\n"+ o.getCustomerId();
 		}
-		this.statusLogText.setText(output1);
+		this.onlineQueueText.setText(output1);
 
 	}
-
-	/**
-	 * Server class used only in this class in order to make adding and removing
-	 * servers to cafe state gui simple
-	 *
-	 */
-	private class Server extends JPanel implements Observer {
-		JLabel serverTitle;
-		JTextPane serverInfoText = new JTextPane();
-		private SalesAssistant assistant;
-
-		/**
-		 * Server constructor, takes one argument the current server number for use in
-		 * the server title
-		 *
-		 * @param serverNumber
-		 *            the index of the current server, used to set the title (title
-		 *            number will be serverNumber +1)
-		 * @param s Sales assistant the server observes
-		 */
-		private Server(Integer serverNumber, SalesAssistant s) {
-			serverTitle = new JLabel("Server " + (++serverNumber).toString());
-
-			this.setLayout(new BorderLayout());
-			this.add(serverTitle, BorderLayout.NORTH);
-
-			serverInfoText.setText("Not currently serving");
-			serverInfoText.setEditable(false);
-			this.add(serverInfoText, BorderLayout.CENTER);
-
-			//store sales assistant, register server as observer
-			this.assistant = s;
-			this.assistant.registerObserver(this);
-		}
-
-		// set the server's text box info
-		private void setServerText(String newServerInfo) {
-			this.serverInfoText.setText(newServerInfo);
-		}
-				
-		//update server box when order changes
-		@Override
-		public void Update() {
-			this.serverInfoText.setText(this.assistant.getCurrentOrder());
-		}
-
-	}
-
 }
