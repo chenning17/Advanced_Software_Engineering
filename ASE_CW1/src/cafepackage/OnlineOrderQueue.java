@@ -3,8 +3,8 @@ package cafepackage;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
+import cafepackage.fileWriting.LogFile;
 import cafepackage.interfaces.Observer;
-import logFilePackage.LogFile;
 
 public class OnlineOrderQueue extends OrderQueue {
 	private LinkedList<Order> pendingOrders; //Orders that have been requested but not processed

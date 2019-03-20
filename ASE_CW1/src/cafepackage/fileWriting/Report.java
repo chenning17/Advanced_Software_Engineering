@@ -1,10 +1,18 @@
-package cafepackage;
+package cafepackage.fileWriting;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Date;
 import java.util.HashMap;
+
+import cafepackage.Discount;
+import cafepackage.Drink;
+import cafepackage.Food;
+import cafepackage.Item;
+import cafepackage.ItemCollection;
+import cafepackage.Order;
+import cafepackage.Snack;
 
 public class Report {
 

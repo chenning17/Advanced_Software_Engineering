@@ -3,9 +3,10 @@ package cafepackage;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import cafepackage.fileWriting.LogFile;
+import cafepackage.fileWriting.Report;
 import cafepackage.interfaces.Observer;
 import cafepackage.interfaces.Subject;
-import logFilePackage.LogFile;
 
 public class SalesAssistant implements Runnable, Subject{
 	private String displayString;

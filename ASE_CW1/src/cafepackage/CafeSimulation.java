@@ -2,6 +2,8 @@ package cafepackage;
 
 import java.util.ArrayList;
 
+import cafepackage.fileWriting.Report;
+
 public class CafeSimulation {
 
 	public static void main(String[] args) {

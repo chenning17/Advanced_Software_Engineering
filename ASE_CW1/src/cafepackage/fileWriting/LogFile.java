@@ -1,4 +1,4 @@
-package logFilePackage;
+package cafepackage.fileWriting;
 
 import java.io.BufferedWriter;
 import java.io.File;
