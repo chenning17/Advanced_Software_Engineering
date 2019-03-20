@@ -6,15 +6,15 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import cafepackage.Item;
-import cafepackage.Snack;
-import cafepackage.Food;
-import cafepackage.Discount;
-import cafepackage.InvalidIDException;
-import cafepackage.Drink;
-import cafepackage.DuplicateIDException;
-import cafepackage.Order;
-import cafepackage.Date;
+import cafepackage.exceptions.DuplicateIDException;
+import cafepackage.exceptions.InvalidIDException;
+import cafepackage.model.Date;
+import cafepackage.model.Order;
+import cafepackage.model.items.Discount;
+import cafepackage.model.items.Drink;
+import cafepackage.model.items.Food;
+import cafepackage.model.items.Item;
+import cafepackage.model.items.Snack;
 
 public class OrderTest {
 
