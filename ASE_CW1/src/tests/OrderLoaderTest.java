@@ -39,8 +39,8 @@ public class OrderLoaderTest {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		order1 = "2018-06-16T09:12:00.00Z,111111,snck364,1";
-		order2 = "2018-06-16T09:12:00.00Z,1176112,snck364,1";
+		order1 = "2019,3,02,9,11,0,111111,snck364,1";
+		order2 = "2019,3,02,9,11,0,1176112,snck364,1";
 		try {
 			testSnack = new Snack("KitKat", "Chocolate bar", 3.00, "snck364",1);
 		} catch (DuplicateIDException | InvalidIDException e) {
@@ -49,7 +49,6 @@ public class OrderLoaderTest {
 		}
 		this.menu = new ItemCollection();
 		this.menu.add(testSnack);
-		//itemLoader = new ItemLoader("testFile.csv", this.menu);
 		orderLoader = new OrderLoader("testFile.csv", this.menu);
 	}
 	
