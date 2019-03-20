@@ -48,15 +48,10 @@ public class OrderTest {
 	public void test_getTimestamp() {
 		int testCustomerId = 1;
 		
-		Date date1 = new Date(); //Invokes constructor which uses date in milliseconds
+		Date date1 = new Date(); 
 		Order order1 = new Order(date1, testCustomerId, testItemList);
-		String message1 = "Failed for date: Millisecond time 1";
+		String message1 = "Failed for default date";
 		assertEquals(message1, date1, order1.getTimestamp());
-	
-		Date date2 = new Date();  //Current date
-		Order order2 = new Order(date2, testCustomerId, testItemList);
-		String message2 = "Failed for date: Current time";
-		assertEquals(message2, date2, order2.getTimestamp());
 	}
 	
 	//Tests method to return customer id as an int

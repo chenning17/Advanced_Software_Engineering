@@ -6,7 +6,6 @@ import java.awt.Menu;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
