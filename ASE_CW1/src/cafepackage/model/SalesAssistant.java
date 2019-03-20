@@ -21,8 +21,8 @@ public class SalesAssistant implements Runnable, Subject{
 	private Order currentOrder;
 	private Discount currentDiscount;
 
-	private static final int DEFAULTSLEEPTIME = 250; //Default time taken between adding orders
-	private static final int DEFAULTWAKEUPTIME = 1100; //Default time to wait before thread becomes active
+	private static final int DEFAULTSLEEPTIME = 350; //Default time taken between adding orders
+	private static final int DEFAULTWAKEUPTIME = 500; //Default time to wait before thread becomes active
 
 
 	//Actual wait times are the default multiplied by the simulation speed
@@ -64,7 +64,7 @@ public class SalesAssistant implements Runnable, Subject{
 		while(queue.isDone() == false || queue.isEmpty() == false || this.onlineQueue.isDone() == false) {
 			//Wait a short time before taking next order
 			try {
-				Thread.sleep(actualWakeUpTime);
+				Thread.sleep(actualSleepTime);
 			}catch (InterruptedException e) {
 				//do nothing
 			}
@@ -109,12 +109,10 @@ public class SalesAssistant implements Runnable, Subject{
 					processOrder();
 			}
 		} catch (Exception e) {
-			//e.printStackTrace();
 			try {
 				Thread.sleep(actualSleepTime);
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				//Do nothing
 			}
 		}
 
@@ -130,7 +128,7 @@ public class SalesAssistant implements Runnable, Subject{
 		this.updateDisplay("Providing pre-order: ");
 		//remove from prepared orders
 		boolean foundCustomer = false;
-
+		Thread.sleep(actualSleepTime);
 		//while loop fixes bug where they're looking for a customer who hasn't joined the queue yet?
 		while(!foundCustomer) {
 			for(int i = 0; i < this.onlineQueue.getProcessed().size(); i++) {
@@ -145,7 +143,6 @@ public class SalesAssistant implements Runnable, Subject{
 					return true;
 				}
 			}
-			Thread.sleep(actualSleepTime);
 		}
 
 		return false;
@@ -180,9 +177,9 @@ public class SalesAssistant implements Runnable, Subject{
 		
 		logMessage("serving customer " + currentOrder.getCustomerId());
 		
-		//Gives a wait time for taking the order, relative to the size of the order
+		//Gives a wait time for taking the order
 		this.takeOrderDisplay();
-		Thread.sleep(actualSleepTime*(currentOrder.getItems().size()));
+		Thread.sleep(actualSleepTime);
 		
 		this.updateDisplay("Preparing order for customer ");
 		
@@ -208,7 +205,6 @@ public class SalesAssistant implements Runnable, Subject{
 	private void orderCompleted() throws InterruptedException{
 		this.currentOrder = null;
 		updateDisplay("");
-		Thread.sleep(actualSleepTime);
 	}
 
 	
