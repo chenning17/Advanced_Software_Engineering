@@ -3,6 +3,9 @@ package cafepackage;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
+import cafepackage.interfaces.Observer;
+import cafepackage.interfaces.Subject;
+
 public class OrderQueue implements Subject{
 	protected LinkedList<Observer> observers;
 	protected LinkedList<Order> currentQueue;

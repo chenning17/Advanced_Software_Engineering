@@ -10,11 +10,11 @@ import org.junit.Test;
 import cafepackage.Discount;
 import cafepackage.DiscountCalculator;
 import cafepackage.Drink;
-import cafepackage.DuplicateIDException;
 import cafepackage.Food;
-import cafepackage.InvalidIDException;
 import cafepackage.Item;
 import cafepackage.Snack;
+import cafepackage.exceptions.DuplicateIDException;
+import cafepackage.exceptions.InvalidIDException;
 
 
 

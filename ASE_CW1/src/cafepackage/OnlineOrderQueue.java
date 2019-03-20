@@ -3,6 +3,7 @@ package cafepackage;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
+import cafepackage.interfaces.Observer;
 import logFilePackage.LogFile;
 
 public class OnlineOrderQueue extends OrderQueue {

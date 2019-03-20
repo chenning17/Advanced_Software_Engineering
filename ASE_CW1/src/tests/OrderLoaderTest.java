@@ -12,10 +12,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import cafepackage.DuplicateIDException;
-import cafepackage.InvalidIDException;
 import cafepackage.OrderLoader;
 import cafepackage.Snack;
+import cafepackage.exceptions.DuplicateIDException;
+import cafepackage.exceptions.InvalidIDException;
 import cafepackage.Item;
 import cafepackage.ItemCollection;
 import cafepackage.ItemLoader;

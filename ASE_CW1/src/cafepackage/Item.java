@@ -1,5 +1,8 @@
 package cafepackage;
 
+import cafepackage.exceptions.DuplicateIDException;
+import cafepackage.exceptions.InvalidIDException;
+
 public abstract class Item implements Comparable<Item> {
 
 	private String name;

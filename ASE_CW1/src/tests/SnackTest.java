@@ -6,9 +6,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import cafepackage.DuplicateIDException;
-import cafepackage.InvalidIDException;
 import cafepackage.Snack;
+import cafepackage.exceptions.DuplicateIDException;
+import cafepackage.exceptions.InvalidIDException;
 
 
 public class SnackTest {

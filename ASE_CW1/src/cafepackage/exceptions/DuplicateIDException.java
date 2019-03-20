@@ -1,4 +1,4 @@
-package cafepackage;
+package cafepackage.exceptions;
 
 public class DuplicateIDException extends Exception{
 	

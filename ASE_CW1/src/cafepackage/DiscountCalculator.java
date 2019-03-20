@@ -2,6 +2,9 @@ package cafepackage;
 
 import java.util.ArrayList;
 
+import cafepackage.exceptions.DuplicateIDException;
+import cafepackage.exceptions.InvalidIDException;
+
 public class DiscountCalculator {
 
 	static int discountID = 0;

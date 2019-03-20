@@ -1,5 +1,8 @@
 package cafepackage;
 
+import cafepackage.exceptions.DuplicateIDException;
+import cafepackage.exceptions.InvalidIDException;
+
 public class ItemLoader extends FileInput {
 	private ItemCollection menu;
 	private String file;

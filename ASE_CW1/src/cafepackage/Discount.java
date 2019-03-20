@@ -2,6 +2,9 @@ package cafepackage;
 
 import java.util.HashSet;
 
+import cafepackage.exceptions.DuplicateIDException;
+import cafepackage.exceptions.InvalidIDException;
+
 public class Discount extends Item {
 
 	private static HashSet<String> idList = new HashSet<String>();
