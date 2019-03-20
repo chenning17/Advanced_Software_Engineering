@@ -11,12 +11,16 @@ import cafepackage.model.SimulationTime;
 
 public class ClockPanel extends JPanel implements Observer{
 	
+	JLabel title;
 	JTextPane text = new JTextPane();
 	
 	public ClockPanel() {
 
 		this.setLayout(new BorderLayout());
 
+		title = new JLabel("Simulation Time");
+		this.add(title, BorderLayout.NORTH);
+		
 		text.setText(SimulationTime.getInstance().getCurrentDateTime().toString());
 		text.setEditable(false);
 		this.add(text, BorderLayout.CENTER);

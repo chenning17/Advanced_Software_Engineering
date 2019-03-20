@@ -32,15 +32,15 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 	// queue details, at top left of GUI
 	JPanel queueInfoPanel = new JPanel();
-	JLabel queueInfoTitle = new JLabel("Queue Status Log");
+	JLabel queueInfoTitle = new JLabel("Queue Size: 0");
 	JScrollPane queueInfoScrollArea;
 	JTextPane queueInfoText = new JTextPane();
 
 	// status log details, at top right of GUI
-	JPanel statusLogPanel = new JPanel();
+	JPanel onlineQueuePanel = new JPanel();
 	JLabel statusLogTitle = new JLabel("Online Orders");
-	JScrollPane statusLogScrollArea;
-	JTextPane statusLogText = new JTextPane();
+	JScrollPane onlineQueueScrollArea;
+	JTextPane onlineQueueText = new JTextPane();
 	
 	//Clock panel
 	ClockPanel clockPanel = new ClockPanel();
@@ -74,7 +74,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		}
 
 		// set layout and size of GUI window
-		this.setSize(new Dimension(1200, 800));
+		this.setSize(new Dimension(800, 400));
 		this.setLayout(new GridLayout(2, 1));
 
 		/******************** QUEUE INFO PANEL *************************/
@@ -82,6 +82,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		queueInfoPanel.setLayout(new BorderLayout());
 		queueInfoScrollArea = new JScrollPane(queueInfoText);
 
+		queueInfoText.setText("Queue Empty");
 		queueInfoText.setEditable(false);
 
 		queueInfoPanel.add(queueInfoTitle, BorderLayout.NORTH);
@@ -89,22 +90,22 @@ public class CafeStateGUI extends JFrame implements Observer {
 
 		/* ___________________________________________________________ */
 
-		/******************** STATUS LOG PANEL *************************/
+		/******************** ONLINE QUEUE PANEL *************************/
 
-		statusLogPanel.setLayout(new BorderLayout());
-		statusLogScrollArea = new JScrollPane(statusLogText);
+		onlineQueuePanel.setLayout(new BorderLayout());
+		onlineQueueScrollArea = new JScrollPane(onlineQueueText);
 
-		statusLogText.setEditable(false);
+		onlineQueueText.setText("Not currently taking online orders");
+		onlineQueueText.setEditable(false);
 
-		statusLogPanel.add(statusLogTitle, BorderLayout.NORTH);
-		statusLogPanel.add(statusLogScrollArea, BorderLayout.CENTER);
+		onlineQueuePanel.add(statusLogTitle, BorderLayout.NORTH);
+		onlineQueuePanel.add(onlineQueueScrollArea, BorderLayout.CENTER);
 
 		/* ___________________________________________________________ */
 
-		// add queue panel and status panel to the combined panel
-		combinedQueueLogPanel.setLayout(new GridLayout(1, 3));
+		combinedQueueLogPanel.setLayout(new GridLayout(1, 2));
 		combinedQueueLogPanel.add(queueInfoPanel);
-		combinedQueueLogPanel.add(statusLogPanel);
+		combinedQueueLogPanel.add(onlineQueuePanel);
 		combinedQueueLogPanel.add(clockPanel);
 
 		/********************* SERVER INFO PANEL ***********************/
@@ -154,9 +155,9 @@ public class CafeStateGUI extends JFrame implements Observer {
 	 *            string to be appended to end of the log info text
 	 */
 	public void appendStatusLogText(String toBeAdded) {
-		String prevText = this.statusLogText.getText();
+		String prevText = this.onlineQueueText.getText();
 		String newText = prevText + "\n" + toBeAdded;
-		this.statusLogText.setText(newText);
+		this.onlineQueueText.setText(newText);
 	}
 
 	/**
@@ -186,9 +187,15 @@ public class CafeStateGUI extends JFrame implements Observer {
 	public void Update() {
 		LinkedList<Order> orders = this.queue.getQueueCopy();
 		String output = "";
-		for(Order order: orders) {
-			output = order.getCustomerId() + ": " + order.getItems().size() + " items\n" + output;
+
+		if(orders.size() == 0) {
+			output = "Queue empty";
+		}else {
+			for(Order order: orders) {
+				output = order.getCustomerId() + ": " + order.getItems().size() + " items\n" + output;
+			}
 		}
+		
 		this.queueInfoText.setText(output);
 		this.queueInfoTitle.setText("Queue size: " + orders.size());
 
@@ -203,7 +210,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 		for(Order o : onlineOrds) {
 			output1 += "\n"+ o.getCustomerId();
 		}
-		this.statusLogText.setText(output1);
+		this.onlineQueueText.setText(output1);
 
 	}
 }
