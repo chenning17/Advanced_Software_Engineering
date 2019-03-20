@@ -2,10 +2,12 @@ package cafepackage.model;
 
 import java.util.ArrayList;
 
-import cafepackage.GUIs.CafeStateGUI;
-import cafepackage.GUIs.StartGUI;
+import cafepackage.fileReading.ItemLoader;
+import cafepackage.fileReading.OrderLoader;
 import cafepackage.fileWriting.Report;
 import cafepackage.model.items.ItemCollection;
+import cafepackage.view.CafeStateGUI;
+import cafepackage.view.StartGUI;
 
 public class CafeSimulation {
 

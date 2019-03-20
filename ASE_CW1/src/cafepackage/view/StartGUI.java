@@ -1,4 +1,4 @@
-package cafepackage.GUIs;
+package cafepackage.view;
 
 import java.awt.event.*;
 import java.util.Hashtable;

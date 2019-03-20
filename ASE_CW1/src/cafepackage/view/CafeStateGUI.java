@@ -1,4 +1,4 @@
-package cafepackage.GUIs;
+package cafepackage.view;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;

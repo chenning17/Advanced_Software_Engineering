@@ -14,9 +14,9 @@ import org.junit.Test;
 
 import cafepackage.exceptions.DuplicateIDException;
 import cafepackage.exceptions.InvalidIDException;
-import cafepackage.model.ItemLoader;
+import cafepackage.fileReading.ItemLoader;
+import cafepackage.fileReading.OrderLoader;
 import cafepackage.model.Order;
-import cafepackage.model.OrderLoader;
 import cafepackage.model.items.Discount;
 import cafepackage.model.items.Drink;
 import cafepackage.model.items.Food;

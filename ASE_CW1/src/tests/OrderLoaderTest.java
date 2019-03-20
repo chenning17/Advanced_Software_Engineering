@@ -14,10 +14,10 @@ import org.junit.Test;
 
 import cafepackage.exceptions.DuplicateIDException;
 import cafepackage.exceptions.InvalidIDException;
-import cafepackage.model.ItemLoader;
+import cafepackage.fileReading.ItemLoader;
+import cafepackage.fileReading.OrderLoader;
 import cafepackage.model.Order;
 import cafepackage.model.OrderCollection;
-import cafepackage.model.OrderLoader;
 import cafepackage.model.items.Item;
 import cafepackage.model.items.ItemCollection;
 import cafepackage.model.items.Snack;;

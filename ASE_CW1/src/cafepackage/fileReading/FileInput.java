@@ -1,4 +1,4 @@
-package cafepackage.model;
+package cafepackage.fileReading;
 
 import java.io.File;
 import java.io.FileNotFoundException;

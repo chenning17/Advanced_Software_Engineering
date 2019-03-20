@@ -1,7 +1,10 @@
-package cafepackage.model;
+package cafepackage.fileReading;
 
 import java.util.ArrayList;
 
+import cafepackage.model.Date;
+import cafepackage.model.Order;
+import cafepackage.model.OrderCollection;
 import cafepackage.model.items.Item;
 import cafepackage.model.items.ItemCollection;
 
