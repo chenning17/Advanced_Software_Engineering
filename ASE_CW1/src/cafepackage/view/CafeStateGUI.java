@@ -41,6 +41,9 @@ public class CafeStateGUI extends JFrame implements Observer {
 	JLabel statusLogTitle = new JLabel("Online Orders");
 	JScrollPane statusLogScrollArea;
 	JTextPane statusLogText = new JTextPane();
+	
+	//Clock panel
+	ClockPanel clockPanel = new ClockPanel();
 
 	// Panel at top to contain both the queue info panel and the status log panel
 	JPanel combinedQueueLogPanel = new JPanel();
@@ -48,7 +51,7 @@ public class CafeStateGUI extends JFrame implements Observer {
 	// server info panel, at bottom of GUI
 	JPanel serverInfoPanel = new JPanel();
 
-	ArrayList<Server> servers = new ArrayList<Server>();
+	ArrayList<SalesAssistantPanel> servers = new ArrayList<SalesAssistantPanel>();
 
 	/**
 	 * CafeStateGUI constructor, takes one argument - an integer used to set the
@@ -99,16 +102,17 @@ public class CafeStateGUI extends JFrame implements Observer {
 		/* ___________________________________________________________ */
 
 		// add queue panel and status panel to the combined panel
-		combinedQueueLogPanel.setLayout(new GridLayout(1, 2));
+		combinedQueueLogPanel.setLayout(new GridLayout(1, 3));
 		combinedQueueLogPanel.add(queueInfoPanel);
 		combinedQueueLogPanel.add(statusLogPanel);
+		combinedQueueLogPanel.add(clockPanel);
 
 		/********************* SERVER INFO PANEL ***********************/
 
 		serverInfoPanel.setLayout(new GridLayout(1, salesAssistants.size()));
 
 		for (int i = 0; i < salesAssistants.size(); i++) {
-			Server server = new Server(i, salesAssistants.get(i));
+			SalesAssistantPanel server = new SalesAssistantPanel(i, salesAssistants.get(i));
 			serverInfoPanel.add(server);
 			servers.add(server);
 		}
@@ -202,52 +206,4 @@ public class CafeStateGUI extends JFrame implements Observer {
 		this.statusLogText.setText(output1);
 
 	}
-
-	/**
-	 * Server class used only in this class in order to make adding and removing
-	 * servers to cafe state gui simple
-	 *
-	 */
-	private class Server extends JPanel implements Observer {
-		JLabel serverTitle;
-		JTextPane serverInfoText = new JTextPane();
-		private SalesAssistant assistant;
-
-		/**
-		 * Server constructor, takes one argument the current server number for use in
-		 * the server title
-		 *
-		 * @param serverNumber
-		 *            the index of the current server, used to set the title (title
-		 *            number will be serverNumber +1)
-		 * @param s Sales assistant the server observes
-		 */
-		private Server(Integer serverNumber, SalesAssistant s) {
-			serverTitle = new JLabel("Server " + (++serverNumber).toString());
-
-			this.setLayout(new BorderLayout());
-			this.add(serverTitle, BorderLayout.NORTH);
-
-			serverInfoText.setText("Not currently serving");
-			serverInfoText.setEditable(false);
-			this.add(serverInfoText, BorderLayout.CENTER);
-
-			//store sales assistant, register server as observer
-			this.assistant = s;
-			this.assistant.registerObserver(this);
-		}
-
-		// set the server's text box info
-		private void setServerText(String newServerInfo) {
-			this.serverInfoText.setText(newServerInfo);
-		}
-				
-		//update server box when order changes
-		@Override
-		public void Update() {
-			this.serverInfoText.setText(this.assistant.getCurrentOrder());
-		}
-
-	}
-
 }

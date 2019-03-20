@@ -100,7 +100,6 @@ public class OrderQueue implements Subject{
 	 */
 	public LinkedList<Order> getQueueCopy(){
 		return (LinkedList<Order>) this.currentQueue.clone();
-		//TODO - think of better solution
 	}
 
 	@Override

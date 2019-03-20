@@ -49,7 +49,7 @@ public class Date {
 	 * Returns string representation of date in form "HH:MM:SS DD/MM/YYYY"
 	 */
 	public String toString() {
-		return hours + ":" + minutes + ":" + seconds + " " + day + "/" + month + "/" + year;
+		return String.format("%02d:%02d:%02d %02d/%02d/%04d", hours, minutes, seconds, day, month, year);
 	}
 	
 	//---------Getters---------
