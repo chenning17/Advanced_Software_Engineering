@@ -1,4 +1,4 @@
-package cafepackage;
+package cafepackage.GUIs;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -6,6 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
+import cafepackage.OnlineOrderQueue;
+import cafepackage.Order;
+import cafepackage.OrderQueue;
+import cafepackage.SalesAssistant;
 import cafepackage.interfaces.Observer;
 
 import java.awt.BorderLayout;

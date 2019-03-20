@@ -1,8 +1,11 @@
-package cafepackage;
+package cafepackage.GUIs;
 
 import java.awt.event.*;
 import java.util.Hashtable;
 import javax.swing.event.*;
+
+import cafepackage.SimulationSettings;
+
 import javax.swing.*;
 
 public class StartGUI extends JFrame implements ActionListener {

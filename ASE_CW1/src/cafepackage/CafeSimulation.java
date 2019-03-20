@@ -2,6 +2,8 @@ package cafepackage;
 
 import java.util.ArrayList;
 
+import cafepackage.GUIs.CafeStateGUI;
+import cafepackage.GUIs.StartGUI;
 import cafepackage.fileWriting.Report;
 
 public class CafeSimulation {
