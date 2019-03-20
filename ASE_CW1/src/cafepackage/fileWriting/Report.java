@@ -6,13 +6,13 @@ import java.io.FileWriter;
 import java.util.Date;
 import java.util.HashMap;
 
-import cafepackage.Discount;
-import cafepackage.Drink;
-import cafepackage.Food;
-import cafepackage.Item;
-import cafepackage.ItemCollection;
-import cafepackage.Order;
-import cafepackage.Snack;
+import cafepackage.model.Order;
+import cafepackage.model.items.Discount;
+import cafepackage.model.items.Drink;
+import cafepackage.model.items.Food;
+import cafepackage.model.items.Item;
+import cafepackage.model.items.ItemCollection;
+import cafepackage.model.items.Snack;
 
 public class Report {
 

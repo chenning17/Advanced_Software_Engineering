@@ -1,4 +1,4 @@
-package cafepackage;
+package cafepackage.model.items;
 
 import java.util.TreeSet;
 import java.util.*;

@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.util.Hashtable;
 import javax.swing.event.*;
 
-import cafepackage.SimulationSettings;
+import cafepackage.model.SimulationSettings;
 
 import javax.swing.*;
 

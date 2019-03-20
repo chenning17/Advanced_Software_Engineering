@@ -1,9 +1,14 @@
-package cafepackage;
+package cafepackage.model;
 
 import java.util.ArrayList;
 
 import cafepackage.exceptions.DuplicateIDException;
 import cafepackage.exceptions.InvalidIDException;
+import cafepackage.model.items.Discount;
+import cafepackage.model.items.Drink;
+import cafepackage.model.items.Food;
+import cafepackage.model.items.Item;
+import cafepackage.model.items.Snack;
 
 public class DiscountCalculator {
 

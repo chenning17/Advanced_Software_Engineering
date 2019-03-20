@@ -1,6 +1,9 @@
-package cafepackage;
+package cafepackage.model;
 
 import java.util.ArrayList;
+
+import cafepackage.model.items.Discount;
+import cafepackage.model.items.Item;
 
 public class Order {
 

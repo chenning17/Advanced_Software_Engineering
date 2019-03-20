@@ -1,6 +1,9 @@
-package cafepackage;
+package cafepackage.model;
 
 import java.util.*;
+
+import cafepackage.model.items.Item;
+import cafepackage.model.items.ItemCollection;
 
 public class OrderCollection implements Iterable<Order> {
 

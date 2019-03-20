@@ -1,4 +1,4 @@
-package cafepackage;
+package cafepackage.model;
 
 public class SimulationSettings {
 	//menu file name, defaults to given project menu file

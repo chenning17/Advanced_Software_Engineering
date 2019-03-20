@@ -6,11 +6,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
-import cafepackage.OnlineOrderQueue;
-import cafepackage.Order;
-import cafepackage.OrderQueue;
-import cafepackage.SalesAssistant;
 import cafepackage.interfaces.Observer;
+import cafepackage.model.OnlineOrderQueue;
+import cafepackage.model.Order;
+import cafepackage.model.OrderQueue;
+import cafepackage.model.SalesAssistant;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

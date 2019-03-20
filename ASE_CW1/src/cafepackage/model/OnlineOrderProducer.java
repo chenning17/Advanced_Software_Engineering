@@ -1,6 +1,9 @@
-package cafepackage;
+package cafepackage.model;
 
 import java.util.ArrayList;
+
+import cafepackage.model.items.Item;
+import cafepackage.model.items.ItemCollection;
 
 public class OnlineOrderProducer implements Runnable {
 	private ItemCollection menu;

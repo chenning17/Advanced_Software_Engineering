@@ -1,10 +1,11 @@
-package cafepackage;
+package cafepackage.model;
 
 import java.util.ArrayList;
 
 import cafepackage.GUIs.CafeStateGUI;
 import cafepackage.GUIs.StartGUI;
 import cafepackage.fileWriting.Report;
+import cafepackage.model.items.ItemCollection;
 
 public class CafeSimulation {
 

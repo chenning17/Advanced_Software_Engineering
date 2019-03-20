@@ -12,15 +12,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import cafepackage.OrderLoader;
-import cafepackage.Snack;
 import cafepackage.exceptions.DuplicateIDException;
 import cafepackage.exceptions.InvalidIDException;
-import cafepackage.Item;
-import cafepackage.ItemCollection;
-import cafepackage.ItemLoader;
-import cafepackage.Order;
-import cafepackage.OrderCollection;;
+import cafepackage.model.ItemLoader;
+import cafepackage.model.Order;
+import cafepackage.model.OrderCollection;
+import cafepackage.model.OrderLoader;
+import cafepackage.model.items.Item;
+import cafepackage.model.items.ItemCollection;
+import cafepackage.model.items.Snack;;
 
 public class OrderLoaderTest {
 	private BufferedWriter writer;

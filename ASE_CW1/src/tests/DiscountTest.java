@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import cafepackage.exceptions.DuplicateIDException;
 import cafepackage.exceptions.InvalidIDException;
-import cafepackage.Discount;
+import cafepackage.model.items.Discount;
 
 public class DiscountTest { 
 		

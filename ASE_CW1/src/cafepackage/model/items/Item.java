@@ -1,4 +1,4 @@
-package cafepackage;
+package cafepackage.model.items;
 
 import cafepackage.exceptions.DuplicateIDException;
 import cafepackage.exceptions.InvalidIDException;

@@ -1,4 +1,4 @@
-package cafepackage;
+package cafepackage.model;
 
 public class Date {
 

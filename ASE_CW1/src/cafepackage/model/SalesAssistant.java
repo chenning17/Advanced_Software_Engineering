@@ -1,4 +1,4 @@
-package cafepackage;
+package cafepackage.model;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -7,6 +7,8 @@ import cafepackage.fileWriting.LogFile;
 import cafepackage.fileWriting.Report;
 import cafepackage.interfaces.Observer;
 import cafepackage.interfaces.Subject;
+import cafepackage.model.items.Discount;
+import cafepackage.model.items.Item;
 
 public class SalesAssistant implements Runnable, Subject{
 	private String displayString;

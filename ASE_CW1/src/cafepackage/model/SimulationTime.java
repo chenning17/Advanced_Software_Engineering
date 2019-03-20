@@ -1,4 +1,4 @@
-package cafepackage;
+package cafepackage.model;
 
 public class SimulationTime {
 	private int hours, minutes, seconds;

@@ -1,4 +1,4 @@
-package cafepackage;
+package cafepackage.model;
 
 
 import cafepackage.fileWriting.LogFile;

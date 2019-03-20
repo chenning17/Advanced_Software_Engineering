@@ -1,4 +1,4 @@
-package cafepackage;
+package cafepackage.model;
 
 import java.util.LinkedList;
 import java.util.NoSuchElementException;

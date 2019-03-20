@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
-import cafepackage.SimulationTime;
+import cafepackage.model.SimulationTime;
 
 public class LogFile {
 
