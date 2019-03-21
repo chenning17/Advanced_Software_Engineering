@@ -43,11 +43,11 @@ public class ItemLoaderTest {
 	} catch (IOException e1) {
 		e1.printStackTrace();
 	}
-	food1 = "food010,Haggis,Haggis with Potato and Turnip,8.50";
-	drink1 = "drnk010,Fanta,Soft Drink,1.25";
-	snack1 = "snck010,Smokey Bacon Crisps,Crisps,0.90";
-	discount1 = "disc010,Meal Deal, Food offer,5.50";
-	drink2 = "drin231,Fanta,Soft Drink,1.25";
+	food1 = "food010,Haggis,Haggis with Potato and Turnip,8.50,1";
+	drink1 = "drnk010,Fanta,Soft Drink,1.25,1";
+	snack1 = "snck010,Smokey Bacon Crisps,Crisps,0.90,1";
+	discount1 = "disc010,Meal Deal, Food offer,5.50,1";
+	drink2 = "drin231,Fanta,Soft Drink,1.25,1";
 	itemLoader = new ItemLoader("testFile.csv");
 		}   	
 	

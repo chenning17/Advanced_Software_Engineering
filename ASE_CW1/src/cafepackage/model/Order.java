@@ -29,7 +29,7 @@ public class Order {
 
 		// Want to clone objects so that if the original object is somehow modified it
 		// doesn't change this order
-		this.timeStamp = (Date) timeStamp.clone();
+		this.timeStamp = timeStamp;
 		this.customerId = customerId;
 		this.orderItems = (ArrayList<Item>) orderItems.clone();
 
@@ -47,7 +47,7 @@ public class Order {
 	}
 
 	public Date getTimestamp() {
-		return (Date) this.timeStamp.clone(); // Return a clone so date can't be modified
+		return this.timeStamp;
 	}
 
 	public int getCustomerId() {
