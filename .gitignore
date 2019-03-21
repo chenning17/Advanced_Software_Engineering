@@ -3,9 +3,13 @@
 
 ### Eclipse ###
 
-.metadata
+.metadata/
 bin/
 tmp/
+.settings/
+.classpath
+.project
+
 *.tmp
 *.bak
 *.swp
@@ -13,7 +17,7 @@ tmp/
 local.properties
 .settings/
 .loadpath
-.recommenders
+.recommenders/
 
 # External tool builders
 .externalToolBuilders/
