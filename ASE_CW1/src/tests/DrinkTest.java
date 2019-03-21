@@ -6,9 +6,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import cafepackage.DuplicateIDException;
-import cafepackage.InvalidIDException;
-import cafepackage.Drink;
+import cafepackage.exceptions.DuplicateIDException;
+import cafepackage.exceptions.InvalidIDException;
+import cafepackage.model.items.Drink;
 
 public class DrinkTest {
 

@@ -6,21 +6,20 @@ import java.awt.Menu;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import cafepackage.DuplicateIDException;
-import cafepackage.InvalidIDException;
-import cafepackage.OrderLoader;
-import cafepackage.Snack;
-import cafepackage.Item;
-import cafepackage.ItemCollection;
-import cafepackage.ItemLoader;
-import cafepackage.Order;
-import cafepackage.OrderCollection;;
+import cafepackage.exceptions.DuplicateIDException;
+import cafepackage.exceptions.InvalidIDException;
+import cafepackage.fileReading.ItemLoader;
+import cafepackage.fileReading.OrderLoader;
+import cafepackage.model.Order;
+import cafepackage.model.OrderCollection;
+import cafepackage.model.items.Item;
+import cafepackage.model.items.ItemCollection;
+import cafepackage.model.items.Snack;;
 
 public class OrderLoaderTest {
 	private BufferedWriter writer;
@@ -39,8 +38,8 @@ public class OrderLoaderTest {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		order1 = "2018-06-16T09:12:00.00Z,111111,snck364,1";
-		order2 = "2018-06-16T09:12:00.00Z,1176112,snck364,1";
+		order1 = "2019,3,02,9,11,0,111111,snck364,1";
+		order2 = "2019,3,02,9,11,0,1176112,snck364,1";
 		try {
 			testSnack = new Snack("KitKat", "Chocolate bar", 3.00, "snck364",1);
 		} catch (DuplicateIDException | InvalidIDException e) {
@@ -49,7 +48,6 @@ public class OrderLoaderTest {
 		}
 		this.menu = new ItemCollection();
 		this.menu.add(testSnack);
-		//itemLoader = new ItemLoader("testFile.csv", this.menu);
 		orderLoader = new OrderLoader("testFile.csv", this.menu);
 	}
 	

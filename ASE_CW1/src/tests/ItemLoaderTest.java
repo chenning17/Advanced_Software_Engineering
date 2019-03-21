@@ -12,17 +12,17 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import cafepackage.DuplicateIDException;
-import cafepackage.InvalidIDException;
-import cafepackage.OrderLoader;
-import cafepackage.ItemLoader;
-import cafepackage.Item;
-import cafepackage.ItemCollection;
-import cafepackage.Snack;
-import cafepackage.Food;
-import cafepackage.Discount;
-import cafepackage.Drink;
-import cafepackage.Order;;
+import cafepackage.exceptions.DuplicateIDException;
+import cafepackage.exceptions.InvalidIDException;
+import cafepackage.fileReading.ItemLoader;
+import cafepackage.fileReading.OrderLoader;
+import cafepackage.model.Order;
+import cafepackage.model.items.Discount;
+import cafepackage.model.items.Drink;
+import cafepackage.model.items.Food;
+import cafepackage.model.items.Item;
+import cafepackage.model.items.ItemCollection;
+import cafepackage.model.items.Snack;;
 
 public class ItemLoaderTest {
 	private BufferedWriter writer;
@@ -43,11 +43,11 @@ public class ItemLoaderTest {
 	} catch (IOException e1) {
 		e1.printStackTrace();
 	}
-	food1 = "food010,Haggis,Haggis with Potato and Turnip,8.50";
-	drink1 = "drnk010,Fanta,Soft Drink,1.25";
-	snack1 = "snck010,Smokey Bacon Crisps,Crisps,0.90";
-	discount1 = "disc010,Meal Deal, Food offer,5.50";
-	drink2 = "drin231,Fanta,Soft Drink,1.25";
+	food1 = "food010,Haggis,Haggis with Potato and Turnip,8.50,1";
+	drink1 = "drnk010,Fanta,Soft Drink,1.25,1";
+	snack1 = "snck010,Smokey Bacon Crisps,Crisps,0.90,1";
+	discount1 = "disc010,Meal Deal, Food offer,5.50,1";
+	drink2 = "drin231,Fanta,Soft Drink,1.25,1";
 	itemLoader = new ItemLoader("testFile.csv");
 		}   	
 	

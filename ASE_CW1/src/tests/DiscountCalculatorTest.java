@@ -7,14 +7,14 @@ import java.util.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import cafepackage.Discount;
-import cafepackage.DiscountCalculator;
-import cafepackage.Drink;
-import cafepackage.DuplicateIDException;
-import cafepackage.Food;
-import cafepackage.InvalidIDException;
-import cafepackage.Item;
-import cafepackage.Snack;
+import cafepackage.exceptions.DuplicateIDException;
+import cafepackage.exceptions.InvalidIDException;
+import cafepackage.model.DiscountCalculator;
+import cafepackage.model.items.Discount;
+import cafepackage.model.items.Drink;
+import cafepackage.model.items.Food;
+import cafepackage.model.items.Item;
+import cafepackage.model.items.Snack;
 
 
 
